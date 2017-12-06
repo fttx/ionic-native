@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Observable } from 'rxjs/Observable';
 
 export interface BarcodeScannerOptions {
 
@@ -53,6 +54,10 @@ export interface BarcodeScannerOptions {
    */
   resultDisplayDuration?: number;
 
+  /**
+   * Enable continuous mode.
+   */
+  continuosMode?: boolean;
 }
 
 export interface BarcodeScanResult {
@@ -112,12 +117,13 @@ export class BarcodeScanner extends IonicNativePlugin {
   /**
    * Open the barcode scanner.
    * @param options {BarcodeScannerOptions} Optional options to pass to the scanner
-   * @returns {Promise<any>} Returns a Promise that resolves with scanner data, or rejects with an error.
+   * @returns {Observable<any>} Returns a Promise that resolves with scanner data, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    observable: true,
+    callbackOrder: 'reverse',
   })
-  scan(options?: BarcodeScannerOptions): Promise<BarcodeScanResult> { return; }
+  scan(options?: BarcodeScannerOptions): Observable<BarcodeScanResult> { return; }
 
   /**
    * Encodes data into a barcode.
