@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, CordovaInstance, checkAvailability, IonicNativePlugin } from '@ionic-native/core';
+import { checkAvailability, Cordova, CordovaInstance, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Observable } from 'rxjs/Observable';
 
 declare const window: any;
 
-export type EventResponse = RegistrationEventResponse & NotificationEventResponse & Error;
+export type EventResponse = RegistrationEventResponse &
+  NotificationEventResponse &
+  Error;
 
 export interface RegistrationEventResponse {
   /**
@@ -12,7 +14,6 @@ export interface RegistrationEventResponse {
    */
   registrationId: string;
 }
-
 
 export interface NotificationEventResponse {
   /**
@@ -111,6 +112,13 @@ export interface IOSPushOptions {
    * Action Buttons on iOS - https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/PAYLOAD.md#action-buttons-1
    */
   categories?: CategoryArray;
+
+  /**
+   * If true the device will be set up to receive VoIP Push notifications and the
+   * other options will be ignored since VoIP notifications are silent
+   * notifications that should be handled in the "notification" event.
+   */
+  voip?: boolean | string;
 }
 
 export interface CategoryArray {
@@ -131,6 +139,11 @@ export interface CategoryActionData {
 }
 
 export interface AndroidPushOptions {
+  /**
+   * Maps to the project number in the Google Developer Console.
+   */
+  senderID?: string;
+
   /**
    * The name of a drawable resource to use as the small-icon. The name should
    * not include the extension.
@@ -198,7 +211,6 @@ export interface BrowserPushOptions {
    * Default: http://push.api.phonegap.com/v1/push	Optional.
    */
   pushServiceURL?: string;
-
 }
 
 export interface PushOptions {
@@ -214,6 +226,7 @@ export interface Channel {
   id: string;
   description: string;
   importance: Priority;
+  sound?: string;
 }
 
 export type PushEvent = string;
@@ -257,7 +270,7 @@ export type PushEvent = string;
  * }).then(() => console.log('Channel created'));
  *
  * // Delete a channel (Android O and above)
- * this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted));
+ * this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted'));
  *
  * // Return a list of currently configured channels
  * this.push.listChannels().then((channels) => console.log('List of channels', channels))
@@ -308,7 +321,6 @@ export type PushEvent = string;
 })
 @Injectable()
 export class Push extends IonicNativePlugin {
-
   /**
    * Init push notifications
    * @param options {PushOptions}
@@ -323,29 +335,40 @@ export class Push extends IonicNativePlugin {
    * @return {Promise<{isEnabled: boolean}>} Returns a Promise that resolves with an object with one property: isEnabled, a boolean that indicates if permission has been granted.
    */
   @Cordova()
-  hasPermission(): Promise<{ isEnabled: boolean }> { return; }
+  hasPermission(): Promise<{ isEnabled: boolean }> {
+    return;
+  }
 
   /**
    * Create a new notification channel for Android O and above.
    * @param channel {Channel}
    */
-  @Cordova()
-  createChannel(channel: Channel): Promise<any> { return; }
+  @Cordova({
+    callbackOrder: 'reverse'
+  })
+  createChannel(channel?: Channel): Promise<any> {
+    return;
+  }
 
   /**
    * Delete a notification channel for Android O and above.
-   * @param id
+   * @param id {string}
    */
-  @Cordova()
-  deleteChannel(id: string): Promise<any> { return; }
+  @Cordova({
+    callbackOrder: 'reverse'
+  })
+  deleteChannel(id?: string): Promise<any> {
+    return;
+  }
 
   /**
    * Returns a list of currently configured channels.
    * @return {Promise<Channel[]>}
    */
   @Cordova()
-  listChannels(): Promise<Channel[]> { return; }
-
+  listChannels(): Promise<Channel[]> {
+    return;
+  }
 }
 
 /**
@@ -357,11 +380,12 @@ export class Push extends IonicNativePlugin {
   pluginRef: 'PushNotification'
 })
 export class PushObject {
-
   private _objectInstance: any;
 
   constructor(options: PushOptions) {
-    if (checkAvailability('PushNotification', 'init', 'PushNotification') === true) {
+    if (
+      checkAvailability('PushNotification', 'init', 'PushNotification') === true
+    ) {
       this._objectInstance = window.PushNotification.init(options);
     }
   }
@@ -376,7 +400,9 @@ export class PushObject {
     clearFunction: 'off',
     clearWithArgs: true
   })
-  on(event: PushEvent): Observable<EventResponse> { return; }
+  on(event: PushEvent): Observable<EventResponse> {
+    return;
+  }
 
   /**
    * The unregister method is used when the application no longer wants to receive push notifications.
@@ -384,7 +410,9 @@ export class PushObject {
    * so you will need to re-register them if you want them to function again without an application reload.
    */
   @CordovaInstance()
-  unregister(): Promise<any> { return; }
+  unregister(): Promise<any> {
+    return;
+  }
 
   /**
    * Set the badge count visible when the app is not running
@@ -397,28 +425,38 @@ export class PushObject {
   @CordovaInstance({
     callbackOrder: 'reverse'
   })
-  setApplicationIconBadgeNumber(count?: number): Promise<any> { return; };
+  setApplicationIconBadgeNumber(count?: number): Promise<any> {
+    return;
+  }
   /**
    * Get the current badge count visible when the app is not running
    * successHandler gets called with an integer which is the current badge count
    */
   @CordovaInstance()
-  getApplicationIconBadgeNumber(): Promise<number> { return; }
+  getApplicationIconBadgeNumber(): Promise<number> {
+    return;
+  }
 
   /**
    * iOS only
    * Tells the OS that you are done processing a background push notification.
    * successHandler gets called when background push processing is successfully completed.
-   * @param id
+   * @param [id]
    */
-  @CordovaInstance()
-  finish(id?: string): Promise<any> { return; }
+  @CordovaInstance({
+    callbackOrder: 'reverse'
+  })
+  finish(id?: string): Promise<any> {
+    return;
+  }
 
   /**
    * Tells the OS to clear all notifications from the Notification Center
    */
   @CordovaInstance()
-  clearAllNotifications(): Promise<any> { return; }
+  clearAllNotifications(): Promise<any> {
+    return;
+  }
 
   /**
    * The subscribe method is used when the application wants to subscribe a new topic to receive push notifications.
@@ -426,7 +464,9 @@ export class PushObject {
    * @return {Promise<any>}
    */
   @CordovaInstance()
-  subscribe(topic: string): Promise<any> { return; }
+  subscribe(topic: string): Promise<any> {
+    return;
+  }
 
   /**
    * The unsubscribe method is used when the application no longer wants to receive push notifications from a specific topic but continue to receive other push messages.
@@ -434,6 +474,7 @@ export class PushObject {
    * @return {Promise<any>}
    */
   @CordovaInstance()
-  unsubscribe(topic: string): Promise<any> { return; }
-
+  unsubscribe(topic: string): Promise<any> {
+    return;
+  }
 }

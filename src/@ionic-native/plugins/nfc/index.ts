@@ -72,6 +72,21 @@ export interface NdefTag {
 @Injectable()
 export class NFC extends IonicNativePlugin {
   /**
+   * Starts the NFCNDEFReaderSession allowing iOS to scan NFC tags.
+   * @param onSuccess
+   * @param onFailure
+   * @returns {Observable<any>}
+   */
+  @Cordova({
+    observable: true,
+    successIndex: 0,
+    errorIndex: 3,
+    clearFunction: 'invalidateSession',
+    clearWithArgs: true
+  })
+  beginSession(onSuccess?: Function, onFailure?: Function): Observable<any> { return; }
+
+  /**
    * Registers an event listener for any NDEF tag.
    * @param onSuccess
    * @param onFailure
@@ -276,13 +291,13 @@ export class Ndef extends IonicNativePlugin {
   record(tnf: number, type: number[] | string, id: number[] | string, payload: number[] | string): NdefRecord { return; }
 
   @Cordova({ sync: true })
-  textRecord(text: string, languageCode: string, id: number[] | string): NdefRecord { return; }
+  textRecord(text: string, languageCode?: string, id?: number[] | string): NdefRecord { return; }
 
   @Cordova({ sync: true })
-  uriRecord(uri: string, id: number[] | string): NdefRecord { return; }
+  uriRecord(uri: string, id?: number[] | string): NdefRecord { return; }
 
   @Cordova({ sync: true })
-  absoluteUriRecord(uri: string, payload: number[] | string, id: number[] | string): NdefRecord { return; }
+  absoluteUriRecord(uri: string, payload: number[] | string, id?: number[] | string): NdefRecord { return; }
 
   @Cordova({ sync: true })
   mimeMediaRecord(mimeType: string, payload: string): NdefRecord { return; }

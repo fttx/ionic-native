@@ -7,7 +7,7 @@ export interface CameraOptions {
   /**
    * Choose the format of the return value.
    * Defined in Camera.DestinationType. Default is FILE_URI.
-   *      DATA_URL : 0,   Return image as base64-encoded string,
+   *      DATA_URL : 0,   Return image as base64-encoded string (DATA_URL can be very memory intensive and cause app crashes or out of memory errors. Use FILE_URI or NATIVE_URI if possible),
    *      FILE_URI : 1,   Return image file URI,
    *      NATIVE_URI : 2  Return image native URI
    *          (e.g., assets-library:// on iOS or content:// on Android)
@@ -126,7 +126,7 @@ export enum Direction {
  * @description
  * Take a photo or capture video.
  *
- * Requires and the Cordova plugin: `cordova-plugin-camera`. For more info, please see the [Cordova Camera Plugin Docs](https://github.com/apache/cordova-plugin-camera).
+ * Requires the Cordova plugin: `cordova-plugin-camera`. For more info, please see the [Cordova Camera Plugin Docs](https://github.com/apache/cordova-plugin-camera).
  *
  * @usage
  * ```typescript
@@ -139,14 +139,14 @@ export enum Direction {
  *
  * const options: CameraOptions = {
  *   quality: 100,
- *   destinationType: this.camera.DestinationType.DATA_URL,
+ *   destinationType: this.camera.DestinationType.FILE_URI,
  *   encodingType: this.camera.EncodingType.JPEG,
  *   mediaType: this.camera.MediaType.PICTURE
  * }
  *
  * this.camera.getPicture(options).then((imageData) => {
  *  // imageData is either a base64 encoded string or a file URI
- *  // If it's base64:
+ *  // If it's base64 (DATA_URL):
  *  let base64Image = 'data:image/jpeg;base64,' + imageData;
  * }, (err) => {
  *  // Handle error
@@ -161,7 +161,7 @@ export enum Direction {
   plugin: 'cordova-plugin-camera',
   pluginRef: 'navigator.camera',
   repo: 'https://github.com/apache/cordova-plugin-camera',
-  platforms: ['Android', 'BlackBerry 10', 'Browser', 'Firefox OS', 'iOS', 'Ubuntu', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows']
 })
 @Injectable()
 export class Camera extends IonicNativePlugin {

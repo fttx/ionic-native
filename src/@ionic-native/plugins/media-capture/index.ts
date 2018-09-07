@@ -115,6 +115,10 @@ export interface ConfigurationData {
 /**
  * @name Media Capture
  * @description
+ * This plugin provides access to the device's audio, image, and video capture capabilities.
+ *
+ * Requires Cordova plugin: `cordova-plugin-media-capture`. For more info, please see the [Media Capture plugin docs](https://github.com/apache/cordova-plugin-media-capture).
+ *
  * @usage
  * ```typescript
  * import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
@@ -147,7 +151,7 @@ export interface ConfigurationData {
   plugin: 'cordova-plugin-media-capture',
   pluginRef: 'navigator.device.capture',
   repo: 'https://github.com/apache/cordova-plugin-media-capture',
-  platforms: ['Android', 'BlackBerry 10', 'Browser', 'iOS', 'Ubuntu', 'Windows', 'Windows Phone']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows']
 })
 @Injectable()
 export class MediaCapture extends IonicNativePlugin {

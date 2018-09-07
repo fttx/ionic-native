@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Cordova, CordovaProperty, Plugin, CordovaCheck, IonicNativePlugin } from '@ionic-native/core';
+import {
+  Cordova,
+  CordovaProperty,
+  Plugin,
+  CordovaCheck,
+  IonicNativePlugin
+} from '@ionic-native/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/merge';
-
+import { merge } from 'rxjs/observable/merge';
 
 declare const navigator: any;
 
@@ -53,24 +58,21 @@ declare const navigator: any;
   plugin: 'cordova-plugin-network-information',
   pluginRef: 'navigator.connection',
   repo: 'https://github.com/apache/cordova-plugin-network-information',
-  platforms: ['Amazon Fire OS', 'Android', 'BlackBerry 10', 'Browser', 'Firefox OS', 'iOS', 'Tizen', 'Ubuntu', 'Windows', 'Windows Phone']
+  platforms: ['Amazon Fire OS', 'Android', 'Browser', 'iOS', 'Windows']
 })
 @Injectable()
 export class Network extends IonicNativePlugin {
-
   /**
    * Connection type
    * @return {string}
    */
-  @CordovaProperty
-  type: string;
+  @CordovaProperty type: string;
 
   /**
    * Downlink Max Speed
    * @return {string}
    */
-  @CordovaProperty
-  downlinkMax: string;
+  @CordovaProperty downlinkMax: string;
 
   /**
    * Returns an observable to watch connection changes
@@ -78,7 +80,7 @@ export class Network extends IonicNativePlugin {
    */
   @CordovaCheck()
   onchange(): Observable<any> {
-    return Observable.merge(this.onConnect(), this.onDisconnect());
+    return merge(this.onConnect(), this.onDisconnect());
   }
 
   /**
@@ -87,9 +89,12 @@ export class Network extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'offline'
+    event: 'offline',
+    element: document
   })
-  onDisconnect(): Observable<any> { return; }
+  onDisconnect(): Observable<any> {
+    return;
+  }
 
   /**
    * Get notified when the device goes online
@@ -97,8 +102,10 @@ export class Network extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'online'
+    event: 'online',
+    element: document
   })
-  onConnect(): Observable<any> { return; }
-
+  onConnect(): Observable<any> {
+    return;
+  }
 }

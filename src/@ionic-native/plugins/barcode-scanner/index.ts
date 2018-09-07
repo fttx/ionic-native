@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Observable } from 'rxjs/Observable';
 
 export interface BarcodeScannerOptions {
-
   /**
    * Prefer front camera. Supported on iOS and Android.
    */
@@ -61,7 +60,23 @@ export interface BarcodeScannerOptions {
 }
 
 export interface BarcodeScanResult {
-  format: 'QR_CODE' | 'DATA_MATRIX' | 'UPC_E' | 'UPC_A' | 'EAN_8' | 'EAN_13' | 'CODE_128' | 'CODE_39' | 'CODE_93' | 'CODABAR' | 'ITF' | 'RSS14' | 'RSS_EXPANDED' | 'PDF417' | 'AZTEC' | 'MSI';
+  format:
+    | 'QR_CODE'
+    | 'DATA_MATRIX'
+    | 'UPC_E'
+    | 'UPC_A'
+    | 'EAN_8'
+    | 'EAN_13'
+    | 'CODE_128'
+    | 'CODE_39'
+    | 'CODE_93'
+    | 'CODABAR'
+    | 'ITF'
+    | 'RSS14'
+    | 'RSS_EXPANDED'
+    | 'PDF_417'
+    | 'AZTEC'
+    | 'MSI';
   cancelled: boolean;
   text: string;
 }
@@ -82,10 +97,10 @@ export interface BarcodeScanResult {
  * ...
  *
  *
- * this.barcodeScanner.scan().then((barcodeData) => {
- *  // Success! Barcode data is here
- * }, (err) => {
- * 	// An error occurred
+ * this.barcodeScanner.scan().then(barcodeData => {
+ *  console.log('Barcode data', barcodeData);
+ * }).catch(err => {
+ * 	console.log('Error', err);
  * });
  * ```
  * @interfaces
@@ -101,7 +116,6 @@ export interface BarcodeScanResult {
 })
 @Injectable()
 export class BarcodeScanner extends IonicNativePlugin {
-
   Encode: {
     TEXT_TYPE: string;
     EMAIL_TYPE: string;
@@ -116,23 +130,26 @@ export class BarcodeScanner extends IonicNativePlugin {
 
   /**
    * Open the barcode scanner.
-   * @param options {BarcodeScannerOptions} Optional options to pass to the scanner
-   * @returns {Observable<any>} Returns a Promise that resolves with scanner data, or rejects with an error.
+   * @param {BarcodeScannerOptions} [options] Optional options to pass to the scanner
+   * @returns {Observable<any>} Returns an Observable that resolves with scanner data, or rejects with an error.
    */
   @Cordova({
     observable: true,
     callbackOrder: 'reverse',
   })
-  scan(options?: BarcodeScannerOptions): Observable<BarcodeScanResult> { return; }
+  scan(options?: BarcodeScannerOptions): Observable<BarcodeScanResult> {
+    return;
+  }
 
   /**
    * Encodes data into a barcode.
    * NOTE: not well supported on Android
-   * @param type {string} Type of encoding
-   * @param data {any} Data to encode
+   * @param {string} type Type of encoding
+   * @param {any} data Data to encode
    * @returns {Promise<any>}
    */
   @Cordova()
-  encode(type: string, data: any): Promise<any> { return; }
-
+  encode(type: string, data: any): Promise<any> {
+    return;
+  }
 }

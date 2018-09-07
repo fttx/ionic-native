@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, CordovaInstance, IonicNativePlugin } from '@ionic-native/core';
+import { Plugin, Cordova, CordovaCheck, CordovaInstance, IonicNativePlugin } from '@ionic-native/core';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -31,6 +31,8 @@ export interface DeployConfig {
   channel?: string;
 }
 
+export type ProgressMessage = number | string;
+
 /**
  * @hidden
  */
@@ -43,38 +45,38 @@ export class ProDeploy {
    * @param config A valid Deploy config object
    */
   @CordovaInstance()
-  init(config: DeployConfig): Promise<any> { return; }
+  init(config: DeployConfig): Promise<void> { return; }
 
   /**
    * Check a channel for an available update
    * @return {Promise<string>} Resolves with 'true' or 'false', or rejects with an error.
    */
-  @CordovaInstance({
-    observable: true
-  })
+  @CordovaInstance()
   check(): Promise<string> { return; }
 
   /**
    * Download an available version
-   * @return {Observable<any>} Updates with percent completion, or errors with a message.
+   * @return {Observable<ProgressMessage>} Updates with percent completion, or errors with a message.
    */
   @CordovaInstance({
     observable: true
   })
-  download(): Observable<any> { return; }
+  download(): Observable<ProgressMessage> { return; }
 
   /**
    * Unzip the latest downloaded version
-   * @return {Observable<any>} Updates with percent completion, or errors with a message.
+   * @return {Observable<ProgressMessage>} Updates with percent completion, or errors with a message.
    */
-  @CordovaInstance()
-  extract(): Observable<any> { return; }
+  @CordovaInstance({
+    observable: true
+  })
+  extract(): Observable<ProgressMessage> { return; }
 
   /**
    * Reload app with the deployed version
    */
   @CordovaInstance()
-  redirect(): Promise<any> { return; }
+  redirect(): Promise<void> { return; }
 
   /**
    * Get info about the version running on the device
@@ -87,14 +89,14 @@ export class ProDeploy {
    * List versions stored on the device
    */
   @CordovaInstance()
-  getVersions(): Promise<any> { return; }
+  getVersions(): Promise<string[]> { return; }
 
   /**
    * Delete a version stored on the device by UUID
    * @param version A version UUID
    */
   @CordovaInstance()
-  deleteVersion(version: string): Promise<any> { return; }
+  deleteVersion(version: string): Promise<void> { return; }
 }
 
 /**
@@ -130,10 +132,20 @@ export class ProDeploy {
 })
 @Injectable()
 export class Pro extends IonicNativePlugin {
+  _deploy: ProDeploy;
+
   /**
    * Ionic Pro Deploy .js API.
    */
-  deploy: ProDeploy = new ProDeploy(Pro.getPlugin().deploy);
+  @CordovaCheck({ sync: true })
+  deploy(): ProDeploy {
+    if (this._deploy) {
+      return this._deploy;
+    } else {
+      this._deploy = new ProDeploy(Pro.getPlugin().deploy);
+      return this._deploy;
+    }
+  }
 
   /**
    * Not yet implemented
