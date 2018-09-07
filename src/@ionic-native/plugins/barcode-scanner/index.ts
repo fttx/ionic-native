@@ -56,7 +56,7 @@ export interface BarcodeScannerOptions {
   /**
    * Enable continuous mode.
    */
-  continuosMode?: boolean;
+  continuousMode?: boolean;
 }
 
 export interface BarcodeScanResult {
