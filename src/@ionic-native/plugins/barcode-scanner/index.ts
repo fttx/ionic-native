@@ -57,6 +57,11 @@ export interface BarcodeScannerOptions {
    * Enable continuous mode.
    */
   continuousMode?: boolean;
+
+  /**
+   * Enable vibration feedback when a scan is performed.
+   */
+  vibrationFeedback?: boolean;
 }
 
 export interface BarcodeScanResult {
