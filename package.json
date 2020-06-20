@@ -10,7 +10,7 @@
     "@angular/compiler-cli": "^5.2.11",
     "@angular/core": "^5.2.11",
     "@types/cordova": "0.0.34",
-    "@types/jasmine": "^2.8.8",
+    "@types/jasmine": "^2.8.7",
     "@types/node": "8.10.20",
     "canonical-path": "0.0.2",
     "child-process-promise": "2.2.1",
