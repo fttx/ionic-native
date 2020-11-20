@@ -39,7 +39,8 @@ const PLUGIN_PEER_DEPENDENCIES = {
 
 function getPackageJsonContent(name: string, peerDependencies = {}, dependencies = {}) {
   return merge(PACKAGE_JSON_BASE, {
-    name: '@ionic-native/' + name,
+    // @fttx rename the npm module
+    name: '@fttx/' + name,
     dependencies,
     peerDependencies,
     version: VERSION,
@@ -65,6 +66,8 @@ function prepare() {
   // write plugin package.json files
   PLUGIN_PATHS.forEach((pluginPath: string) => {
     const pluginName = pluginPath.split(/[\/\\]+/).slice(-2)[0];
+    // @fttx: build only barcode-scanner plugin
+    if (pluginName.indexOf('barcode-scanner') == -1) return;
     const packageJsonContents = getPackageJsonContent(pluginName, PLUGIN_PEER_DEPENDENCIES);
     const dir = path.resolve(DIST, 'plugins', pluginName);
     const ngxDir = path.join(dir, 'ngx');

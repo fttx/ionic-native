@@ -2,13 +2,14 @@
 
 ```bash
 npm i
-npm run build
-cd dist/@ionic-native/barcode-scanner
+npm run build && npm run readmes
+cd dist/@ionic-native/plugins/barcode-scanner
 npm version patch
-# edit the package.json file to: "name": "@fttx/barcode-scanner",
+# search for '@fttx' in the 'scripts/tasks/publish.ts' file for more info
+npm run npmpub
+npm login
 npm publish
 ```
-
 
 [![Circle CI](https://circleci.com/gh/ionic-team/ionic-native.svg?style=shield)](https://circleci.com/gh/ionic-team/ionic-native) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) ![](https://img.shields.io/npm/v/@ionic-native/core.svg)
 
@@ -18,7 +19,8 @@ Ionic Native is a curated set of wrappers for Cordova plugins that make adding a
 
 Ionic Native wraps plugin callbacks in a Promise or Observable, providing a common interface for all plugins and making it easy to use plugins with Angular change detection.
 
-Ionic Native is available in two versions: 
+Ionic Native is available in two versions:
+
 1. Ionic Native [Community Edition](https://ionicframework.com/docs/native/community), featuring open source, community-maintained Cordova and Capacitor plugins and APIs.
 2. Ionic Native [Enterprise Edition](https://ionicframework.com/docs/enterprise), featuring a library of Premier plugins and solutions that are fully supported and maintained by the Ionic team, with access to Ionic experts and a guaranteed response SLA to mission-critical app development.
 
