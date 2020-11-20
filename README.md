@@ -8,7 +8,7 @@ npm login
 npm run shipit
 ```
 
-[![Circle CI](https://circleci.com/gh/ionic-team/ionic-native.svg?style=shield)](https://circleci.com/gh/ionic-team/ionic-native) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) ![](https://img.shields.io/npm/v/@ionic-native/core.svg)
+[![Circle CI](https://circleci.com/gh/ionic-team/ionic-native.svg?style=shield)](https://circleci.com/gh/ionic-team/ionic-native) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) ![](https://img.shields.io/npm/v/@fttx/core.svg)
 
 # Ionic Native
 
@@ -30,7 +30,7 @@ In addition to Cordova, Ionic Native also works with [Capacitor](https://capacit
 Run following command to install Ionic Native in your project.
 
 ```bash
-npm install @ionic-native/core --save
+npm install @fttx/core --save
 ```
 
 You also need to install the Ionic Native package for each plugin you want to add. Please see the [Ionic Native documentation](https://ionicframework.com/docs/native/) for complete instructions on how to add and use the plugins.
@@ -48,7 +48,7 @@ Make sure to import the injectable class from the `/ngx` directory as shown in t
 
 ```typescript
 // app.module.ts
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@fttx/camera/ngx';
 
 ...
 
@@ -66,7 +66,7 @@ export class AppModule { }
 ```
 
 ```typescript
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Geolocation } from '@fttx/geolocation/ngx';
 import { Platform } from 'ionic-angular';
 
 @Component({ ... })
@@ -102,10 +102,10 @@ React apps must use Capacitor to build native mobile apps. However, Ionic Native
 
 ```bash
 # Install Core library (once per project)
-npm install @ionic-native/core
+npm install @fttx/core
 
 # Install Ionic Native TypeScript wrapper
-npm install @ionic-native/barcode-scanner
+npm install @fttx/barcode-scanner
 
 # Install Cordova plugin
 npm install phonegap-plugin-barcodescanner
@@ -117,7 +117,7 @@ ionic cap sync
 Import the plugin object then use its static methods:
 
 ```typescript
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@fttx/barcode-scanner';
 
 const Tab1: React.FC = () => {
   const openScanner = async () => {
@@ -144,7 +144,7 @@ const Tab1: React.FC = () => {
 These modules can work in any ES2015+/TypeScript app (including Angular/Ionic apps). To use any plugin, import the class from the appropriate package, and use it's static methods.
 
 ```js
-import { Camera } from '@ionic-native/camera';
+import { Camera } from '@fttx/camera';
 
 document.addEventListener('deviceready', () => {
   Camera.getPicture()
@@ -205,7 +205,7 @@ To do this, you need to provide a mock implementation of the plugins you wish to
 First import the `Camera` class in your `src/app/app.module.ts` file:
 
 ```typescript
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@fttx/camera/ngx';
 ```
 
 Then create a new class that extends the `Camera` class with a mock implementation:
@@ -235,7 +235,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@fttx/camera/ngx';
 
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';

@@ -33,7 +33,7 @@ export function getProgram(rootNames: string[] = createSourceFiles()) {
 
 // hacky way to export metadata only for core package
 export function transpileNgxCore() {
-  getProgram([path.resolve(ROOT, 'src/@ionic-native/core/index.ts')]).emit({
+  getProgram([path.resolve(ROOT, 'src/@fttx/core/index.ts')]).emit({
     emitFlags: EmitFlags.Metadata,
     emitCallback: ({ program, writeFile, customTransformers, cancellationToken, targetSourceFile }) => {
       return program.emit(targetSourceFile, writeFile, cancellationToken, true, customTransformers);
@@ -54,7 +54,7 @@ export function generateDeclarationFiles() {
   generateDeclarations(PLUGIN_PATHS.map(p => p.replace('index.ts', 'ngx/index.ts')));
 }
 
-// remove reference to @ionic-native/core decorators
+// remove reference to @fttx/core decorators
 export function modifyMetadata() {
   debugger;
   PLUGIN_PATHS.map(p =>
@@ -80,7 +80,7 @@ export function modifyMetadata() {
 function removeIonicNativeDecorators(node: any) {
   if (node.decorators && node.decorators.length) {
     node.decorators = node.decorators.filter(
-      (d: { expression: { module: string } }) => d.expression.module !== '@ionic-native/core'
+      (d: { expression: { module: string } }) => d.expression.module !== '@fttx/core'
     );
   }
 

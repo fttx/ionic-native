@@ -21,7 +21,7 @@ interface Plugin {
 
 const rootDir = resolve(__dirname, '../..');
 const typedocTmp = resolve(__dirname, 'typedoc.tmp.json');
-const pluginsDir = resolve(rootDir, 'src/@ionic-native/plugins');
+const pluginsDir = resolve(rootDir, 'src/@fttx/plugins');
 const typedoc = new Application();
 
 typedoc.options.addReader(new TypeDoc.TSConfigReader());
@@ -53,7 +53,7 @@ async function generateTypedoc(root: string, outputPath = typedocTmp) {
 function processPlugin(pluginModule): Plugin {
   const pluginClass = pluginModule.children.find(isPlugin);
   const decorator = getPluginDecorator(pluginClass);
-  const packageName = `@ionic-native/${basename(dirname(pluginModule.originalName))}`;
+  const packageName = `@fttx/${basename(dirname(pluginModule.originalName))}`;
   const displayName = getTag(pluginClass, 'name');
   const usage = getTag(pluginClass, 'usage');
   const description = getTag(pluginClass, 'description');

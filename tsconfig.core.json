@@ -16,6 +16,6 @@
     "inlineSources": true,
     "sourceMap": true
   },
-  "include": ["src/@ionic-native/core/**/*.ts"],
-  "exclude": ["node_modules", "src/@ionic-native/core/**/*.spec.ts"]
+  "include": ["src/@fttx/core/**/*.ts"],
+  "exclude": ["node_modules", "src/@fttx/core/**/*.spec.ts"]
 }

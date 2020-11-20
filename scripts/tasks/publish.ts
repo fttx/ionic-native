@@ -25,7 +25,7 @@ const PACKAGE_JSON_BASE = {
   },
 };
 
-const DIST = path.resolve(ROOT, 'dist/@ionic-native');
+const DIST = path.resolve(ROOT, 'dist/@fttx');
 
 const PACKAGES = [];
 
@@ -41,7 +41,7 @@ const PLUGIN_PEER_DEPENDENCIES = {
 function getPackageJsonContent(name: string, peerDependencies = {}, dependencies = {}) {
   return merge(PACKAGE_JSON_BASE, {
     // @fttx rename the npm module
-    name: (name.indexOf('barcode-scanner') != -1 || name.indexOf('core') != -1 ? '@fttx/' : '@ionic-native') + name,
+    name: (name.indexOf('barcode-scanner') != -1 || name.indexOf('core') != -1 ? '@fttx/' : '@fttx') + name,
     dependencies,
     peerDependencies,
     version: VERSION,
@@ -58,7 +58,7 @@ function writeNGXPackageJson(data: any, dir: string) {
   fs.writeJSONSync(filePath, data);
 }
 function prepare() {
-  // write @ionic-native/core package.json
+  // write @fttx/core package.json
   writePackageJson(
     getPackageJsonContent('core', { rxjs: RXJS_VERSION }, { '@types/cordova': 'latest' }),
     path.resolve(DIST, 'core')

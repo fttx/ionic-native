@@ -52,7 +52,7 @@ module.exports = currentVersion => {
         readFilesProcessor.basePath = path.resolve(__dirname, '../../..');
 
         readTypeScriptModules.basePath = path.resolve(__dirname, '../../..');
-        readTypeScriptModules.sourceFiles = ['./src/@ionic-native/plugins/**/*.ts'];
+        readTypeScriptModules.sourceFiles = ['./src/@fttx/plugins/**/*.ts'];
       })
 
       // Configure file writing

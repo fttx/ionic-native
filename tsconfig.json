@@ -9,7 +9,7 @@
     "module": "es2015",
     "moduleResolution": "node",
     "paths": {
-      "@ionic-native/core": ["./dist/@ionic-native/core"]
+      "@fttx/core": ["./dist/@fttx/core"]
     },
     "outDir": "./dist",
     "rootDir": "src",
@@ -19,7 +19,7 @@
     "inlineSources": true,
     "inlineSourceMap": true
   },
-  "include": ["src/@ionic-native/plugins/**/*.ts"],
+  "include": ["src/@fttx/plugins/**/*.ts"],
   "angularCompilerOptions": {
     "genDir": "aot"
   },

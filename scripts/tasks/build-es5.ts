@@ -33,7 +33,7 @@ const webpackConfig: webpack.Configuration = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      '@ionic-native/core': path.resolve(DIST, '@ionic-native/core/index.js'),
+      '@fttx/core': path.resolve(DIST, '@fttx/core/index.js'),
     },
   },
   module: {
@@ -69,8 +69,8 @@ function createIndexFile() {
   fileContent += `\nwindow.IonicNative = {\n`;
   fileContent += INJECTABLE_CLASSES.map(e => e.className).join(',\n');
   fileContent += '\n};\n';
-  fileContent += `require('./@ionic-native/core/bootstrap').checkReady();\n`;
-  fileContent += `require('./@ionic-native/core/ng1').initAngular1(window.IonicNative);`;
+  fileContent += `require('./@fttx/core/bootstrap').checkReady();\n`;
+  fileContent += `require('./@fttx/core/ng1').initAngular1(window.IonicNative);`;
 
   fs.writeFileSync(INDEX_PATH, fileContent, { encoding: 'utf-8' });
 }

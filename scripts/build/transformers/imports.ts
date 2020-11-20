@@ -9,12 +9,12 @@ function transformImports(file: ts.SourceFile, ctx: ts.TransformationContext, ng
     );
   }
 
-  // find the @ionic-native/core import statement
+  // find the @fttx/core import statement
   const importStatement = (file.statements as any).find((s: any) => {
-    return s.kind === ts.SyntaxKind.ImportDeclaration && s.moduleSpecifier.text === '@ionic-native/core';
+    return s.kind === ts.SyntaxKind.ImportDeclaration && s.moduleSpecifier.text === '@fttx/core';
   });
 
-  // we're only interested in files containing @ionic-native/core import statement
+  // we're only interested in files containing @fttx/core import statement
   if (!importStatement) return file;
 
   const decorators: string[] = [];

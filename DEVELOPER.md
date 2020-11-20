@@ -16,7 +16,7 @@ gulp plugin:create -n PluginName
 gulp plugin:create -m -n PluginName
 ```
 
-Running the command above will create a new directory `src/@ionic-native/plugins/plugin-name/` with a single file in there: `index.ts`. This file is where all the plugin definitions should be.
+Running the command above will create a new directory `src/@fttx/plugins/plugin-name/` with a single file in there: `index.ts`. This file is where all the plugin definitions should be.
 
 Let's take a look at the existing plugin wrapper for Geolocation to see what goes into an Ionic Native plugin (comments have been removed for clarity):
 
@@ -108,7 +108,7 @@ The `@Cordova` decorator has a few more options now.
 
 ### Testing your changes
 
-You need to run `npm run build` in the `ionic-native` project, this will create a `dist` directory. The `dist` directory will contain a sub directory `@ionic-native` with all the packages compiled in there. Copy the package(s) you created/modified to your app's node_modules under the `@ionic-native` directory. (e.g. `cp -r dist/@ionic-native/plugin-name ../my-app/node_modules/@ionic-native/`).
+You need to run `npm run build` in the `ionic-native` project, this will create a `dist` directory. The `dist` directory will contain a sub directory `@fttx` with all the packages compiled in there. Copy the package(s) you created/modified to your app's node_modules under the `@fttx` directory. (e.g. `cp -r dist/@fttx/plugin-name ../my-app/node_modules/@fttx/`).
 
 ### Cleaning the code
 
