@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@fttx/core';
 import { Observable } from 'rxjs';
 
 export interface BarcodeScannerOptions {

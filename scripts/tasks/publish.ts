@@ -68,7 +68,7 @@ function prepare() {
   PLUGIN_PATHS.forEach((pluginPath: string) => {
     const pluginName = pluginPath.split(/[\/\\]+/).slice(-2)[0];
     // @fttx: build only barcode-scanner plugin
-    if (pluginName.indexOf('barcode-scanner') == -1) return;
+    if (pluginName.indexOf('barcode-scanner') == -1 || pluginName.indexOf('core') == -1) return;
     const packageJsonContents = getPackageJsonContent(pluginName, PLUGIN_PEER_DEPENDENCIES);
     const dir = path.resolve(DIST, 'plugins', pluginName);
     const ngxDir = path.join(dir, 'ngx');
@@ -84,7 +84,7 @@ async function publish(ignoreErrors = false) {
     (pkg: any) =>
       new Promise<any>((resolve, reject) => {
         // @fttx: build only barcode-scanner plugin
-        if (pkg.indexOf('barcode-scanner') == -1) return resolve();
+        if (pkg.indexOf('barcode-scanner') == -1 || pkg.indexOf('core') == -1) return resolve();
         exec(`npm publish ${pkg} ${FLAGS}`, (err, stdout) => {
           if (stdout) {
             Logger.verbose(stdout.trim());
