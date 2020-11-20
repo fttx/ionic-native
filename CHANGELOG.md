@@ -1,3 +1,7 @@
+## [5.29.3](https://github.com/ionic-team/ionic-native/compare/v5.29.2...v5.29.3) (2020-11-20)
+
+
+
 ## [5.29.2](https://github.com/ionic-team/ionic-native/compare/v5.29.1...v5.29.2) (2020-11-20)
 
 
