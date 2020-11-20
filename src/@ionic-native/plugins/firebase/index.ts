@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * @name Firebase
+ * @capacitorincompatible true
  * @description
  * This plugin brings push notifications, analytics, event tracking, crash reporting and more from Google Firebase to your Cordova project! Android and iOS supported (including iOS 10).
  *
  * @usage
  * ```typescript
- * import { Firebase } from '@ionic-native/firebase';
+ * import { Firebase } from '@ionic-native/firebase/ngx';
  *
  * constructor(private firebase: Firebase) { }
  *
@@ -18,6 +19,9 @@ import { Observable } from 'rxjs/Observable';
  * this.firebase.getToken()
  *   .then(token => console.log(`The token is ${token}`)) // save the token server-side and use it to push notifications to this device
  *   .catch(error => console.error('Error getting token', error));
+ *
+ * this.firebase.onNotificationOpen()
+ *    .subscribe(data => console.log(`User opened a notification ${data}`));
  *
  * this.firebase.onTokenRefresh()
  *   .subscribe((token: string) => console.log(`Got a new token ${token}`));
@@ -29,7 +33,7 @@ import { Observable } from 'rxjs/Observable';
   plugin: 'cordova-plugin-firebase',
   pluginRef: 'FirebasePlugin',
   repo: 'https://github.com/arnesson/cordova-plugin-firebase',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class Firebase extends IonicNativePlugin {
@@ -47,7 +51,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Observable<any>}
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
   onTokenRefresh(): Observable<any> {
     return;
@@ -58,7 +62,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Observable<any>}
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
   onNotificationOpen(): Observable<any> {
     return;
@@ -69,7 +73,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    platforms: ['iOS']
+    platforms: ['iOS'],
   })
   grantPermission(): Promise<any> {
     return;
@@ -191,7 +195,7 @@ export class Firebase extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
   fetch(cacheExpirationSeconds?: number): Promise<any> {
     return;
@@ -214,7 +218,7 @@ export class Firebase extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
   getValue(key: string, namespace?: string): Promise<any> {
     return;
@@ -227,7 +231,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
   getByteArray(key: string, namespace?: string): Promise<any> {
     return;
@@ -238,7 +242,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
   getInfo(): Promise<any> {
     return;
@@ -250,7 +254,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
   setConfigSettings(settings: any): Promise<any> {
     return;
@@ -263,7 +267,7 @@ export class Firebase extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
   setDefaults(defaults: any, namespace?: string): Promise<any> {
     return;
@@ -308,6 +312,17 @@ export class Firebase extends IonicNativePlugin {
   }
 
   /**
+   * Allows the user to set User Identifier for crashlytics reporting
+   * https://firebase.google.com/docs/crashlytics/customize-crash-reports?authuser=0#set_user_ids
+   * @param {string} userId value to set the userId
+   * @returns {Promise<any>}
+   */
+  @Cordova()
+  setCrashlyticsUserId(userId: string): Promise<any> {
+    return;
+  }
+
+  /**
    * Sends an SMS to the user with the SMS verification code and returns the Verification ID required to sign in using phone authentication
    * @param {string} phoneNumber The phone number, including '+' and country code
    * @param {number} timeoutDuration (Android only) The timeout in sec - no more SMS will be sent to this number until this timeout expires
@@ -316,12 +331,20 @@ export class Firebase extends IonicNativePlugin {
   @Cordova({
     platforms: ['Android', 'iOS'],
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
-  verifyPhoneNumber(
-    phoneNumber: string,
-    timeoutDuration: number = 0
-  ): Promise<any> {
+  verifyPhoneNumber(phoneNumber: string, timeoutDuration = 0): Promise<any> {
+    return;
+  }
+
+  /**
+   * Clear all pending notifications from the drawer
+   * @return {Promise<any>}
+   */
+  @Cordova({
+    platforms: ['Android'],
+  })
+  clearAllNotifications(): Promise<any> {
     return;
   }
 }

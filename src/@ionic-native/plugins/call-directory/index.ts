@@ -6,6 +6,11 @@ export interface CallDirectoryItem {
   number: string;
 }
 
+export interface CallDirectoryLog {
+  plugin: string[];
+  extension: string[];
+}
+
 /**
  * @name Call Directory
  * @description
@@ -14,7 +19,7 @@ export interface CallDirectoryItem {
  *
  * @usage
  * ```typescript
- * import { CallDirectory } from '@ionic-native/call-directory';
+ * import { CallDirectory } from '@ionic-native/call-directory/ngx';
  *
  *
  * constructor(private callDirectory: CallDirectory) { }
@@ -29,19 +34,23 @@ export interface CallDirectoryItem {
  *   .then(res: string) => console.log(res))
  *   .catch((error: any) => console.error(error));
  * ```
+ *
+ * @Interfaces
+ * CallDirectoryItem
+ * CallDirectoryLog
  */
 @Plugin({
   pluginName: 'CallDirectory',
   plugin: 'cordova-plugin-call-directory',
   pluginRef: 'CallDirectory',
   repo: 'https://github.com/GEDYSIntraWare/cordova-plugin-call-directory',
-  install: 'cordova plugin add cordova-plugin-call-directory --variable EXT_NAME="Cordova-Directory" --variable ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES="NO"',
+  install:
+    'cordova plugin add cordova-plugin-call-directory --variable EXT_NAME="Cordova-Directory" --variable ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES="NO"',
   installVariables: ['EXT_NAME', 'ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'],
-  platforms: ['iOS']
+  platforms: ['iOS'],
 })
 @Injectable()
 export class CallDirectory extends IonicNativePlugin {
-
   /**
    * Check if the call directory extension is available and enabled
    * @return {Promise<boolean>} Returns a promise with result
@@ -53,21 +62,21 @@ export class CallDirectory extends IonicNativePlugin {
 
   /**
    * Add identification numbers
-   * @param {Array<CallDirectoryItem>} items Set of numbers with labels
+   * @param {CallDirectoryItem[]} items Set of numbers with labels
    * @return {Promise<any>} Returns a promise that resolves when numbers are added
    */
   @Cordova()
-  addIdentification(items: Array<CallDirectoryItem>): Promise<any> {
+  addIdentification(items: CallDirectoryItem[]): Promise<any> {
     return;
   }
 
   /**
    * Remove identification numbers
-   * @param {Array<CallDirectoryItem>} items Set of numbers with arbitrary label
+   * @param {CallDirectoryItem[]} items Set of numbers with arbitrary label
    * @return {Promise<any>} Returns a promise that resolves when numbers are removed
    */
   @Cordova()
-  removeIdentification(items: Array<CallDirectoryItem>): Promise<any> {
+  removeIdentification(items: CallDirectoryItem[]): Promise<any> {
     return;
   }
 
@@ -82,10 +91,10 @@ export class CallDirectory extends IonicNativePlugin {
 
   /**
    * Get all numbers and labels in call directory
-   * @return {Array<CallDirectoryItem>} Returns a promise that resolves with an array of all items
+   * @return {CallDirectoryItem[]} Returns a promise that resolves with an array of all items
    */
   @Cordova()
-  getAllItems(): Promise<Array<CallDirectoryItem>> {
+  getAllItems(): Promise<CallDirectoryItem[]> {
     return;
   }
 
@@ -95,6 +104,15 @@ export class CallDirectory extends IonicNativePlugin {
    */
   @Cordova()
   reloadExtension(): Promise<string> {
+    return;
+  }
+
+  /**
+   * Get log from plugin and call directory extension
+   * @return {Promise<CallDirectoryLog>} Returns a promise with an object of log messages
+   */
+  @Cordova()
+  getLog(): Promise<CallDirectoryLog> {
     return;
   }
 }

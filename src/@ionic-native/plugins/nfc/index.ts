@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin, CordovaProperty } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, CordovaProperty, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 declare let window: any;
 
+// tag should be NfcTag, but keeping as NdefTag to avoid breaking existing code
 export interface NdefEvent {
   tag: NdefTag;
 }
@@ -14,14 +15,35 @@ export interface NdefRecord {
   type: number[];
 }
 
+/**
+ * @deprecated use NfcTag
+ */
 export interface NdefTag {
   canMakeReadOnly: boolean;
   id: number[];
-  isWriteable: boolean;
+  isWritable: boolean;
   maxSize: number;
   ndefMessage: NdefRecord[];
   techTypes: string[];
   type: string;
+}
+
+export interface NfcTag {
+  id?: number[];
+  canMakeReadOnly?: boolean;
+  isWritable?: boolean;
+  maxSize?: number;
+  ndefMessage?: NdefRecord[];
+  techTypes?: string[];
+  type?: string;
+}
+
+export interface ScanOptions {
+  /**
+   * If true, keep the scan session open so write can be called
+   * after reading. The default value is false.
+   */
+  keepSessionOpen?: boolean;
 }
 
 /**
@@ -39,40 +61,145 @@ export interface NdefTag {
  *
  * @usage
  * ```typescript
- * import { NFC, Ndef } from '@ionic-native/nfc';
+ * import { NFC, Ndef } from '@ionic-native/nfc/ngx';
  *
  * constructor(private nfc: NFC, private ndef: Ndef) { }
  *
  * ...
  *
- * this.nfc.addNdefListener(() => {
- *   console.log('successfully attached ndef listener');
- * }, (err) => {
- *   console.log('error attaching ndef listener', err);
- * }).subscribe((event) => {
- *   console.log('received ndef message. the tag contains: ', event.tag);
- *   console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+ * // Read NFC Tag - Android
+ * // Once the reader mode is enabled, any tags that are scanned are sent to the subscriber
+ *  let flags = this.nfc.FLAG_READER_NFC_A | this.nfc.FLAG_READER_NFC_V;
+ *  this.readerMode$ = this.nfc.readerMode(flags).subscribe(
+ *      tag => console.log(JSON.stringify(tag)),
+ *      err => console.log('Error reading tag', err)
+ *  );
  *
- *   let message = this.ndef.textRecord('Hello world');
- *   this.nfc.share([message]).then(onSuccess).catch(onError);
- * });
+ * // Read NFC Tag - iOS
+ * // On iOS, a NFC reader session takes control from your app while scanning tags then returns a tag
+ * try {
+ *     let tag = await this.nfc.scanNdef();
+ *     console.log(JSON.stringify(tag));
+ *  } catch (err) {
+ *      console.log('Error reading tag', err);
+ *  }
  *
  * ```
+ *
+ * For more details on NFC tag operations see https://github.com/chariotsolutions/phonegap-nfc
  */
 @Plugin({
   pluginName: 'NFC',
   plugin: 'phonegap-nfc',
   pluginRef: 'nfc',
   repo: 'https://github.com/chariotsolutions/phonegap-nfc',
-  platforms: ['Android', 'BlackBerry 10', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'iOS', 'Windows'],
 })
 /**
-*@{ NFC } class methods
-*/
+ * @{ NFC } class methods
+ */
 @Injectable()
 export class NFC extends IonicNativePlugin {
+  // Flags for readerMode
+  // https://developer.android.com/reference/android/nfc/NfcAdapter#FLAG_READER_NFC_A
+  @CordovaProperty()
+  FLAG_READER_NFC_A: number;
+  @CordovaProperty()
+  FLAG_READER_NFC_B: number;
+  @CordovaProperty()
+  FLAG_READER_NFC_F: number;
+  @CordovaProperty()
+  FLAG_READER_NFC_V: number;
+  @CordovaProperty()
+  FLAG_READER_NFC_BARCODE: number;
+  @CordovaProperty()
+  FLAG_READER_SKIP_NDEF_CHECK: number;
+  @CordovaProperty()
+  FLAG_READER_NO_PLATFORM_SOUNDS: number;
+
+  /**
+   * Read NFC tags sending the tag data to the success callback.
+   * See https://github.com/chariotsolutions/phonegap-nfc#nfcreadermode
+   *
+   * @param flags
+   * @returns {Observable<any>}
+   */
+  @Cordova({
+    observable: true,
+    clearFunction: 'disableReaderMode',
+    clearWithArgs: false,
+  })
+  readerMode(flags: number): Observable<NfcTag> {
+    return;
+  }
+
+  /**
+   * Function scanNdef starts the NFCNDEFReaderSession allowing iOS to scan NFC tags.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfcscanndef
+   */
+  @Cordova({ sync: true })
+  scanNdef(options?: ScanOptions): Promise<NfcTag> {
+    return;
+  }
+
+  /**
+   * Function scanTag starts the NFCTagReaderSession allowing iOS to scan NFC tags.
+   *
+   * You probably want *scanNdef* for reading NFC tags on iOS. Only use scanTag if you need the tag UID.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfcscantag
+   */
+  @Cordova({ sync: true })
+  scanTag(options?: ScanOptions): Promise<NfcTag> {
+    return;
+  }
+
+  /**
+   * Function cancelScan stops the NFCReaderSession returning control to your app.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfccancelscan
+   */
+  @Cordova({ sync: true })
+  cancelScan(): Promise<any> {
+    return;
+  }
+
+  /**
+   * Connect to the tag and enable I/O operations to the tag from this TagTechnology object.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfcconnect
+   *
+   * @param tech The tag technology class name e.g. android.nfc.tech.IsoDep
+   * @param timeout The transceive(byte[]) timeout in milliseconds [optional]
+   */
+  @Cordova({ sync: true })
+  connect(tech: string, timeout?: number): Promise<any> {
+    return;
+  }
+
+  /**
+   * Close TagTechnology connection.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfcclose
+   */
+  @Cordova({ sync: true })
+  close(): Promise<any> {
+    return;
+  }
+
+  /**
+   * Send raw command to the tag and receive the response.
+   * https://github.com/chariotsolutions/phonegap-nfc#nfctransceive
+   *
+   * Example code https://github.com/chariotsolutions/phonegap-nfc#tag-technology-functions-1
+   *
+   * @param data an ArrayBuffer or string of hex data e.g. '00 A4 04 00 07 D2 76 00 00 85 01 00'
+   */
+  @Cordova({ sync: true })
+  transceive(data: string | ArrayBuffer): Promise<ArrayBuffer> {
+    return;
+  }
+
   /**
    * Starts the NFCNDEFReaderSession allowing iOS to scan NFC tags.
+   * @deprecated use scanNdef or scanTag
+   *
    * @param onSuccess
    * @param onFailure
    * @returns {Observable<any>}
@@ -82,9 +209,11 @@ export class NFC extends IonicNativePlugin {
     successIndex: 0,
     errorIndex: 3,
     clearFunction: 'invalidateSession',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
-  beginSession(onSuccess?: Function, onFailure?: Function): Observable<any> { return; }
+  beginSession(onSuccess?: Function, onFailure?: Function): Observable<any> {
+    return;
+  }
 
   /**
    * Registers an event listener for any NDEF tag.
@@ -97,9 +226,11 @@ export class NFC extends IonicNativePlugin {
     successIndex: 0,
     errorIndex: 3,
     clearFunction: 'removeNdefListener',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
-  addNdefListener(onSuccess?: Function, onFailure?: Function): Observable<NdefEvent> { return; }
+  addNdefListener(onSuccess?: Function, onFailure?: Function): Observable<NdefEvent> {
+    return;
+  }
 
   /**
    * Registers an event listener for tags matching any tag type.
@@ -112,9 +243,11 @@ export class NFC extends IonicNativePlugin {
     successIndex: 0,
     errorIndex: 3,
     clearFunction: 'removeTagDiscoveredListener',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
-  addTagDiscoveredListener(onSuccess?: Function, onFailure?: Function): Observable<any> { return; }
+  addTagDiscoveredListener(onSuccess?: Function, onFailure?: Function): Observable<any> {
+    return;
+  }
 
   /**
    * Registers an event listener for NDEF tags matching a specified MIME type.
@@ -128,9 +261,11 @@ export class NFC extends IonicNativePlugin {
     successIndex: 1,
     errorIndex: 4,
     clearFunction: 'removeMimeTypeListener',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
-  addMimeTypeListener(mimeType: string, onSuccess?: Function, onFailure?: Function): Observable<any> { return; }
+  addMimeTypeListener(mimeType: string, onSuccess?: Function, onFailure?: Function): Observable<any> {
+    return;
+  }
 
   /**
    * Registers an event listener for formatable NDEF tags.
@@ -141,9 +276,11 @@ export class NFC extends IonicNativePlugin {
   @Cordova({
     observable: true,
     successIndex: 0,
-    errorIndex: 3
+    errorIndex: 3,
   })
-  addNdefFormatableListener(onSuccess?: Function, onFailure?: Function): Observable<any> { return; }
+  addNdefFormatableListener(onSuccess?: Function, onFailure?: Function): Observable<any> {
+    return;
+  }
 
   /**
    * Writes an NdefMessage(array of ndef records) to a NFC tag.
@@ -151,13 +288,17 @@ export class NFC extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  write(message: any[]): Promise<any> { return; }
+  write(message: any[]): Promise<any> {
+    return;
+  }
   /**
    * Makes a NFC tag read only. **Warning** this is permanent.
    * @returns {Promise<any>}
    */
   @Cordova()
-  makeReadyOnly(): Promise<any> { return; }
+  makeReadOnly(): Promise<any> {
+    return;
+  }
 
   /**
    * Shares an NDEF Message(array of ndef records) via peer-to-peer.
@@ -165,20 +306,26 @@ export class NFC extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  share(message: any[]): Promise<any> { return; }
+  share(message: any[]): Promise<any> {
+    return;
+  }
 
   /**
    * Stop sharing NDEF data via peer-to-peer.
    * @returns {Promise<any>}
    */
   @Cordova()
-  unshare(): Promise<any> { return; }
+  unshare(): Promise<any> {
+    return;
+  }
 
   /**
    * Erase a NDEF tag
    */
   @Cordova()
-  erase(): Promise<any> { return; }
+  erase(): Promise<any> {
+    return;
+  }
 
   /**
    * Send a file to another device via NFC handover.
@@ -186,46 +333,58 @@ export class NFC extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  handover(uris: string[]): Promise<any> { return; }
+  handover(uris: string[]): Promise<any> {
+    return;
+  }
 
   /**
    * Stop sharing NDEF data via NFC handover.
    * @returns {Promise<any>}
    */
   @Cordova()
-  stopHandover(): Promise<any> { return; }
+  stopHandover(): Promise<any> {
+    return;
+  }
 
   /**
    * Opens the device's NFC settings.
    * @returns {Promise<any>}
    */
   @Cordova()
-  showSettings(): Promise<any> { return; }
+  showSettings(): Promise<any> {
+    return;
+  }
 
   /**
    * Check if NFC is available and enabled on this device.
    * @returns {Promise<any>}
    */
   @Cordova()
-  enabled(): Promise<any> { return; }
+  enabled(): Promise<any> {
+    return;
+  }
   /**
-  * @{ NFC } class utility methods
-  * for use with
-  */
+   * @{ NFC } class utility methods
+   * for use with
+   */
   /**
    * Convert byte array to string
    * @param bytes {number[]}
    * @returns {string}
    */
   @Cordova({ sync: true })
-  bytesToString(bytes: number[]): string { return; }
+  bytesToString(bytes: number[]): string {
+    return;
+  }
   /**
    * Convert string to byte array.
    * @param str {string}
    * @returns {number[]}
    */
   @Cordova({ sync: true })
-  stringToBytes(str: string): number[] { return; };
+  stringToBytes(str: string): number[] {
+    return;
+  }
   /**
    * Convert byte array to hex string
    *
@@ -233,8 +392,9 @@ export class NFC extends IonicNativePlugin {
    * @returns {string}
    */
   @Cordova({ sync: true })
-  bytesToHexString(bytes: number[]): string { return; };
-
+  bytesToHexString(bytes: number[]): string {
+    return;
+  }
 }
 /**
  * @hidden
@@ -242,94 +402,103 @@ export class NFC extends IonicNativePlugin {
 @Plugin({
   pluginName: 'NFC',
   plugin: 'phonegap-nfc',
-  pluginRef: 'ndef'
+  pluginRef: 'ndef',
 })
 /**
-*@{ Ndef } class methods
-*@description
-* Utility methods for creating ndef records for the ndef tag format.
-* Move records into array before usage. Then pass an array to methods as parameters.
-* Do not pass bytes as parameters for these methods, conversion is built in.
-* For usage with nfc.write() and nfc.share()
-*/
+ * @description
+ * Utility methods for creating ndef records for the ndef tag format.
+ * Move records into array before usage. Then pass an array to methods as parameters.
+ * Do not pass bytes as parameters for these methods, conversion is built in.
+ * For usage with nfc.write() and nfc.share()
+ */
 @Injectable()
 export class Ndef extends IonicNativePlugin {
-
-  @CordovaProperty
+  @CordovaProperty()
   TNF_EMPTY: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_WELL_KNOWN: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_MIME_MEDIA: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_ABSOLUTE_URI: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_EXTERNAL_TYPE: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_UNKNOWN: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_UNCHANGED: number;
-  @CordovaProperty
+  @CordovaProperty()
   TNF_RESERVED: number;
 
-  @CordovaProperty
-  RTD_TEXT: number[];
-  @CordovaProperty
-  RTD_URI: number[];
-  @CordovaProperty
-  RTD_SMART_POSTER: number[];
-  @CordovaProperty
-  RTD_ALTERNATIVE_CARRIER: number[];
-  @CordovaProperty
-  RTD_HANDOVER_CARRIER: number[];
-  @CordovaProperty
-  RTD_HANDOVER_REQUEST: number[];
-  @CordovaProperty
-  RTD_HANDOVER_SELECT: number[];
+  @Cordova({ sync: true })
+  record(tnf: number, type: number[] | string, id: number[] | string, payload: number[] | string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  record(tnf: number, type: number[] | string, id: number[] | string, payload: number[] | string): NdefRecord { return; }
+  textRecord(text: string, languageCode?: string, id?: number[] | string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  textRecord(text: string, languageCode?: string, id?: number[] | string): NdefRecord { return; }
+  uriRecord(uri: string, id?: number[] | string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  uriRecord(uri: string, id?: number[] | string): NdefRecord { return; }
+  absoluteUriRecord(uri: string, payload: number[] | string, id?: number[] | string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  absoluteUriRecord(uri: string, payload: number[] | string, id?: number[] | string): NdefRecord { return; }
+  mimeMediaRecord(mimeType: string, payload: string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  mimeMediaRecord(mimeType: string, payload: string): NdefRecord { return; }
+  smartPoster(ndefRecords: any[], id?: number[] | string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  smartPoster(ndefRecords: any[], id?: number[] | string ): NdefRecord { return; }
+  emptyRecord(): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  emptyRecord(): NdefRecord { return; }
+  androidApplicationRecord(packageName: string): NdefRecord {
+    return;
+  }
 
   @Cordova({ sync: true })
-  androidApplicationRecord(packageName: string): NdefRecord { return; }
+  encodeMessage(ndefRecords: any): any {
+    return;
+  }
 
   @Cordova({ sync: true })
-  encodeMessage(ndefRecords: any): any { return; }
+  decodeMessage(bytes: any): any {
+    return;
+  }
 
   @Cordova({ sync: true })
-  decodeMessage(bytes: any): any { return; }
+  decodeTnf(tnf_byte: any): any {
+    return;
+  }
 
   @Cordova({ sync: true })
-  docodeTnf(tnf_byte: any): any { return; }
+  encodeTnf(mb: any, me: any, cf: any, sr: any, il: any, tnf: any): any {
+    return;
+  }
 
   @Cordova({ sync: true })
-  encodeTnf(mb: any, me: any, cf: any, sr: any, il: any, tnf: any): any { return; }
+  tnfToString(tnf: any): string {
+    return;
+  }
 
-  @Cordova({ sync: true })
-  tnfToString(tnf: any): string { return; }
-
-  @CordovaProperty
+  @CordovaProperty()
   textHelper: TextHelper;
 
-  @CordovaProperty
+  @CordovaProperty()
   uriHelper: UriHelper;
 }
 
@@ -339,36 +508,65 @@ export class Ndef extends IonicNativePlugin {
 @Plugin({
   pluginName: 'NFC',
   plugin: 'phonegap-nfc',
-  pluginRef: 'util'
+  pluginRef: 'util',
 })
 @Injectable()
 export class NfcUtil extends IonicNativePlugin {
+  @Cordova({ sync: true })
+  toHex(i: number): string {
+    return;
+  }
 
   @Cordova({ sync: true })
-  toHex(i: number): string { return; }
+  toPrintable(i: number): string {
+    return;
+  }
 
   @Cordova({ sync: true })
-  toPrintable(i: number): string { return; }
+  bytesToString(i: number[]): string {
+    return;
+  }
 
   @Cordova({ sync: true })
-  bytesToString(i: number[]): string { return; }
+  stringToBytes(s: string): number[] {
+    return;
+  }
 
   @Cordova({ sync: true })
-  stringToBytes(s: string): number[] { return; }
+  bytesToHexString(bytes: number[]): string {
+    return;
+  }
 
   @Cordova({ sync: true })
-  bytesToHexString(bytes: number[]): string { return; }
+  isType(record: NdefRecord, tnf: number, type: number[] | string): boolean {
+    return;
+  }
 
   @Cordova({ sync: true })
-  isType(record: NdefRecord, tnf: number, type: number[]|string): boolean { return; }
+  arrayBufferToHexString(buffer: ArrayBuffer): string {
+    return;
+  }
+
+  @Cordova({ sync: true })
+  hexStringToArrayBuffer(hexString: string): ArrayBuffer {
+    return;
+  }
 }
 
 export class TextHelper extends IonicNativePlugin {
-  decodePayload(data: number[]): string { return; }
-  encodePayload(text: string, lang: string): number[] { return; }
+  decodePayload(data: number[]): string {
+    return;
+  }
+  encodePayload(text: string, lang: string): number[] {
+    return;
+  }
 }
 
 export class UriHelper extends IonicNativePlugin {
-  decodePayload(data: number[]): string { return; }
-  encodePayload(uri: string): number[] { return; }
+  decodePayload(data: number[]): string {
+    return;
+  }
+  encodePayload(uri: string): number[] {
+    return;
+  }
 }

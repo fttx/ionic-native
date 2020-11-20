@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 export interface ZBarOptions {
   /**
@@ -44,7 +44,7 @@ export interface ZBarOptions {
  *
  * @usage
  * ```typescript
- * import { ZBar, ZBarOptions } from '@ionic-native/zbar';
+ * import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
  *
  * constructor(private zbar: ZBar) { }
  *
@@ -53,7 +53,7 @@ export interface ZBarOptions {
  * let options: ZBarOptions = {
  *       flash: 'off',
  *       drawSight: false
- *     };
+ *     }
  *
  * this.zbar.scan(options)
  *    .then(result => {
@@ -73,17 +73,17 @@ export interface ZBarOptions {
   plugin: 'cordova-plugin-cszbar',
   pluginRef: 'cloudSky.zBar',
   repo: 'https://github.com/tjwoon/csZBar',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class ZBar extends IonicNativePlugin {
-
   /**
    * Open the scanner
    * @param options { ZBarOptions } Scan options
    * @returns {Promise<any>} Returns a Promise that resolves with the scanned string, or rejects with an error.
    */
   @Cordova()
-  scan(options: ZBarOptions): Promise<any> { return; }
-
+  scan(options: ZBarOptions): Promise<any> {
+    return;
+  }
 }

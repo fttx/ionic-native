@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin, CordovaCheck } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, CordovaCheck, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 declare var chcp: any;
 
@@ -46,7 +46,7 @@ export interface HotCodePushRequestOptions {
   /**
    * Additional HTTP headers, that will be added to all requests in update download process, including loading configs and new/changed files.
    */
-  'request-headers'?: {[key: string]: any};
+  'request-headers'?: { [key: string]: any };
 }
 
 /**
@@ -73,7 +73,7 @@ export enum ErrorCode {
   INSTALLATION_ALREADY_IN_PROGRESS = -16,
   DOWNLOAD_ALREADY_IN_PROGRESS = -17,
   ASSETS_FOLDER_IS_NOT_YET_INSTALLED = -18,
-  NEW_APPLICATION_CONFIG_IS_INVALID = -19
+  NEW_APPLICATION_CONFIG_IS_INVALID = -19,
 }
 
 export interface HotCodePushError {
@@ -85,7 +85,7 @@ export interface HotCodePushEventData {
   details?: {
     error?: HotCodePushError;
   };
-};
+}
 
 /**
  * @name Hot Code Push
@@ -96,7 +96,7 @@ export interface HotCodePushEventData {
  *
  * @usage
  * ```typescript
- * import { HotCodePush } from '@ionic-native/hot-code-push';
+ * import { HotCodePush } from '@ionic-native/hot-code-push/ngx';
  *
  * constructor(private hotCodePush: HotCodePush) { }
  *
@@ -111,7 +111,7 @@ export interface HotCodePushEventData {
   plugin: 'cordova-hot-code-push',
   pluginRef: 'chcp',
   repo: 'https://github.com/nordnet/cordova-hot-code-push',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class HotCodePush extends IonicNativePlugin {
@@ -121,7 +121,9 @@ export class HotCodePush extends IonicNativePlugin {
    * @returns {Promise<any>} Resolves when the user is redirected to the store, rejects if the user declines.
    */
   @Cordova()
-  requestApplicationUpdate(message: string): Promise<any> { return; }
+  requestApplicationUpdate(message: string): Promise<any> {
+    return;
+  }
 
   /**
    * Download updates from the server-side.
@@ -146,27 +148,33 @@ export class HotCodePush extends IonicNativePlugin {
    * @returns {Promise<any>} Resolves when the update is installed.
    */
   @Cordova({
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
-  installUpdate(): Promise<any> { return; }
+  installUpdate(): Promise<any> {
+    return;
+  }
 
   /**
    * Check if update was loaded and ready to be installed.
    * @returns {Promise<HotCodePushUpdate>} Resolves if an update is ready, rejects if there is no update.
    */
   @Cordova({
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
-  isUpdateAvailableForInstallation(): Promise<HotCodePushUpdate> { return; }
+  isUpdateAvailableForInstallation(): Promise<HotCodePushUpdate> {
+    return;
+  }
 
   /**
    * Gets information about the app's versions.
    * @returns {Promise<HotCodePushVersion>} Resolves with the information about the versions.
    */
   @Cordova({
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
-  getVersionInfo(): Promise<HotCodePushVersion> { return; }
+  getVersionInfo(): Promise<HotCodePushVersion> {
+    return;
+  }
 
   /**
    * Event sent when new release was successfully loaded and ready to be installed.
@@ -174,9 +182,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_updateIsReadyToInstall'
+    event: 'chcp_updateIsReadyToInstall',
   })
-  onUpdateIsReadyToInstall(): Observable<HotCodePushEventData> { return; }
+  onUpdateIsReadyToInstall(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when plugin couldn't load update from the server. Error details are attached to the event.
@@ -184,9 +194,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_updateLoadFailed'
+    event: 'chcp_updateLoadFailed',
   })
-  onUpdateLoadFailed(): Observable<HotCodePushEventData> { return; }
+  onUpdateLoadFailed(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when we successfully loaded application config from the server, but there is nothing new is available.
@@ -194,9 +206,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_nothingToUpdate'
+    event: 'chcp_nothingToUpdate',
   })
-  onNothingToUpdate(): Observable<HotCodePushEventData> { return; }
+  onNothingToUpdate(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when an update is about to be installed.
@@ -204,9 +218,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_beforeInstall'
+    event: 'chcp_beforeInstall',
   })
-  onBeforeInstall(): Observable<HotCodePushEventData> { return; }
+  onBeforeInstall(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when update was successfully installed.
@@ -214,9 +230,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_updateInstalled'
+    event: 'chcp_updateInstalled',
   })
-  onUpdateInstalled(): Observable<HotCodePushEventData> { return; }
+  onUpdateInstalled(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when update installation failed. Error details are attached to the event.
@@ -224,9 +242,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_updateInstallFailed'
+    event: 'chcp_updateInstallFailed',
   })
-  onUpdateInstallFailed(): Observable<HotCodePushEventData> { return; }
+  onUpdateInstallFailed(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when there is nothing to install. Probably, nothing was loaded before that.
@@ -234,9 +254,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_nothingToInstall'
+    event: 'chcp_nothingToInstall',
   })
-  onNothingToInstall(): Observable<HotCodePushEventData> { return; }
+  onNothingToInstall(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when plugin is about to start installing bundle content on the external storage.
@@ -244,9 +266,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_beforeAssetsInstalledOnExternalStorage'
+    event: 'chcp_beforeAssetsInstalledOnExternalStorage',
   })
-  onBeforeAssetsInstalledOnExternalStorage(): Observable<HotCodePushEventData> { return; }
+  onBeforeAssetsInstalledOnExternalStorage(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when plugin successfully copied web project files from bundle on the external storage. Most likely you will use it for debug purpose only. Or even never.
@@ -254,9 +278,11 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_assetsInstalledOnExternalStorage'
+    event: 'chcp_assetsInstalledOnExternalStorage',
   })
-  onAssetsInstalledOnExternalStorage(): Observable<HotCodePushEventData> { return; }
+  onAssetsInstalledOnExternalStorage(): Observable<HotCodePushEventData> {
+    return;
+  }
 
   /**
    * Event sent when plugin couldn't copy files from bundle on the external storage. If this happens - plugin won't work. Can occur when there is not enough free space on the device.
@@ -264,7 +290,9 @@ export class HotCodePush extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'chcp_assetsInstallationError'
+    event: 'chcp_assetsInstallationError',
   })
-  onAssetsInstallationError(): Observable<HotCodePushEventData> { return; }
+  onAssetsInstallationError(): Observable<HotCodePushEventData> {
+    return;
+  }
 }

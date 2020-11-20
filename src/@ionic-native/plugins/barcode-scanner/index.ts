@@ -95,7 +95,7 @@ export interface BarcodeScanResult {
  *
  * @usage
  * ```typescript
- * import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+ * import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
  *
  * constructor(private barcodeScanner: BarcodeScanner) { }
  *
@@ -117,7 +117,7 @@ export interface BarcodeScanResult {
   plugin: 'phonegap-plugin-barcodescanner',
   pluginRef: 'cordova.plugins.barcodeScanner',
   repo: 'https://github.com/phonegap/phonegap-plugin-barcodescanner',
-  platforms: ['Android', 'BlackBerry 10', 'Browser', 'iOS', 'Windows']
+  platforms: ['Android', 'BlackBerry 10', 'Browser', 'iOS', 'Windows'],
 })
 @Injectable()
 export class BarcodeScanner extends IonicNativePlugin {
@@ -130,7 +130,7 @@ export class BarcodeScanner extends IonicNativePlugin {
     TEXT_TYPE: 'TEXT_TYPE',
     EMAIL_TYPE: 'EMAIL_TYPE',
     PHONE_TYPE: 'PHONE_TYPE',
-    SMS_TYPE: 'SMS_TYPE'
+    SMS_TYPE: 'SMS_TYPE',
   };
 
   /**

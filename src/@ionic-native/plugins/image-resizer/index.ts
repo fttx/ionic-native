@@ -49,7 +49,7 @@ export interface ImageResizerOptions {
  *
  * @usage
  * ```typescript
- * import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
+ * import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/ngx';
  *
  * constructor(private imageResizer: ImageResizer) { }
  *
@@ -77,7 +77,7 @@ export interface ImageResizerOptions {
   plugin: 'info.protonet.imageresizer',
   pluginRef: 'ImageResizer',
   repo: 'https://github.com/JoschkaSchulz/cordova-plugin-image-resizer',
-  platforms: ['Android', 'iOS', 'Windows']
+  platforms: ['Android', 'iOS', 'Windows'],
 })
 @Injectable()
 export class ImageResizer extends IonicNativePlugin {

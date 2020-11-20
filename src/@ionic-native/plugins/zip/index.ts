@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Zip
@@ -8,7 +8,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Zip } from '@ionic-native/zip';
+ * import { Zip } from '@ionic-native/zip/ngx';
  *
  * constructor(private zip: Zip) { }
  *
@@ -27,11 +27,10 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-zip',
   pluginRef: 'zip',
   repo: 'https://github.com/MobileChromeApps/cordova-plugin-zip',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class Zip extends IonicNativePlugin {
-
   /**
    * Extracts files from a ZIP archive
    * @param sourceZip {string} Source ZIP file
@@ -41,8 +40,9 @@ export class Zip extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 4
+    errorIndex: 4,
   })
-  unzip(sourceZip: string, destUrl: string, onProgress?: Function): Promise<number> { return; }
-
+  unzip(sourceZip: string, destUrl: string, onProgress?: Function): Promise<number> {
+    return;
+  }
 }

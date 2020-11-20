@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 /**
  * @name Youtube Video Player
  * @description
@@ -14,7 +14,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  *
  * ```typescript
- * import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
+ * import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
  *
  * constructor(private youtube: YoutubeVideoPlayer) { }
  *
@@ -30,16 +30,14 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-youtube-video-player',
   pluginRef: 'YoutubeVideoPlayer',
   repo: 'https://github.com/ihadeed/CordovaYoutubeVideoPlayer',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class YoutubeVideoPlayer extends IonicNativePlugin {
-
   /**
    * Plays a YouTube video
    * @param videoId {string} Video ID
    */
   @Cordova({ sync: true })
-  openVideo(videoId: string): void { }
-
+  openVideo(videoId: string): void {}
 }

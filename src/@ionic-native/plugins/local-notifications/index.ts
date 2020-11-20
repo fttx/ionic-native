@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 export enum ELocalNotificationTriggerUnit {
   SECOND = 'second',
@@ -13,7 +13,59 @@ export enum ELocalNotificationTriggerUnit {
   YEAR = 'year',
   WEEKDAY = 'weekday',
   WEEKDAY_ORDINAL = 'weekdayOrdinal',
-  WEEK_OF_MONTH = 'weekOfMonth'
+  WEEK_OF_MONTH = 'weekOfMonth',
+}
+
+export interface ILocalNotificationEvery {
+  /**
+   * The minute.
+   */
+  minute?: number;
+
+  /**
+   * The hour.
+   */
+  hour?: number;
+
+  /**
+   * The day.
+   */
+  day?: number;
+
+  /**
+   * The day of week.
+   */
+  weekday?: number;
+
+  /**
+   * The week of yeaday of the ardinal week.
+   */
+  week?: number;
+
+  /**
+   * The day of the ordinal week.
+   */
+  weekdayOrdinal?: number;
+
+  /**
+   * The week of month.
+   */
+  weekOfMonth?: number;
+
+  /**
+   * The month.
+   */
+  month?: number;
+
+  /**
+   * The quarter.
+   */
+  quarter?: number;
+
+  /**
+   * The year.
+   */
+  year?: number;
 }
 
 export interface ILocalNotificationTrigger {
@@ -47,7 +99,7 @@ export interface ILocalNotificationTrigger {
   /**
    * The unit
    */
-  every?: ELocalNotificationTriggerUnit;
+  every?: ELocalNotificationTriggerUnit | ILocalNotificationEvery;
 
   /**
    * The end of the repeating notification
@@ -102,7 +154,7 @@ export interface ILocalNotificationTrigger {
 
 export enum ILocalNotificationActionType {
   INPUT = 'input',
-  BUTTON = 'button'
+  BUTTON = 'button',
 }
 
 /**
@@ -122,9 +174,14 @@ export interface ILocalNotificationAction {
   title?: string;
 
   /**
-   * Specifies whether the action causes the app to launch in the foreground
+   * Make this notification show when app in foreground.
    */
   foreground?: boolean;
+
+  /**
+   * Specifies whether the action causes the app to launch in the foreground
+   */
+  launch?: boolean;
 
   /**
    * If the value is 'decline' the action is displayed with special highlighting to indicate that it performs a destructive task
@@ -142,6 +199,24 @@ export interface ILocalNotificationAction {
    * The resource path of the action icon
    */
   icon?: string;
+
+  /**
+   * ANDROID ONLY
+   * An array of pre-defined choices for users input
+   */
+  choices?: string[];
+
+  /**
+   * ANDROID ONLY
+   * Specifies whether the user can provide arbitrary text values
+   */
+  editable?: boolean;
+
+  /**
+   * IOS ONLY
+   * The title of the text input button that is displayed to the user.
+   */
+  submitTitle?: string;
 
   /**
    * The type of the action. If omitted 'button' is used.
@@ -409,7 +484,7 @@ export interface ILocalNotification {
  *
  * @usage
  * ```typescript
- * import { LocalNotifications } from '@ionic-native/local-notifications';
+ * import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
  *
  *
  * constructor(private localNotifications: LocalNotifications) { }
@@ -456,25 +531,43 @@ export interface ILocalNotification {
   plugin: 'cordova-plugin-local-notification',
   pluginRef: 'cordova.plugins.notification.local',
   repo: 'https://github.com/katzer/cordova-plugin-local-notifications',
-  platforms: ['Android', 'iOS', 'Windows']
+  platforms: ['Android', 'iOS', 'Windows'],
 })
 @Injectable()
 export class LocalNotifications extends IonicNativePlugin {
   /**
+   * Informs if the app has the permission to show notifications.
+   * @returns {Promise<boolean>}
+   */
+  @Cordova()
+  hasPermission(): Promise<boolean> {
+    return;
+  }
+
+  /**
+   * Request permission to show notifications if not already granted.
+   * @returns {Promise<boolean>}
+   */
+  @Cordova()
+  requestPermission(): Promise<boolean> {
+    return;
+  }
+
+  /**
    * Schedules a single or multiple notifications
-   * @param options {Notification | Array<ILocalNotification>} optional
+   * @param options {Notification | ILocalNotification[]} optional
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
-  schedule(options?: ILocalNotification | Array<ILocalNotification>): void {}
+  schedule(options?: ILocalNotification | ILocalNotification[]): void {}
 
   /**
    * Updates a previously scheduled notification. Must include the id in the options parameter.
    * @param options {ILocalNotification} optional
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
   update(options?: ILocalNotification): void {}
 
@@ -547,11 +640,40 @@ export class LocalNotifications extends IonicNativePlugin {
   }
 
   /**
+   * Check if a notification has a given type.
+   * @param {number} id The ID of the notification.
+   * @param {string} type  The type of the notification.
+   * @returns {Promise<boolean>}
+   */
+  @Cordova()
+  hasType(id: number, type: string): Promise<boolean> {
+    return;
+  }
+
+  /**
+   * Get the type (triggered, scheduled) for the notification.
+   * @param {number} id The ID of the notification.
+   */
+  @Cordova()
+  getType(id: number): Promise<boolean> {
+    return;
+  }
+
+  /**
    * Get all the notification ids
    * @returns {Promise<Array<number>>}
    */
   @Cordova()
-  getIds(): Promise<Array<number>> {
+  getIds(): Promise<number[]> {
+    return;
+  }
+
+  /**
+   * Get the ids of scheduled notifications
+   * @returns {Promise<number[]>} Returns a promise
+   */
+  @Cordova()
+  getScheduledIds(): Promise<number[]> {
     return;
   }
 
@@ -560,16 +682,7 @@ export class LocalNotifications extends IonicNativePlugin {
    * @returns {Promise<Array<number>>}
    */
   @Cordova()
-  getTriggeredIds(): Promise<Array<number>> {
-    return;
-  }
-
-  /**
-   * Get the ids of scheduled notifications
-   * @returns {Promise<Array<number>>} Returns a promise
-   */
-  @Cordova()
-  getScheduledIds(): Promise<Array<number>> {
+  getTriggeredIds(): Promise<number[]> {
     return;
   }
 
@@ -580,6 +693,15 @@ export class LocalNotifications extends IonicNativePlugin {
    */
   @Cordova()
   get(notificationId: any): Promise<ILocalNotification> {
+    return;
+  }
+
+  /**
+   * Get all notification objects
+   * @returns {Promise<ILocalNotification[]>}
+   */
+  @Cordova()
+  getAll(): Promise<ILocalNotification[]> {
     return;
   }
 
@@ -604,61 +726,13 @@ export class LocalNotifications extends IonicNativePlugin {
   }
 
   /**
-   * Get all notification objects
-   * @returns {Promise<Array<ILocalNotification>>}
-   */
-  @Cordova()
-  getAll(): Promise<Array<ILocalNotification>> {
-    return;
-  }
-
-  /**
-   * Get all scheduled notification objects
-   * @returns {Promise<Array<ILocalNotification>>}
-   */
-  @Cordova()
-  getAllScheduled(): Promise<Array<ILocalNotification>> {
-    return;
-  }
-
-  /**
-   * Get all triggered notification objects
-   * @returns {Promise<Array<ILocalNotification>>}
-   */
-  @Cordova()
-  getAllTriggered(): Promise<Array<ILocalNotification>> {
-    return;
-  }
-
-  /**
-   * Request permission to show notifications if not already granted.
-   * @returns {Promise<boolean>}
-   */
-  @Cordova()
-  requestPermission(): Promise<boolean> {
-    return;
-  }
-
-  /**
-   * Informs if the app has the permission to show notifications.
-   * @returns {Promise<boolean>}
-   */
-  @Cordova()
-  hasPermission(): Promise<boolean> {
-    return;
-  }
-
-  /**
    * Adds a group of actions
    * @param groupId The id of the action group
    * @param actions The actions of this group
    * @returns {Promise<any>}
    */
   @Cordova()
-  addActions(
-    groupId: any,
-    actions: Array<ILocalNotificationAction>
-  ): Promise<any> {
+  addActions(groupId: any, actions: ILocalNotificationAction[]): Promise<any> {
     return;
   }
 
@@ -687,7 +761,7 @@ export class LocalNotifications extends IonicNativePlugin {
    * @returns {Promise<any>} An object with all default settings
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
   getDefaults(): Promise<any> {
     return;
@@ -698,9 +772,27 @@ export class LocalNotifications extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
   setDefaults(defaults: any): Promise<any> {
+    return;
+  }
+
+  /**
+   * Get all scheduled notification objects
+   * @returns {Promise<Array<ILocalNotification>>}
+   */
+  @Cordova()
+  getAllScheduled(): Promise<ILocalNotification[]> {
+    return;
+  }
+
+  /**
+   * Get all triggered notification objects
+   * @returns {Promise<Array<ILocalNotification>>}
+   */
+  @Cordova()
+  getAllTriggered(): Promise<ILocalNotification[]> {
     return;
   }
 
@@ -712,7 +804,7 @@ export class LocalNotifications extends IonicNativePlugin {
   @Cordova({
     observable: true,
     clearFunction: 'un',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
   on(eventName: string): Observable<any> {
     return;
@@ -720,11 +812,11 @@ export class LocalNotifications extends IonicNativePlugin {
 
   /**
    * Not an official interface, however its possible to manually fire events.
-   ** @param eventName The name of the event. Available events: schedule, trigger, click, update, clear, clearall, cancel, cancelall. Custom event names are possible for actions
+   * @param eventName The name of the event. Available events: schedule, trigger, click, update, clear, clearall, cancel, cancelall. Custom event names are possible for actions
    * @param args Optional arguments
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
   fireEvent(eventName: string, args: any): void {}
 

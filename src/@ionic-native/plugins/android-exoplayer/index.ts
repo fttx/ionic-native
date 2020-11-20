@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export type AndroidExoPlayerAspectRatio = 'FILL_SCREEN' | 'FIT_SCREEN';
 
@@ -158,7 +158,7 @@ export interface AndroidExoPlayerControllerConfig {
  *
  * @usage
  * ```typescript
- * import { AndroidExoPlayer } from '@ionic-native/android-exoplayer';
+ * import { AndroidExoPlayer } from '@ionic-native/android-exoplayer/ngx';
  *
  * constructor(private androidExoPlayer: AndroidExoPlayer) { }
  *
@@ -178,7 +178,7 @@ export interface AndroidExoPlayerControllerConfig {
   plugin: 'cordova-plugin-exoplayer',
   pluginRef: 'ExoPlayer',
   repo: 'https://github.com/frontyard/cordova-plugin-exoplayer',
-  platforms: ['Android']
+  platforms: ['Android'],
 })
 @Injectable()
 export class AndroidExoplayer extends IonicNativePlugin {
@@ -192,7 +192,7 @@ export class AndroidExoplayer extends IonicNativePlugin {
     clearFunction: 'close',
     clearWithArgs: false,
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
   show(parameters: AndroidExoPlayerParams): Observable<AndroidExoplayerState> {
     return;
@@ -205,10 +205,7 @@ export class AndroidExoplayer extends IonicNativePlugin {
    * @return {Promise<void>}
    */
   @Cordova()
-  setStream(
-    url: string,
-    controller: AndroidExoPlayerControllerConfig
-  ): Promise<void> {
+  setStream(url: string, controller: AndroidExoPlayerControllerConfig): Promise<void> {
     return;
   }
 

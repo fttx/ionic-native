@@ -5,7 +5,7 @@ import {
   CordovaInstance,
   InstanceProperty,
   IonicNativePlugin,
-  Plugin
+  Plugin,
 } from '@ionic-native/core';
 
 declare const sqlitePlugin: any;
@@ -37,12 +37,7 @@ export interface SQLiteDatabaseConfig {
  * @hidden
  */
 export interface DbTransaction {
-  executeSql: (
-    sql: any,
-    values?: any[],
-    success?: Function,
-    error?: Function
-  ) => void;
+  executeSql: (sql: any, values?: any[], success?: Function, error?: Function) => void;
 }
 
 /**
@@ -65,12 +60,11 @@ export interface SQLiteTransaction extends DbTransaction {
 export class SQLiteObject {
   constructor(public _objectInstance: any) {}
 
-  @InstanceProperty databaseFeatures: { isSQLitePluginDatabase: boolean };
-
-  @InstanceProperty openDBs: any;
+  @InstanceProperty() databaseFeatures: { isSQLitePluginDatabase: boolean };
+  @InstanceProperty() openDBs: any;
 
   @CordovaInstance({
-    sync: true
+    sync: true,
   })
   addTransaction(transaction: (tx: SQLiteTransaction) => void): void {}
 
@@ -80,7 +74,7 @@ export class SQLiteObject {
    */
   @CordovaInstance({
     successIndex: 2,
-    errorIndex: 1
+    errorIndex: 1,
   })
   transaction(fn: (tx: DbTransaction) => void): Promise<any> {
     return;
@@ -96,7 +90,7 @@ export class SQLiteObject {
   }
 
   @CordovaInstance({
-    sync: true
+    sync: true,
   })
   startNextTransaction(): void {}
 
@@ -126,16 +120,16 @@ export class SQLiteObject {
   }
 
   /**
-   * @param sqlStatements {Array<string | string[] | any>}
+   * @param sqlStatements {string[] | string[][] | any[]}
    * @returns {Promise<any>}
    */
   @CordovaInstance()
-  sqlBatch(sqlStatements: Array<string | string[] | any>): Promise<any> {
+  sqlBatch(sqlStatements: (string | string[] | any)[]): Promise<any> {
     return;
   }
 
   @CordovaInstance({
-    sync: true
+    sync: true,
   })
   abortallPendingTransactions(): void {}
 }
@@ -149,7 +143,7 @@ export class SQLiteObject {
  * @usage
  *
  * ```typescript
- * import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+ * import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
  *
  * constructor(private sqlite: SQLite) { }
  *
@@ -162,7 +156,7 @@ export class SQLiteObject {
  *   .then((db: SQLiteObject) => {
  *
  *
- *     db.executeSql('create table danceMoves(name VARCHAR(32))', {})
+ *     db.executeSql('create table danceMoves(name VARCHAR(32))', [])
  *       .then(() => console.log('Executed SQL'))
  *       .catch(e => console.log(e));
  *
@@ -183,7 +177,7 @@ export class SQLiteObject {
   pluginRef: 'sqlitePlugin',
   plugin: 'cordova-sqlite-storage',
   repo: 'https://github.com/litehelpers/Cordova-sqlite-storage',
-  platforms: ['Android', 'iOS', 'macOS', 'Windows']
+  platforms: ['Android', 'iOS', 'macOS', 'Windows'],
 })
 @Injectable()
 export class SQLite extends IonicNativePlugin {
@@ -198,11 +192,7 @@ export class SQLite extends IonicNativePlugin {
   @CordovaCheck()
   create(config: SQLiteDatabaseConfig): Promise<SQLiteObject> {
     return new Promise((resolve, reject) => {
-      sqlitePlugin.openDatabase(
-        config,
-        (db: any) => resolve(new SQLiteObject(db)),
-        reject
-      );
+      sqlitePlugin.openDatabase(config, (db: any) => resolve(new SQLiteObject(db)), reject);
     });
   }
 

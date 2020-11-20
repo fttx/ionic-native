@@ -1,10 +1,10 @@
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Injectable } from '@angular/core';
 
 declare const window: any;
 
 export interface IntelSecurityDataOptions {
-  /** Non-empty string. **/
+  /* Non-empty string. **/
   data: String;
   /** Tag text.  */
   tag?: String;
@@ -41,7 +41,7 @@ export interface IntelSecurityDataOptions {
  *
  * @usage
  * ```typescript
- * import { IntelSecurity } from '@ionic-native/intel-security';
+ * import { IntelSecurity } from '@ionic-native/intel-security/ngx';
  * ...
  * constructor(private intelSecurity: IntelSecurity) { }
  * ...
@@ -72,11 +72,10 @@ export interface IntelSecurityDataOptions {
   plugin: 'com-intel-security-cordova-plugin',
   pluginRef: 'intel.security',
   repo: 'https://github.com/AppSecurityApi/com-intel-security-cordova-plugin',
-  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone 8'],
 })
 @Injectable()
 export class IntelSecurity extends IonicNativePlugin {
-
   /**
    * returns an IntelSecurityStorage object
    * @type {IntelSecurityStorage}
@@ -88,7 +87,6 @@ export class IntelSecurity extends IonicNativePlugin {
    * @type {IntelSecurityData}
    */
   data: IntelSecurityData = new IntelSecurityData();
-
 }
 
 /**
@@ -97,17 +95,18 @@ export class IntelSecurity extends IonicNativePlugin {
 @Plugin({
   pluginName: 'IntelSecurity',
   plugin: 'com-intel-security-cordova-plugin',
-  pluginRef: 'intel.security.secureData'
+  pluginRef: 'intel.security.secureData',
 })
 export class IntelSecurityData {
-
   /**
-  * This creates a new instance of secure data using plain-text data.
-  * @param options {IntelSecurityDataOptions}
-  * @returns {Promise<any>} Returns a Promise that resolves with the instanceID of the created data instance, or rejects with an error.
-  */
+   * This creates a new instance of secure data using plain-text data.
+   * @param options {IntelSecurityDataOptions}
+   * @returns {Promise<any>} Returns a Promise that resolves with the instanceID of the created data instance, or rejects with an error.
+   */
   @Cordova({ otherPromise: true })
-  createFromData(options: IntelSecurityDataOptions): Promise<Number> { return; }
+  createFromData(options: IntelSecurityDataOptions): Promise<Number> {
+    return;
+  }
 
   /**
    * This creates a new instance of secure data (using sealed data)
@@ -116,7 +115,9 @@ export class IntelSecurityData {
    * @returns {Promise<any>} Returns a Promise that resolves with the instanceID of the created data instance, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  createFromSealedData(options: { sealedData: string }): Promise<Number> { return; }
+  createFromSealedData(options: { sealedData: string }): Promise<Number> {
+    return;
+  }
 
   /**
    * This returns the plain-text data of the secure data instance.
@@ -124,7 +125,9 @@ export class IntelSecurityData {
    * @returns {Promise<string>} Returns a Promise that resolves to the data as plain-text, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getData(instanceID: Number): Promise<string> { return; }
+  getData(instanceID: Number): Promise<string> {
+    return;
+  }
 
   /**
    * This returns the sealed chunk of a secure data instance.
@@ -132,7 +135,9 @@ export class IntelSecurityData {
    * @returns {Promise<any>} Returns a Promise that resolves to the sealed data, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getSealedData(instanceID: any): Promise<any> { return; }
+  getSealedData(instanceID: any): Promise<any> {
+    return;
+  }
 
   /**
    * This returns the tag of the secure data instance.
@@ -140,7 +145,9 @@ export class IntelSecurityData {
    * @returns {Promise<string>} Returns a Promise that resolves to the tag, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getTag(instanceID: any): Promise<string> { return; }
+  getTag(instanceID: any): Promise<string> {
+    return;
+  }
 
   /**
    * This returns the data policy of the secure data instance.
@@ -148,7 +155,9 @@ export class IntelSecurityData {
    * @returns {Promise<any>} Returns a promise that resolves to the policy object, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getPolicy(instanceID: any): Promise<any> { return; }
+  getPolicy(instanceID: any): Promise<any> {
+    return;
+  }
 
   /**
    * This returns an array of the data owners unique IDs.
@@ -156,7 +165,9 @@ export class IntelSecurityData {
    * @returns {Promise<Array>} Returns a promise that resolves to an array of owners' unique IDs, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getOwners(instanceID: any): Promise<Array<any>> { return; }
+  getOwners(instanceID: any): Promise<any[]> {
+    return;
+  }
 
   /**
    * This returns the data creator unique ID.
@@ -164,7 +175,9 @@ export class IntelSecurityData {
    * @returns {Promise<Number>} Returns a promsie that resolves to the creator's unique ID, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getCreator(instanceID: any): Promise<Number> { return; }
+  getCreator(instanceID: any): Promise<Number> {
+    return;
+  }
 
   /**
    * This returns an array of the trusted web domains of the secure data instance.
@@ -172,7 +185,9 @@ export class IntelSecurityData {
    * @returns {Promise<Array>} Returns a promise that resolves to a list of web owners, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  getWebOwners(instanceID: any): Promise<Array<any>> { return; }
+  getWebOwners(instanceID: any): Promise<any[]> {
+    return;
+  }
 
   /**
    * This changes the extra key of a secure data instance. To successfully replace the extra key, the calling application must have sufficient access to the plain-text data.
@@ -182,7 +197,9 @@ export class IntelSecurityData {
    * @returns {Promise<any>} Returns a promise that resolves with no parameters, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  changeExtraKey(options: any): Promise<any> { return; }
+  changeExtraKey(options: any): Promise<any> {
+    return;
+  }
 
   /**
    * This releases a secure data instance.
@@ -190,8 +207,9 @@ export class IntelSecurityData {
    * @returns {Promise<any>} Returns a promise that resovles with no parameters, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  destroy(instanceID: any): Promise<any> { return; }
-
+  destroy(instanceID: any): Promise<any> {
+    return;
+  }
 }
 
 /**
@@ -200,10 +218,9 @@ export class IntelSecurityData {
 @Plugin({
   pluginName: 'IntelSecurity',
   plugin: 'com-intel-security-cordova-plugin',
-  pluginRef: 'intel.security.secureStorage'
+  pluginRef: 'intel.security.secureStorage',
 })
 export class IntelSecurityStorage {
-
   /**
    * This deletes a secure storage resource (indicated by id).
    * @param options {Object}
@@ -212,10 +229,9 @@ export class IntelSecurityStorage {
    * @returns {Promise<any>} Returns a Promise that resolves with no parameters, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  delete(options: {
-    id: string,
-    storageType?: Number
-  }): Promise<any> { return; }
+  delete(options: { id: string; storageType?: Number }): Promise<any> {
+    return;
+  }
 
   /**
    * This reads the data from secure storage (indicated by id) and creates a new secure data instance.
@@ -226,11 +242,9 @@ export class IntelSecurityStorage {
    * @returns {Promise<Number>} Returns a Promise that resolves with the instance ID of the created secure data instance, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  read(options: {
-    id: string,
-    storageType?: Number,
-    extraKey?: Number
-  }): Promise<Number> { return; }
+  read(options: { id: string; storageType?: Number; extraKey?: Number }): Promise<Number> {
+    return;
+  }
 
   /**
    * This writes the data contained in a secure data instance into secure storage.
@@ -241,10 +255,7 @@ export class IntelSecurityStorage {
    * @returns {Promise<any>} Returns a Promise that resolves with no parameters, or rejects with an error.
    */
   @Cordova({ otherPromise: true })
-  write(options: {
-    id: String,
-    instanceID: Number,
-    storageType?: Number
-  }): Promise<any> { return; }
-
+  write(options: { id: String; instanceID: Number; storageType?: Number }): Promise<any> {
+    return;
+  }
 }

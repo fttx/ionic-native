@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 export interface SafariViewControllerOptions {
   animated?: boolean;
@@ -24,7 +24,7 @@ export interface SafariViewControllerOptions {
  *
  * @usage
  * ```typescript
- * import { SafariViewController } from '@ionic-native/safari-view-controller';
+ * import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
  *
  * constructor(private safariViewController: SafariViewController) { }
  *
@@ -64,17 +64,18 @@ export interface SafariViewControllerOptions {
   plugin: 'cordova-plugin-safariviewcontroller',
   pluginRef: 'SafariViewController',
   repo: 'https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class SafariViewController extends IonicNativePlugin {
-
   /**
    * Checks if SafariViewController is available
    * @returns {Promise<boolean>}
    */
   @Cordova()
-  isAvailable(): Promise<boolean> { return; }
+  isAvailable(): Promise<boolean> {
+    return;
+  }
 
   /**
    * Shows Safari View Controller
@@ -84,29 +85,37 @@ export class SafariViewController extends IonicNativePlugin {
   @Cordova({
     successIndex: 1,
     errorIndex: 2,
-    observable: true
+    observable: true,
   })
-  show(options?: SafariViewControllerOptions): Observable<any> { return; }
+  show(options?: SafariViewControllerOptions): Observable<any> {
+    return;
+  }
 
   /**
    * Hides Safari View Controller
    */
   @Cordova()
-  hide(): Promise<any> { return; }
+  hide(): Promise<any> {
+    return;
+  }
 
   /**
    * Tries to connect to the  Chrome's custom tabs service. you must call this method before calling any of the other methods listed below.
    * @returns {Promise<any>}
    */
   @Cordova()
-  connectToService(): Promise<any> { return; }
+  connectToService(): Promise<any> {
+    return;
+  }
 
   /**
    * Call this method whenever there's a chance the user will open an external url.
    * @returns {Promise<any>}
    */
   @Cordova()
-  warmUp(): Promise<any> { return; }
+  warmUp(): Promise<any> {
+    return;
+  }
 
   /**
    * For even better performance optimization, call this methods if there's more than a 50% chance the user will open a certain URL.
@@ -114,6 +123,7 @@ export class SafariViewController extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  mayLaunchUrl(url: string): Promise<any> { return; }
-
+  mayLaunchUrl(url: string): Promise<any> {
+    return;
+  }
 }

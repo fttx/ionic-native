@@ -110,7 +110,7 @@ export interface AFADeleteOptions {
  * This plugin will open a native dialog fragment prompting the user to authenticate using their fingerprint. If the device has a secure lockscreen (pattern, PIN, or password), the user may opt to authenticate using that method as a backup.
  * @usage
  * ```typescript
- * import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
+ * import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth/ngx';
  *
  * constructor(private androidFingerprintAuth: AndroidFingerprintAuth) { }
  *
@@ -155,7 +155,7 @@ export interface AFADeleteOptions {
   plugin: 'cordova-plugin-android-fingerprint-auth',
   pluginRef: 'FingerprintAuth',
   repo: 'https://github.com/mjwheatley/cordova-plugin-android-fingerprint-auth',
-  platforms: ['Android']
+  platforms: ['Android'],
 })
 @Injectable()
 export class AndroidFingerprintAuth extends IonicNativePlugin {
@@ -199,7 +199,7 @@ export class AndroidFingerprintAuth extends IonicNativePlugin {
     MISSING_ACTION_PARAMETERS: 'MISSING_ACTION_PARAMETERS',
     MISSING_PARAMETERS: 'MISSING_PARAMETERS',
     NO_SUCH_ALGORITHM_EXCEPTION: 'NO_SUCH_ALGORITHM_EXCEPTION',
-    SECURITY_EXCEPTION: 'SECURITY_EXCEPTION'
+    SECURITY_EXCEPTION: 'SECURITY_EXCEPTION',
   };
 
   /**

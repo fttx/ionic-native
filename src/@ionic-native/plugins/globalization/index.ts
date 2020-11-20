@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 export interface GlobalizationOptions {
   formatLength: string;
@@ -8,6 +8,7 @@ export interface GlobalizationOptions {
 
 /**
  * @name Globalization
+ * @premier globalization
  * @description
  * This plugin obtains information and performs operations specific to the user's locale, language, and timezone.
  *
@@ -17,7 +18,7 @@ export interface GlobalizationOptions {
  *
  * @usage
  * ```typescript
- * import { Globalization } from '@ionic-native/globalization';
+ * import { Globalization } from '@ionic-native/globalization/ngx';
  *
  * constructor(private globalization: Globalization) { }
  *
@@ -39,7 +40,7 @@ export interface GlobalizationOptions {
   plugin: 'cordova-plugin-globalization',
   pluginRef: 'navigator.globalization',
   repo: 'https://github.com/apache/cordova-plugin-globalization',
-  platforms: ['Amazon Fire OS', 'Android', 'Browser', 'iOS', 'Windows']
+  platforms: ['Amazon Fire OS', 'Android', 'Browser', 'iOS', 'Windows'],
 })
 @Injectable()
 export class Globalization extends IonicNativePlugin {
@@ -69,12 +70,9 @@ export class Globalization extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  dateToString(
-    date: Date,
-    options: GlobalizationOptions
-  ): Promise<{ value: string }> {
+  dateToString(date: Date, options: GlobalizationOptions): Promise<{ value: string }> {
     return;
   }
 
@@ -86,7 +84,7 @@ export class Globalization extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
   stringToDate(
     dateString: string,
@@ -109,7 +107,7 @@ export class Globalization extends IonicNativePlugin {
    * @returns {Promise<{ pattern: string, timezone: string, utc_offset: number, dst_offset: number }>} Returns a promise.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   getDatePattern(
     options: GlobalizationOptions
@@ -126,15 +124,12 @@ export class Globalization extends IonicNativePlugin {
   /**
    * Returns an array of the names of the months or days of the week, depending on the client's user preferences and calendar.
    * @param options Object with type (narrow or wide) and item (month or days).
-   * @returns {Promise<{value: Array<string>}>} Returns a promise.
+   * @returns {Promise<{value: string[]}>} Returns a promise.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  getDateNames(options: {
-    type: string;
-    item: string;
-  }): Promise<{ value: Array<string> }> {
+  getDateNames(options: { type: string; item: string }): Promise<{ value: string[] }> {
     return;
   }
 
@@ -164,12 +159,9 @@ export class Globalization extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  numberToString(
-    numberToConvert: number,
-    options: { type: string }
-  ): Promise<{ value: string }> {
+  numberToString(numberToConvert: number, options: { type: string }): Promise<{ value: string }> {
     return;
   }
 
@@ -181,12 +173,9 @@ export class Globalization extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  stringToNumber(
-    stringToConvert: string,
-    options: { type: string }
-  ): Promise<{ value: number | string }> {
+  stringToNumber(stringToConvert: string, options: { type: string }): Promise<{ value: number | string }> {
     return;
   }
 
@@ -196,7 +185,7 @@ export class Globalization extends IonicNativePlugin {
    * @returns {Promise<{ pattern: string, symbol: string, fraction: number, rounding: number, positive: string, negative: string, decimal: string, grouping: string }>}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   getNumberPattern(options: {
     type: string;

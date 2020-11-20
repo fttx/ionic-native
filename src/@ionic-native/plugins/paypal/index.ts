@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name PayPal
@@ -8,7 +8,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
+ * import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
  *
  * constructor(private payPal: PayPal) { }
  *
@@ -69,7 +69,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'com.paypal.cordova.mobilesdk',
   pluginRef: 'PayPalMobile',
   repo: 'https://github.com/paypal/PayPal-Cordova-Plugin',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class PayPal extends IonicNativePlugin {
@@ -78,7 +78,9 @@ export class PayPal extends IonicNativePlugin {
    * @returns {Promise<string>}
    */
   @Cordova()
-  version(): Promise<string> { return; }
+  version(): Promise<string> {
+    return;
+  }
 
   /**
    * You must preconnect to PayPal to prepare the device for processing payments.
@@ -90,7 +92,9 @@ export class PayPal extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  init(clientIdsForEnvironments: PayPalEnvironment): Promise<any> { return; }
+  init(clientIdsForEnvironments: PayPalEnvironment): Promise<any> {
+    return;
+  }
 
   /**
    * You must preconnect to PayPal to prepare the device for processing payments.
@@ -102,7 +106,9 @@ export class PayPal extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  prepareToRender(environment: string, configuration: PayPalConfiguration): Promise<any> { return; }
+  prepareToRender(environment: string, configuration: PayPalConfiguration): Promise<any> {
+    return;
+  }
 
   /**
    * Start PayPal UI to collect payment from the user.
@@ -113,7 +119,9 @@ export class PayPal extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  renderSinglePaymentUI(payment: PayPalPayment): Promise<any> { return; }
+  renderSinglePaymentUI(payment: PayPalPayment): Promise<any> {
+    return;
+  }
 
   /**
    * Once a user has consented to future payments, when the user subsequently initiates a PayPal payment
@@ -126,24 +134,30 @@ export class PayPal extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  clientMetadataID(): Promise<any> { return; }
+  clientMetadataID(): Promise<any> {
+    return;
+  }
 
   /**
    * Please Read Docs on Future Payments at https://github.com/paypal/PayPal-iOS-SDK#future-payments
    * @returns {Promise<any>}
    */
   @Cordova()
-  renderFuturePaymentUI(): Promise<any> { return; }
+  renderFuturePaymentUI(): Promise<any> {
+    return;
+  }
 
   /**
    * Please Read Docs on Profile Sharing at https://github.com/paypal/PayPal-iOS-SDK#profile-sharing
    *
-   * @param {Array<string>} scopes scopes Set of requested scope-values. Accepted scopes are: openid, profile, address, email, phone, futurepayments and paypalattributes
+   * @param {string[]} scopes scopes Set of requested scope-values. Accepted scopes are: openid, profile, address, email, phone, futurepayments and paypalattributes
    * See https://developer.paypal.com/docs/integration/direct/identity/attributes/ for more details
    * @returns {Promise<any>}
    */
   @Cordova()
-  renderProfileSharingUI(scopes: string[]): Promise<any> { return; }
+  renderProfileSharingUI(scopes: string[]): Promise<any> {
+    return;
+  }
 }
 
 export interface PayPalEnvironment {
@@ -155,7 +169,13 @@ export interface PayPalEnvironment {
  * @hidden
  */
 export class PayPalPayment {
-  constructor(amount: string, currency: string, shortDescription: string, intent: string, details?: PayPalPaymentDetails) {
+  constructor(
+    amount: string,
+    currency: string,
+    shortDescription: string,
+    intent: string,
+    details?: PayPalPaymentDetails
+  ) {
     this.amount = amount;
     this.currency = currency;
     this.shortDescription = shortDescription;
@@ -183,38 +203,33 @@ export class PayPalPayment {
    * Optional Build Notation code ("BN code"), obtained from partnerprogram@paypal.com,
    * for your tracking purposes.
    */
-  bnCode: string = 'PhoneGap_SP';
+  bnCode = 'PhoneGap_SP';
   /**
    * Optional invoice number, for your tracking purposes. (up to 256 characters)
    */
   invoiceNumber: string;
-
   /**
    * Optional text, for your tracking purposes. (up to 256 characters)
    */
   custom: string;
-
   /**
    * Optional text which will appear on the customer's credit card statement. (up to 22 characters)
    */
   softDescriptor: string;
-
   /**
    * Optional array of PayPalItem objects.
    */
-  items: Array<PayPalItem>;
+  items: PayPalItem[];
 
   /**
-  * Optional payee email, if your app is paying a third-party merchant.
-  * The payee's email. It must be a valid PayPal email address.
-  */
+   * Optional payee email, if your app is paying a third-party merchant.
+   * The payee's email. It must be a valid PayPal email address.
+   */
   payeeEmail: string;
-
   /**
    * Optional customer shipping address, if your app wishes to provide this to the SDK.
    */
   shippingAddress: string;
-
   /**
    * Optional PayPalPaymentDetails object
    */
@@ -269,17 +284,6 @@ export class PayPalItem {
  */
 export class PayPalPaymentDetails {
   /**
-   * The PayPalPaymentDetails class defines optional amount details.
-   * @param {String} subtotal: Sub-total (amount) of items being paid for. 10 characters max with support for 2 decimal places.
-   * @param {String} shipping: Amount charged for shipping. 10 characters max with support for 2 decimal places.
-   * @param {String} tax: Amount charged for tax. 10 characters max with support for 2 decimal places.
-   */
-  constructor(subtotal: string, shipping: string, tax: string) {
-    this.subtotal = subtotal;
-    this.shipping = shipping;
-    this.tax = tax;
-  }
-  /**
    * Sub-total (amount) of items being paid for. 10 characters max with support for 2 decimal places.
    */
   subtotal: string;
@@ -291,6 +295,18 @@ export class PayPalPaymentDetails {
    * Amount charged for tax. 10 characters max with support for 2 decimal places.
    */
   tax: string;
+
+  /**
+   * The PayPalPaymentDetails class defines optional amount details.
+   * @param {String} subtotal: Sub-total (amount) of items being paid for. 10 characters max with support for 2 decimal places.
+   * @param {String} shipping: Amount charged for shipping. 10 characters max with support for 2 decimal places.
+   * @param {String} tax: Amount charged for tax. 10 characters max with support for 2 decimal places.
+   */
+  constructor(subtotal: string, shipping: string, tax: string) {
+    this.subtotal = subtotal;
+    this.shipping = shipping;
+    this.tax = tax;
+  }
 }
 
 /**
@@ -396,6 +412,7 @@ export interface PayPalConfigurationOptions {
    */
   [key: string]: any;
 }
+
 /**
  * @hidden
  */
@@ -405,8 +422,7 @@ export class PayPalConfiguration implements PayPalConfigurationOptions {
    * see defaults for options available
    */
   constructor(options?: PayPalConfigurationOptions) {
-
-    let defaults: PayPalConfigurationOptions = {
+    const defaults: PayPalConfigurationOptions = {
       defaultUserEmail: null,
       defaultUserPhoneCountryCode: null,
       defaultUserPhoneNumber: null,
@@ -421,11 +437,11 @@ export class PayPalConfiguration implements PayPalConfigurationOptions {
       presentingInPopover: false,
       forceDefaultsInSandbox: false,
       sandboxUserPassword: null,
-      sandboxUserPin: null
+      sandboxUserPin: null,
     };
 
     if (options && typeof options === 'object') {
-      for (let i in options) {
+      for (const i in options) {
         if (defaults.hasOwnProperty(i)) {
           defaults[i] = options[i];
         }
@@ -450,7 +466,15 @@ export class PayPalShippingAddress {
    * @param {String} postalCode: ZIP code or equivalent is usually required for countries that have them. 20 characters max. Required in certain countries.
    * @param {String} countryCode: 2-letter country code. 2 characters max.
    */
-  constructor(recipientName: string, line1: string, line2: string, city: string, state: string, postalCode: string, countryCode: string) {
+  constructor(
+    recipientName: string,
+    line1: string,
+    line2: string,
+    city: string,
+    state: string,
+    postalCode: string,
+    countryCode: string
+  ) {
     this.recipientName = recipientName;
     this.line1 = line1;
     this.line2 = line2;

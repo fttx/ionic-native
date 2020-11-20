@@ -62,7 +62,7 @@ export interface ActionSheetOptions {
  *
  * @usage
  * ```typescript
- * import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
+ * import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx';
  *
  * constructor(private actionSheet: ActionSheet) { }
  *
@@ -79,7 +79,7 @@ export interface ActionSheetOptions {
  *   addDestructiveButtonWithLabel: 'Delete',
  *   androidTheme: this.actionSheet.ANDROID_THEMES.THEME_HOLO_DARK,
  *   destructiveButtonLast: true
- * };
+ * }
  *
  * this.actionSheet.show(options).then((buttonIndex: number) => {
  *   console.log('Button pressed: ' + buttonIndex);
@@ -93,7 +93,7 @@ export interface ActionSheetOptions {
   plugin: 'cordova-plugin-actionsheet',
   pluginRef: 'plugins.actionsheet',
   repo: 'https://github.com/EddyVerbruggen/cordova-plugin-actionsheet',
-  platforms: ['Android', 'Browser', 'iOS', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows', 'Windows Phone 8'],
 })
 @Injectable()
 export class ActionSheet extends IonicNativePlugin {
@@ -111,7 +111,7 @@ export class ActionSheet extends IonicNativePlugin {
     THEME_HOLO_DARK: 2,
     THEME_HOLO_LIGHT: 3,
     THEME_DEVICE_DEFAULT_DARK: 4,
-    THEME_DEVICE_DEFAULT_LIGHT: 5
+    THEME_DEVICE_DEFAULT_LIGHT: 5,
   };
 
   /**

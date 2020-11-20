@@ -29,7 +29,7 @@ export const enum TYPE_SENSOR {
  *
  * @usage
  * ```typescript
- * import { Sensors, TYPE_SENSOR } from '@ionic-native/sensors';
+ * import { Sensors, TYPE_SENSOR } from '@ionic-native/sensors/ngx';
  *
  *
  * constructor(private sensors: Sensors) { }
@@ -50,7 +50,6 @@ export const enum TYPE_SENSOR {
 })
 @Injectable()
 export class Sensors extends IonicNativePlugin {
-
   /**
    * This function enables the sensor
    * @param {string} TYPE_SENSOR Specify the sensor to enable
@@ -78,5 +77,4 @@ export class Sensors extends IonicNativePlugin {
   getState(): Promise<any> {
     return;
   }
-
 }

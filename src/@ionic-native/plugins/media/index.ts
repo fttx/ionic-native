@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CordovaInstance, Plugin, checkAvailability, IonicNativePlugin, InstanceProperty } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { CordovaInstance, InstanceProperty, IonicNativePlugin, Plugin, checkAvailability } from '@ionic-native/core';
+import { Observable, Observer } from 'rxjs';
 
 /**
  * @hidden
  */
 export class MediaObject {
-
   /**
    * An observable that notifies you on actions success
    */
@@ -26,35 +24,32 @@ export class MediaObject {
   /**
    * @hidden
    */
-  @InstanceProperty
-  successCallback: Function;
+  @InstanceProperty() successCallback: Function;
 
   /**
    * @hidden
    */
-  @InstanceProperty
-  errorCallback: Function;
+  @InstanceProperty() errorCallback: Function;
 
   /**
    * @hidden
    */
-  @InstanceProperty
-  statusCallback: Function;
+  @InstanceProperty() statusCallback: Function;
 
   constructor(private _objectInstance: any) {
     this.onSuccess = new Observable<any>((observer: Observer<any>) => {
       this.successCallback = observer.next.bind(observer);
-      return () => this.successCallback = () => {};
+      return () => (this.successCallback = () => {});
     });
 
     this.onError = new Observable<MEDIA_ERROR>((observer: Observer<MEDIA_ERROR>) => {
       this.errorCallback = observer.next.bind(observer);
-      return () => this.errorCallback = () => {};
+      return () => (this.errorCallback = () => {});
     });
 
     this.onStatusUpdate = new Observable<MEDIA_STATUS>((observer: Observer<MEDIA_STATUS>) => {
       this.statusCallback = observer.next.bind(observer);
-      return () => this.statusCallback = () => {};
+      return () => (this.statusCallback = () => {});
     });
   }
 
@@ -63,56 +58,59 @@ export class MediaObject {
    * @returns {Promise<any>} Returns a promise with the amplitude of the current recording
    */
   @CordovaInstance()
-  getCurrentAmplitude(): Promise<any> { return; }
+  getCurrentAmplitude(): Promise<any> {
+    return;
+  }
 
   /**
    * Get the current position within an audio file. Also updates the Media object's position parameter.
    * @returns {Promise<any>} Returns a promise with the position of the current recording
    */
   @CordovaInstance()
-  getCurrentPosition(): Promise<any> { return; }
+  getCurrentPosition(): Promise<any> {
+    return;
+  }
 
   /**
    * Get the duration of an audio file in seconds. If the duration is unknown, it returns a value of -1.
    * @returns {number} Returns a promise with the duration of the current recording
    */
   @CordovaInstance({ sync: true })
-  getDuration(): number { return; }
+  getDuration(): number {
+    return;
+  }
 
   /**
    * Starts or resumes playing an audio file.
    */
   @CordovaInstance({ sync: true })
-  play(iosOptions?: {
-    numberOfLoops?: number,
-    playAudioWhenScreenIsLocked?: boolean
-  }): void { }
+  play(iosOptions?: { numberOfLoops?: number; playAudioWhenScreenIsLocked?: boolean }): void {}
 
   /**
    * Pauses playing an audio file.
    */
   @CordovaInstance({ sync: true })
-  pause(): void { }
+  pause(): void {}
 
   /**
    * Releases the underlying operating system's audio resources. This is particularly important for Android, since there are a finite amount of OpenCore instances for media playback. Applications should call the release function for any Media resource that is no longer needed.
    */
   @CordovaInstance({ sync: true })
-  release(): void { }
+  release(): void {}
 
   /**
    * Sets the current position within an audio file.
    * @param {number} milliseconds The time position you want to set for the current audio file
    */
   @CordovaInstance({ sync: true })
-  seekTo(milliseconds: number): void { }
+  seekTo(milliseconds: number): void {}
 
   /**
    * Set the volume for an audio file.
    * @param volume {number} The volume to set for playback. The value must be within the range of 0.0 to 1.0.
    */
   @CordovaInstance({ sync: true })
-  setVolume(volume: number): void { }
+  setVolume(volume: number): void {}
 
   @CordovaInstance({ sync: true })
   setRate(speedRate: number): void {}
@@ -121,38 +119,36 @@ export class MediaObject {
    * Starts recording an audio file.
    */
   @CordovaInstance({ sync: true })
-  startRecord(): void { }
+  startRecord(): void {}
 
   /**
    * Stops recording
    */
   @CordovaInstance({ sync: true })
-  stopRecord(): void { }
+  stopRecord(): void {}
 
   /**
    * Pauses recording
    */
   @CordovaInstance({ sync: true })
-  pauseRecord(): void { }
+  pauseRecord(): void {}
 
   /**
    * Resumes recording
    */
   @CordovaInstance({ sync: true })
-  resumeRecord(): void { }
+  resumeRecord(): void {}
 
   /**
    * Stops playing an audio file.
    */
   @CordovaInstance({ sync: true })
-  stop(): void { }
-
+  stop(): void {}
 }
 
 export type MediaStatusUpdateCallback = (statusCode: number) => void;
 
 export interface MediaError {
-
   /**
    * Error message
    */
@@ -162,7 +158,6 @@ export interface MediaError {
    * Error code
    */
   code: number;
-
 }
 
 export enum MEDIA_STATUS {
@@ -170,26 +165,27 @@ export enum MEDIA_STATUS {
   STARTING,
   RUNNING,
   PAUSED,
-  STOPPED
+  STOPPED,
 }
 
 export enum MEDIA_ERROR {
   ABORTED = 1,
   NETWORK,
   DECODE,
-  SUPPORTED
+  SUPPORTED,
 }
 
 export type MediaErrorCallback = (error: MediaError) => void;
 
 /**
  * @name Media
+ * @premier media
  * @description
  * This plugin provides the ability to record and play back audio files on a device.
  *
  * @usage
  * ```typescript
- * import { Media, MediaObject } from '@ionic-native/media';
+ * import { Media, MediaObject } from '@ionic-native/media/ngx';
  *
  *
  * constructor(private media: Media) { }
@@ -257,8 +253,8 @@ export type MediaErrorCallback = (error: MediaError) => void;
  * 2.) If that's not working, too, create the file before using.
  * Example:
  * ```typescript
- * import { Media, MediaObject } from '@ionic-native/media';
- * import { File } from '@ionic-native/file';
+ * import { Media, MediaObject } from '@ionic-native/media/ngx';
+ * import { File } from '@ionic-native/file/ngx';
  *
  * ...
  *
@@ -284,50 +280,49 @@ export type MediaErrorCallback = (error: MediaError) => void;
   repo: 'https://github.com/apache/cordova-plugin-media',
   plugin: 'cordova-plugin-media',
   pluginRef: 'Media',
-  platforms: ['Android', 'Browser', 'iOS', 'Windows']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows'],
 })
 @Injectable()
 export class Media extends IonicNativePlugin {
-
   // Constants
   /**
    * @hidden
    */
-  MEDIA_NONE: number = 0;
+  MEDIA_NONE = 0;
   /**
    * @hidden
    */
-  MEDIA_STARTING: number = 1;
+  MEDIA_STARTING = 1;
   /**
    * @hidden
    */
-  MEDIA_RUNNING: number = 2;
+  MEDIA_RUNNING = 2;
   /**
    * @hidden
    */
-  MEDIA_PAUSED: number = 3;
+  MEDIA_PAUSED = 3;
   /**
    * @hidden
    */
-  MEDIA_STOPPED: number = 4;
+  MEDIA_STOPPED = 4;
 
   // error codes
   /**
    * @hidden
    */
-  MEDIA_ERR_ABORTED: number = 1;
+  MEDIA_ERR_ABORTED = 1;
   /**
    * @hidden
    */
-  MEDIA_ERR_NETWORK: number = 2;
+  MEDIA_ERR_NETWORK = 2;
   /**
    * @hidden
    */
-  MEDIA_ERR_DECODE: number = 3;
+  MEDIA_ERR_DECODE = 3;
   /**
    * @hidden
    */
-  MEDIA_ERR_NONE_SUPPORTED: number = 4;
+  MEDIA_ERR_NONE_SUPPORTED = 4;
 
   /**
    * Open a media file
@@ -344,5 +339,4 @@ export class Media extends IonicNativePlugin {
 
     return new MediaObject(instance);
   }
-
 }

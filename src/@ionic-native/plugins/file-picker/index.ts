@@ -6,7 +6,7 @@ export interface IOSFilePickerPosition {
   y: number;
   width: number;
   height: number;
-};
+}
 
 /**
  * @name iOS File Picker
@@ -16,7 +16,7 @@ export interface IOSFilePickerPosition {
  *
  * @usage
  * ```typescript
- * import { IOSFilePicker } from '@ionic-native/file-picker';
+ * import { IOSFilePicker } from '@ionic-native/file-picker/ngx';
  *
  * constructor(private filePicker: IOSFilePicker) { }
  *
@@ -35,7 +35,7 @@ export interface IOSFilePickerPosition {
   plugin: 'cordova-plugin-filepicker',
   pluginRef: 'FilePicker',
   repo: 'https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin',
-  platforms: ['iOS']
+  platforms: ['iOS'],
 })
 @Injectable()
 export class IOSFilePicker extends IonicNativePlugin {
@@ -46,12 +46,9 @@ export class IOSFilePicker extends IonicNativePlugin {
    * @returns {Promise<string>}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  pickFile(
-    utis?: string | string[],
-    position?: IOSFilePickerPosition
-  ): Promise<string> {
+  pickFile(utis?: string | string[], position?: IOSFilePickerPosition): Promise<string> {
     return;
   }
 }

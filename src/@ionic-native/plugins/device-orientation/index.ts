@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface DeviceOrientationCompassHeading {
   /**
@@ -44,7 +44,7 @@ export interface DeviceOrientationCompassOptions {
  * @usage
  * ```typescript
  * // DeviceOrientationCompassHeading is an interface for compass
- * import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
+ * import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation/ngx';
  *
  * constructor(private deviceOrientation: DeviceOrientation) { }
  *
@@ -83,8 +83,8 @@ export interface DeviceOrientationCompassOptions {
     'Tizen',
     'Ubuntu',
     'Windows',
-    'Windows Phone'
-  ]
+    'Windows Phone',
+  ],
 })
 @Injectable()
 export class DeviceOrientation extends IonicNativePlugin {
@@ -107,11 +107,9 @@ export class DeviceOrientation extends IonicNativePlugin {
   @Cordova({
     callbackOrder: 'reverse',
     observable: true,
-    clearFunction: 'clearWatch'
+    clearFunction: 'clearWatch',
   })
-  watchHeading(
-    options?: DeviceOrientationCompassOptions
-  ): Observable<DeviceOrientationCompassHeading> {
+  watchHeading(options?: DeviceOrientationCompassOptions): Observable<DeviceOrientationCompassHeading> {
     return;
   }
 }

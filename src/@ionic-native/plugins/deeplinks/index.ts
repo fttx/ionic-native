@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 export interface DeeplinkMatch {
-
   /**
    * The route info for the matched route
    */
@@ -20,7 +19,6 @@ export interface DeeplinkMatch {
    * the route was matched (for example, Facebook sometimes adds extra data)
    */
   $link: any;
-
 }
 
 export interface DeeplinkOptions {
@@ -32,12 +30,16 @@ export interface DeeplinkOptions {
 
 /**
  * @name Deeplinks
+ * @premier deeplinks
  * @description This plugin handles deeplinks on iOS and Android for both custom URL scheme links
  * and Universal App Links.
  *
+ * Please read the [ionic plugin deeplinks docs](https://github.com/ionic-team/ionic-plugin-deeplinks) for iOS and Android integration.
+ * You must add `universal-links` to your `config.xml` and set up Apple App Site Association (AASA) for iOS and Asset Links for Android.
+ *
  * @usage
  * ```typescript
- * import { Deeplinks } from '@ionic-native/deeplinks';
+ * import { Deeplinks } from '@ionic-native/deeplinks/ngx';
  *
  * constructor(private deeplinks: Deeplinks) { }
  *
@@ -85,13 +87,13 @@ export interface DeeplinkOptions {
   plugin: 'ionic-plugin-deeplinks',
   pluginRef: 'IonicDeeplink',
   repo: 'https://github.com/ionic-team/ionic-plugin-deeplinks',
-  install: 'ionic cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=example.com --variable ANDROID_PATH_PREFIX=/',
+  install:
+    'ionic cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=example.com --variable ANDROID_PATH_PREFIX=/',
   installVariables: ['URL_SCHEME', 'DEEPLINK_SCHEME', 'DEEPLINK_HOST', 'ANDROID_PATH_PREFIX'],
-  platforms: ['Android', 'Browser', 'iOS']
+  platforms: ['Android', 'Browser', 'iOS'],
 })
 @Injectable()
 export class Deeplinks extends IonicNativePlugin {
-
   /**
    * Define a set of paths to match against incoming deeplinks.
    *
@@ -103,9 +105,11 @@ export class Deeplinks extends IonicNativePlugin {
    * errors if a deeplink comes through that does not match a given path.
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
-  route(paths: any): Observable<DeeplinkMatch> { return; }
+  route(paths: any): Observable<DeeplinkMatch> {
+    return;
+  }
 
   /**
    *
@@ -123,15 +127,16 @@ export class Deeplinks extends IonicNativePlugin {
    * promise result which you can then use to navigate in the app as you see fit.
    *
    * @param {Object} paths
-   * 
+   *
    * @param {DeeplinkOptions} options
    *
    * @returns {Observable<DeeplinkMatch>} Returns an Observable that resolves each time a deeplink comes through, and
    * errors if a deeplink comes through that does not match a given path.
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
-  routeWithNavController(navController: any, paths: any, options?: DeeplinkOptions): Observable<DeeplinkMatch> { return; }
-
+  routeWithNavController(navController: any, paths: any, options?: DeeplinkOptions): Observable<DeeplinkMatch> {
+    return;
+  }
 }

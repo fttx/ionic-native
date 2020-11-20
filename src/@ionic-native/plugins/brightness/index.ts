@@ -10,7 +10,7 @@ import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Brightness } from '@ionic-native/brightness';
+ * import { Brightness } from '@ionic-native/brightness/ngx';
  *
  * constructor(private brightness: Brightness) { }
  *
@@ -26,7 +26,7 @@ import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-brightness',
   pluginRef: 'cordova.plugins.brightness',
   repo: 'https://github.com/mgcrea/cordova-plugin-brightness',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class Brightness extends IonicNativePlugin {

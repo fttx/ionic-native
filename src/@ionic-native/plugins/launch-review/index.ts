@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 /**
  * @name Launch Review
@@ -11,14 +12,14 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { LaunchReview } from '@ionic-native/launch-review';
+ * import { LaunchReview } from '@ionic-native/launch-review/ngx';
  *
  * constructor(private launchReview: LaunchReview) { }
  *
  * ...
  *
  * this.launchReview.launch()
- *   .then(() => console.log('Successfully launched store app');
+ *   .then(() => console.log('Successfully launched store app'));
  *
  * if(this.launchReview.isRatingSupported()){
  *   this.launchReview.rating()
@@ -31,11 +32,10 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-launch-review',
   pluginRef: 'LaunchReview',
   repo: 'https://github.com/dpa99c/cordova-launch-review',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class LaunchReview extends IonicNativePlugin {
-
   /**
    * Launches App Store on current platform in order to leave a review for given app.
    * @param appId {string} - (optional) the platform-specific app ID to use to open the page in the store app.
@@ -45,7 +45,9 @@ export class LaunchReview extends IonicNativePlugin {
    * @returns {Promise<void>}
    */
   @Cordova({ platforms: ['Android', 'iOS'], callbackOrder: 'reverse' })
-  launch(appId?: string): Promise<void> { return; }
+  launch(appId?: string): Promise<void> {
+    return;
+  }
 
   /**
    * Invokes the native in-app rating dialog which allows a user to rate your app without needing to open the App Store.
@@ -54,10 +56,12 @@ export class LaunchReview extends IonicNativePlugin {
    * - First: after `LaunchReview.rating()` is called and the request to show the dialog is successful. Will be passed the value `requested`.
    * - Second: if and when the Rating dialog is actually displayed.  Will be passed the value `shown`.
    * - Third: if and when the Rating dialog is dismissed.  Will be passed the value `dismissed`.
-   * @returns {Promise<string>}
+   * @returns {Observable<string>}
    */
-  @Cordova({ platforms: ['iOS'] })
-  rating(): Promise<string> { return; }
+  @Cordova({ observable: true })
+  rating(): Observable<string> {
+    return;
+  }
 
   /**
    * Indicates if the current platform/version supports in-app ratings dialog, i.e. calling LaunchReview.rating().
@@ -65,6 +69,7 @@ export class LaunchReview extends IonicNativePlugin {
    * @returns {boolean}
    */
   @Cordova({ platforms: ['Android', 'iOS'], sync: true })
-  isRatingSupported(): boolean { return; }
-
+  isRatingSupported(): boolean {
+    return;
+  }
 }

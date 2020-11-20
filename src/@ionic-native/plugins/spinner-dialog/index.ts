@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 export interface SpinnerDialogIOSOptions {
   /**
@@ -32,7 +32,7 @@ export interface SpinnerDialogIOSOptions {
  *
  * @usage
  * ```typescript
- * import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+ * import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
  *
  * constructor(private spinnerDialog: SpinnerDialog) { }
  *
@@ -50,11 +50,10 @@ export interface SpinnerDialogIOSOptions {
   plugin: 'cordova-plugin-native-spinner',
   pluginRef: 'SpinnerDialog',
   repo: 'https://github.com/greybax/cordova-plugin-native-spinner',
-  platforms: ['Android', 'iOS', 'Windows Phone 8', 'Windows']
+  platforms: ['Android', 'iOS', 'Windows Phone 8', 'Windows'],
 })
 @Injectable()
 export class SpinnerDialog extends IonicNativePlugin {
-
   /**
    * Shows the spinner dialog
    * @param title {string} Spinner title (shows on Android only)
@@ -63,16 +62,15 @@ export class SpinnerDialog extends IonicNativePlugin {
    * @param iOSOptions {object} Options for iOS only
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
-  show(title?: string, message?: string, cancelCallback?: any, iOSOptions?: SpinnerDialogIOSOptions): void { }
+  show(title?: string, message?: string, cancelCallback?: any, iOSOptions?: SpinnerDialogIOSOptions): void {}
 
   /**
    * Hides the spinner dialog if visible
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
-  hide(): void { }
-
+  hide(): void {}
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 namespace Http {
   export const enum Verb {
@@ -12,7 +12,7 @@ namespace Http {
     TRACE,
     OPTIONS,
     CONNECT,
-    PATCH
+    PATCH,
   }
 
   export interface Response {
@@ -22,12 +22,7 @@ namespace Http {
 
   export interface Requester {
     request(verb: Verb, url: string, callback: Callback<Response>): void;
-    request(
-      verb: Verb,
-      url: string,
-      requestBody: string,
-      callback: Callback<Response>
-    ): void;
+    request(verb: Verb, url: string, requestBody: string, callback: Callback<Response>): void;
   }
 }
 
@@ -76,10 +71,7 @@ export interface IRemotePackage extends IPackage {
    * @param {SuccessCallback<void>} [abortSuccess] Optional callback invoked if the abort operation succeeded.
    * @param {ErrorCallback} [abortError] Optional callback invoked in case of an error.
    */
-  abortDownload(
-    abortSuccess?: SuccessCallback<void>,
-    abortError?: ErrorCallback
-  ): void;
+  abortDownload(abortSuccess?: SuccessCallback<void>, abortError?: ErrorCallback): void;
 }
 
 /**
@@ -118,20 +110,24 @@ export interface ILocalPackage extends IPackage {
  * Decomposed static side of RemotePackage.
  * For Class Decomposition guidelines see http://www.typescriptlang.org/Handbook#writing-dts-files-guidelines-and-specifics
  */
+
 /* tslint:disable */
 interface RemotePackage_Static {
   new (): IRemotePackage;
 }
+
 /* tslint:enable */
 
 /**
  * Decomposed static side of LocalPackage.
  * For Class Decomposition guidelines see http://www.typescriptlang.org/Handbook#writing-dts-files-guidelines-and-specifics
  */
+
 /* tslint:disable */
 interface LocalPackage_Static {
   new (): ILocalPackage;
 }
+
 /* tslint:enable */
 
 declare const RemotePackage: RemotePackage_Static;
@@ -152,15 +148,9 @@ interface NativeUpdateNotification {
   appVersion: string;
 }
 
-export interface Callback<T> {
-  (error: Error, parameter: T): void;
-}
-export interface SuccessCallback<T> {
-  (result?: T): void;
-}
-export interface ErrorCallback {
-  (error?: Error): void;
-}
+export type Callback<T> = (error: Error, parameter: T) => void;
+export type SuccessCallback<T> = (result?: T) => void;
+export type ErrorCallback = (error?: Error) => void;
 
 interface Configuration {
   appVersion: string;
@@ -177,18 +167,18 @@ declare class AcquisitionStatus {
 
 declare class AcquisitionManager {
   constructor(httpRequester: Http.Requester, configuration: Configuration);
-  public queryUpdateWithCurrentPackage(
+  queryUpdateWithCurrentPackage(
     currentPackage: IPackage,
     callback?: Callback<IRemotePackage | NativeUpdateNotification>
   ): void;
-  public reportStatusDeploy(
+  reportStatusDeploy(
     pkg?: IPackage,
     status?: string,
     previousLabelOrAppVersion?: string,
     previousDeploymentKey?: string,
     callback?: Callback<void>
   ): void;
-  public reportStatusDownload(pkg: IPackage, callback?: Callback<void>): void;
+  reportStatusDownload(pkg: IPackage, callback?: Callback<void>): void;
 }
 
 interface CodePushCordovaPlugin {
@@ -198,19 +188,13 @@ interface CodePushCordovaPlugin {
    * @param packageSuccess Callback invoked with the currently deployed package information.
    * @param packageError Optional callback invoked in case of an error.
    */
-  getCurrentPackage(
-    packageSuccess: SuccessCallback<ILocalPackage>,
-    packageError?: ErrorCallback
-  ): void;
+  getCurrentPackage(packageSuccess: SuccessCallback<ILocalPackage>, packageError?: ErrorCallback): void;
 
   /**
    * Gets the pending package information, if any. A pending package is one that has been installed but the application still runs the old code.
    * This happens only after a package has been installed using ON_NEXT_RESTART or ON_NEXT_RESUME mode, but the application was not restarted/resumed yet.
    */
-  getPendingPackage(
-    packageSuccess: SuccessCallback<ILocalPackage>,
-    packageError?: ErrorCallback
-  ): void;
+  getPendingPackage(packageSuccess: SuccessCallback<ILocalPackage>, packageError?: ErrorCallback): void;
 
   /**
    * Checks with the CodePush server if an update package is available for download.
@@ -235,10 +219,7 @@ interface CodePushCordovaPlugin {
    * @param {SuccessCallback<void>} [notifySucceeded] Optional callback invoked if the plugin was successfully notified.
    * @param {ErrorCallback} [notifyFailed] Optional callback invoked in case of an error during notifying the plugin.
    */
-  notifyApplicationReady(
-    notifySucceeded?: SuccessCallback<void>,
-    notifyFailed?: ErrorCallback
-  ): void;
+  notifyApplicationReady(notifySucceeded?: SuccessCallback<void>, notifyFailed?: ErrorCallback): void;
 
   /**
    * Reloads the application. If there is a pending update package installed using ON_NEXT_RESTART or ON_NEXT_RESUME modes, the update
@@ -247,10 +228,7 @@ interface CodePushCordovaPlugin {
    * @param {SuccessCallback<void>} installSuccess
    * @param {ErrorCallback} [errorCallback]
    */
-  restartApplication(
-    installSuccess: SuccessCallback<void>,
-    errorCallback?: ErrorCallback
-  ): void;
+  restartApplication(installSuccess: SuccessCallback<void>, errorCallback?: ErrorCallback): void;
 
   /**
    * Convenience method for installing updates in one method call.
@@ -329,7 +307,7 @@ export enum SyncStatus {
   /**
    * Intermediate status - the update package is about to be installed.
    */
-  INSTALLING_UPDATE
+  INSTALLING_UPDATE,
 }
 
 /**
@@ -349,7 +327,7 @@ export enum InstallMode {
   /**
    * The udpate is downloaded but not installed immediately. The new content will be available the next time the application is resumed or restarted, whichever event happends first.
    */
-  ON_NEXT_RESUME
+  ON_NEXT_RESUME,
 }
 
 /**
@@ -466,7 +444,7 @@ export interface DownloadProgress {
  *
  * @usage
  * ```typescript
- * import { CodePush } from '@ionic-native/code-push';
+ * import { CodePush } from '@ionic-native/code-push/ngx';
  *
  * constructor(private codePush: CodePush) { }
  *
@@ -486,7 +464,7 @@ export interface DownloadProgress {
   plugin: 'cordova-plugin-code-push',
   pluginRef: 'codePush',
   repo: 'https://github.com/Microsoft/cordova-plugin-code-push',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class CodePush extends IonicNativePlugin {
@@ -517,7 +495,7 @@ export class CodePush extends IonicNativePlugin {
    * @returns {Promise<IRemotePackage>}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   checkForUpdate(deploymentKey?: string): Promise<IRemotePackage> {
     return;
@@ -568,12 +546,9 @@ export class CodePush extends IonicNativePlugin {
   @Cordova({
     observable: true,
     successIndex: 0,
-    errorIndex: 3 // we don't need this, so we set it to a value higher than # of args
+    errorIndex: 3, // we don't need this, so we set it to a value higher than # of args
   })
-  sync(
-    syncOptions?: SyncOptions,
-    downloadProgress?: SuccessCallback<DownloadProgress>
-  ): Observable<SyncStatus> {
+  sync(syncOptions?: SyncOptions, downloadProgress?: SuccessCallback<DownloadProgress>): Observable<SyncStatus> {
     return;
   }
 }

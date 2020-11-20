@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * @name DB Meter
  * @description This plugin defines a global DBMeter object, which permits to get the decibel values from the microphone.
  * @usage
  * ```typescript
- * import { DBMeter } from '@ionic-native/db-meter';
+ * import { DBMeter } from '@ionic-native/db-meter/ngx';
  *
  * constructor(private dbMeter: DBMeter) { }
  *
@@ -39,7 +39,7 @@ import { Observable } from 'rxjs/Observable';
   plugin: 'cordova-plugin-dbmeter',
   pluginRef: 'DBMeter',
   repo: 'https://github.com/akofman/cordova-plugin-dbmeter',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class DBMeter extends IonicNativePlugin {
@@ -49,7 +49,7 @@ export class DBMeter extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'stop'
+    clearFunction: 'stop',
   })
   start(): Observable<any> {
     return;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 /**
  * @name Market
  * @description
@@ -7,7 +7,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Market } from '@ionic-native/market';
+ * import { Market } from '@ionic-native/market/ngx';
  *
  * constructor(private market: Market) { }
  *
@@ -22,11 +22,10 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-market',
   pluginRef: 'cordova.plugins.market',
   repo: 'https://github.com/xmartlabs/cordova-plugin-market',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class Market extends IonicNativePlugin {
-
   /**
    * Opens an app in Google Play / App Store
    * @param appId {string} Package name
@@ -35,9 +34,11 @@ export class Market extends IonicNativePlugin {
   @Cordova({
     callbackStyle: 'object',
     successName: 'success',
-    errorName: 'failure'
+    errorName: 'failure',
   })
-  open(appId: string): Promise<any> { return; }
+  open(appId: string): Promise<any> {
+    return;
+  }
 
   /**
    * Search apps by keyword
@@ -48,8 +49,9 @@ export class Market extends IonicNativePlugin {
     callbackStyle: 'object',
     successName: 'success',
     errorName: 'failure',
-    platforms: ['Android']
+    platforms: ['Android'],
   })
-  search(keyword: string): Promise<any> { return; }
-
+  search(keyword: string): Promise<any> {
+    return;
+  }
 }

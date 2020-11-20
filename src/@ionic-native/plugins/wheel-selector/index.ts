@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 export interface WheelSelectorItem {
   description?: string;
@@ -19,12 +19,12 @@ export interface WheelSelectorOptions {
   /**
    * The items to display (array of items).
    */
-  items: Array<Array<WheelSelectorItem>>;
+  items: WheelSelectorItem[][];
 
   /**
    * Which items to display by default.
    */
-  defaultItems?: Array<DefaultItem>;
+  defaultItems?: DefaultItem[];
 
   /**
    * The 'ok' button text
@@ -55,7 +55,7 @@ export interface WheelSelectorOptions {
    * key/value to be displayed
    * Default: description
    */
-   displayKey?: string;
+  displayKey?: string;
 }
 
 export interface WheelSelectorData {
@@ -69,7 +69,7 @@ export interface WheelSelectorData {
  *
  * @usage
  * ```
- * import { WheelSelector } from '@ionic-native/wheel-selector';
+ * import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
  *
  *
  * constructor(private selector: WheelSelector) { }
@@ -101,7 +101,7 @@ export interface WheelSelectorData {
  *     { name: "Gordon", id: '103' },
  *     { name: "Smith", id: '104' }
  *   ]
- * };
+ * }
  *
  * ...
  *
@@ -155,7 +155,7 @@ export interface WheelSelectorData {
  *      ],
  *      displayKey: 'name',
  *      defaultItems: [
- *  	  {index:0, value: this.jsonData.firstNames[2].name}, 
+ *  	  {index:0, value: this.jsonData.firstNames[2].name},
  *        {index: 0, value: this.jsonData.lastNames[3].name}
  *      ]
  *    }).then(
@@ -177,12 +177,10 @@ export interface WheelSelectorData {
   plugin: 'cordova-wheel-selector-plugin',
   pluginRef: 'SelectorCordovaPlugin',
   repo: 'https://github.com/jasonmamy/cordova-wheel-selector-plugin',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
-
 @Injectable()
 export class WheelSelector extends IonicNativePlugin {
-
   /**
    * Shows the wheel selector
    * @param {WheelSelectorOptions} options Options for the wheel selector
@@ -198,7 +196,9 @@ export class WheelSelector extends IonicNativePlugin {
    * @returns {Promise<void>}
    */
   @Cordova({
-    platforms: ['iOS']
+    platforms: ['iOS'],
   })
-  hideSelector(): Promise<void> { return; }
+  hideSelector(): Promise<void> {
+    return;
+  }
 }

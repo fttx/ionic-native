@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { checkAvailability, Cordova, CordovaInstance, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, CordovaInstance, IonicNativePlugin, Plugin, checkAvailability } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 declare const window: any;
 
-export type EventResponse = RegistrationEventResponse &
-  NotificationEventResponse &
-  Error;
+export type EventResponse = RegistrationEventResponse & NotificationEventResponse & Error;
 
 export interface RegistrationEventResponse {
   /**
@@ -50,8 +48,6 @@ export interface NotificationEventResponse {
  * so that he could specify any custom code without having to use array notation (map['prop']) for all of them.
  */
 export interface NotificationEventAdditionalData {
-  [name: string]: any;
-
   /**
    * Whether the notification was received while the app was in the foreground
    */
@@ -60,6 +56,8 @@ export interface NotificationEventAdditionalData {
   coldstart?: boolean;
   from?: string;
   notId?: string;
+
+  [name: string]: any;
 }
 
 export interface IOSPushOptions {
@@ -136,6 +134,7 @@ export interface CategoryActionData {
   title: string;
   foreground: boolean;
   destructive: boolean;
+  inline?: boolean;
 }
 
 export interface AndroidPushOptions {
@@ -208,7 +207,7 @@ export interface BrowserPushOptions {
 
   /**
    * URL for the push server you want to use.
-   * Default: http://push.api.phonegap.com/v1/push	Optional.
+   * Default: http://push.api.phonegap.com/v1/push  Optional.
    */
   pushServiceURL?: string;
 }
@@ -221,12 +220,16 @@ export interface PushOptions {
 }
 
 export type Priority = 1 | 2 | 3 | 4 | 5;
+export type Visibility = 0 | 1 | -1;
 
 export interface Channel {
   id: string;
   description: string;
   importance: Priority;
   sound?: string;
+  vibration?: boolean | number[];
+  visibility?: Visibility;
+  badge?: boolean;
 }
 
 export type PushEvent = string;
@@ -242,7 +245,7 @@ export type PushEvent = string;
  *
  * @usage
  * ```typescript
- * import { Push, PushObject, PushOptions } from '@ionic-native/push';
+ * import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
  *
  * constructor(private push: Push) { }
  *
@@ -266,7 +269,11 @@ export type PushEvent = string;
  *  id: "testchannel1",
  *  description: "My first test channel",
  *  // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
- *  importance: 3
+ *  importance: 3,
+ *  //badge is used to if badge appears on the app icon see https://developer.android.com/reference/android/app/NotificationChannel.html#setShowBadge(boolean).
+ *  //false = no badge on app icon.
+ *  //true = badge on app icon
+ *  badge: false
  * }).then(() => console.log('Channel created'));
  *
  * // Delete a channel (Android O and above)
@@ -288,7 +295,7 @@ export type PushEvent = string;
  *    browser: {
  *        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
  *    }
- * };
+ * }
  *
  * const pushObject: PushObject = this.push.init(options);
  *
@@ -317,7 +324,7 @@ export type PushEvent = string;
   pluginRef: 'PushNotification',
   repo: 'https://github.com/phonegap/phonegap-plugin-push',
   install: 'ionic cordova plugin add phonegap-plugin-push',
-  platforms: ['Android', 'Browser', 'iOS', 'Windows']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows'],
 })
 @Injectable()
 export class Push extends IonicNativePlugin {
@@ -344,7 +351,7 @@ export class Push extends IonicNativePlugin {
    * @param channel {Channel}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   createChannel(channel?: Channel): Promise<any> {
     return;
@@ -355,7 +362,7 @@ export class Push extends IonicNativePlugin {
    * @param id {string}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   deleteChannel(id?: string): Promise<any> {
     return;
@@ -377,16 +384,16 @@ export class Push extends IonicNativePlugin {
 @Plugin({
   pluginName: 'Push',
   plugin: 'phonegap-plugin-push',
-  pluginRef: 'PushNotification'
+  pluginRef: 'PushNotification',
 })
 export class PushObject {
   private _objectInstance: any;
 
   constructor(options: PushOptions) {
-    if (
-      checkAvailability('PushNotification', 'init', 'PushNotification') === true
-    ) {
-      this._objectInstance = window.PushNotification.init(options);
+    if (checkAvailability('PushNotification', 'init', 'PushNotification') === true) {
+      if (typeof window !== 'undefined') {
+        this._objectInstance = window.PushNotification.init(options);
+      }
     }
   }
 
@@ -398,7 +405,7 @@ export class PushObject {
   @CordovaInstance({
     observable: true,
     clearFunction: 'off',
-    clearWithArgs: true
+    clearWithArgs: true,
   })
   on(event: PushEvent): Observable<EventResponse> {
     return;
@@ -423,7 +430,7 @@ export class PushObject {
    * @param count
    */
   @CordovaInstance({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   setApplicationIconBadgeNumber(count?: number): Promise<any> {
     return;
@@ -444,7 +451,7 @@ export class PushObject {
    * @param [id]
    */
   @CordovaInstance({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   finish(id?: string): Promise<any> {
     return;

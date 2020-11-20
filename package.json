@@ -1,63 +1,85 @@
 {
   "name": "@fttx/ionic-native",
-  "version": "4.13.3",
+  "version": "5.29.0",
   "description": "Native plugin wrappers for Cordova and Ionic with TypeScript, ES6+, Promise and Observable support",
   "homepage": "https://ionicframework.com/",
   "author": "Ionic Team <hi@ionic.io> (https://ionic.io)",
   "license": "MIT",
-  "devDependencies": {
-    "@angular/compiler": "^5.2.11",
-    "@angular/compiler-cli": "^5.2.11",
-    "@angular/core": "^5.2.11",
-    "@types/cordova": "0.0.34",
-    "@types/jasmine": "^2.8.7",
-    "@types/node": "8.10.20",
-    "canonical-path": "0.0.2",
-    "child-process-promise": "2.2.1",
-    "conventional-changelog-cli": "^2.0.5",
-    "cz-conventional-changelog": "^2.1.0",
-    "dgeni": "0.4.7",
-    "dgeni-packages": "0.16.10",
-    "fs-extra": "2.0.0",
-    "fs-extra-promise": "0.4.1",
-    "gulp": "3.9.1",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-tslint": "6.1.2",
-    "jasmine-core": "^3.2.1",
-    "karma": "^2.0.5",
-    "karma-cli": "^1.0.1",
-    "karma-jasmine": "^1.1.2",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-typescript": "^3.0.13",
-    "karma-typescript-es6-transform": "^1.0.4",
-    "lodash": "^4.17.10",
-    "minimist": "1.2.0",
-    "node-html-encoder": "0.0.2",
-    "q": "^1.5.1",
-    "queue": "^4.5.0",
-    "rimraf": "^2.6.2",
-    "rxjs": "^5.5.12",
-    "semver": "^5.5.1",
-    "tslint": "3.15.1",
-    "tslint-ionic-rules": "0.0.8",
-    "typescript": "~2.4.2",
-    "zone.js": "^0.8.26"
-  },
   "scripts": {
-    "start": "npm run test:watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build:core": "tsc -p tsconfig.core.json",
+    "build:esm": "ts-node -P scripts/tsconfig.json scripts/tasks/build-esm",
+    "build:es5": "ts-node -P scripts/tsconfig.json scripts/tasks/build-es5",
+    "build:ngx": "ts-node -P scripts/tsconfig.json scripts/tasks/build-ngx",
+    "build": "npm run build:core && npm run build:esm && npm run build:ngx && npm run build:es5",
+    "prebuild": "rimraf -rf dist",
+    "npmpub": "ts-node -P scripts/tsconfig.json scripts/tasks/publish",
     "lint": "gulp lint",
-    "build": "npm run clean && npm run lint && npm run build:core && npm run build:modules",
-    "build:core": "ngc -p scripts/build/tsconfig-core.json",
-    "build:modules": "node scripts/build/build.js",
-    "clean": "rimraf dist .tmp",
-    "shipit": "npm run build && gulp readmes && npm run npmpub",
-    "npmpub": "node scripts/build/publish.js",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "postchangelog": "git commit -am \"chore(): update changelog\"",
-    "test": "karma start karma.conf.js --single-run",
-    "test:watch": "karma start karma.conf.js",
-    "readmes": "gulp readmes"
+    "readmes": "gulp readmes",
+    "docs-json": "ts-node -P scripts/tsconfig.json scripts/docs-json",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "shipit": "npm run build && npm run readmes && npm run npmpub",
+    "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\""
+  },
+  "devDependencies": {
+    "@angular/common": "^9.1.12",
+    "@angular/compiler": "^9.1.12",
+    "@angular/compiler-cli": "^9.1.12",
+    "@angular/core": "^9.1.12",
+    "@types/cordova": "0.0.34",
+    "@types/fs-extra": "^9.0.2",
+    "@types/jest": "^26.0.14",
+    "@types/lodash": "^4.14.162",
+    "@types/node": "^12.12.68",
+    "@types/rimraf": "^3.0.0",
+    "@types/webpack": "^4.41.22",
+    "ajv": "^6.12.6",
+    "async-promise-queue": "^1.0.5",
+    "conventional-changelog-cli": "^2.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "dgeni": "^0.4.12",
+    "dgeni-packages": "0.16.10",
+    "fs-extra": "^9.0.1",
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-tslint": "^8.1.4",
+    "husky": "^4.3.0",
+    "jest": "^26.5.3",
+    "lint-staged": "^10.4.1",
+    "lodash": "^4.17.20",
+    "minimist": "^1.2.5",
+    "natives": "^1.1.6",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "rxjs": "^6.6.3",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^8.10.2",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-ionic-rules": "0.0.21",
+    "typedoc": "^0.18.0",
+    "typescript": "~3.8.3",
+    "typescript-tslint-plugin": "0.5.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "unminified-webpack-plugin": "^2.0.0",
+    "webpack": "^4.44.2",
+    "winston": "^3.3.3",
+    "zone.js": "^0.10.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   },
   "repository": {
     "type": "git",
@@ -70,5 +92,18 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "tslib": "^1.14.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write"
+    ]
   }
 }

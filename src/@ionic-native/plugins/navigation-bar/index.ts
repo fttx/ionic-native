@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @beta
@@ -10,7 +9,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { NavigationBar } from '@ionic-native/navigation-bar';
+ * import { NavigationBar } from '@ionic-native/navigation-bar/ngx';
  *
  * constructor(private navigationBar: NavigationBar) { }
  *
@@ -25,32 +24,34 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-navigationbar',
   pluginRef: 'navigationbar',
   repo: 'https://github.com/cranberrygame/cordova-plugin-navigationbar',
-  platforms: ['Android']
+  platforms: ['Android'],
 })
 @Injectable()
 export class NavigationBar extends IonicNativePlugin {
-
   /**
    * hide automatically (or not) the navigation bar.
-   * @param autohide {boolean}  
+   * @param autohide {boolean}
    * @return {Promise<any>}
    */
   @Cordova({
     callbackStyle: 'object',
     successName: 'success',
-    errorName: 'failure'
+    errorName: 'failure',
   })
-  setUp(autohide?: boolean): Promise<any> { return; }
+  setUp(autohide?: boolean): Promise<any> {
+    return;
+  }
 
   /**
-   * Hide the navigation bar. 
+   * Hide the navigation bar.
    * @return {Promise<any>}
    */
   @Cordova({
     callbackStyle: 'object',
     successName: 'success',
-    errorName: 'failure'
+    errorName: 'failure',
   })
-  hideNavigationBar(): Promise<any> { return; }
-
+  hideNavigationBar(): Promise<any> {
+    return;
+  }
 }

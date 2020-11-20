@@ -1,8 +1,7 @@
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Injectable } from '@angular/core';
 
 export interface QQShareOptions {
-
   /**
    * The clinet type, QQ or TIM
    * Default is QQ
@@ -59,7 +58,7 @@ export interface QQShareOptions {
  *
  * @usage
  * ```typescript
- * import { QQSDK, QQShareOptions } from '@ionic-native/qqsdk';
+ * import { QQSDK, QQShareOptions } from '@ionic-native/qqsdk/ngx';
  *
  * constructor(private qq: QQSDK) { }
  *
@@ -74,17 +73,17 @@ export interface QQShareOptions {
  *   image: 'https://cordova.apache.org/static/img/cordova_bot.png',
  *   description: 'This is  Cordova QQ share description',
  *   flashUrl:  'http://stream20.qqmusic.qq.com/30577158.mp3',
- * };
+ * }
  *
  * const clientOptions: QQShareOptions = {
  *   client: this.qq.ClientType.QQ,
- * };
+ * }
  *
  * const shareTextOptions: QQShareOptions = {
  *   client: this.qq.ClientType.QQ,
  *   text: 'This is Share Text',
  *   scene: this.qq.Scene.QQ,
- * };
+ * }
  *
  * this.qq.ssoLogin(clientOptions)
  *    .then(result => {
@@ -163,21 +162,20 @@ export interface QQShareOptions {
 })
 @Injectable()
 export class QQSDK extends IonicNativePlugin {
-
   /**
    * QQ Share Scene
    */
   Scene = {
     QQ: 0,
     QQZone: 1,
-    Favorite: 2
+    Favorite: 2,
   };
   /**
    *  client type:  QQ application or TIM application
    */
   ClientType = {
     QQ: 0,
-    TIM: 1
+    TIM: 1,
   };
 
   /**
@@ -186,14 +184,14 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   ssoLogin(options: QQShareOptions): Promise<any> {
     return;
   }
 
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   logout(): Promise<any> {
     return;
@@ -205,7 +203,7 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   checkClientInstalled(options: QQShareOptions): Promise<any> {
     return;
@@ -217,7 +215,7 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   shareText(options: QQShareOptions): Promise<any> {
     return;
@@ -229,7 +227,7 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   shareImage(options: QQShareOptions): Promise<any> {
     return;
@@ -241,7 +239,7 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   shareNews(options: QQShareOptions): Promise<any> {
     return;
@@ -253,7 +251,7 @@ export class QQSDK extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a Promise that resolves with the success return, or rejects with an error.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
   shareAudio(options: QQShareOptions): Promise<any> {
     return;

@@ -17,7 +17,7 @@ export interface StringMap {
  *
  * @usage
  * ```typescript
- * import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
+ * import { AppCenterAnalytics } from '@ionic-native/app-center-analytics/ngx';
  *
  *
  * constructor(private appCenterAnalytics: AppCenterAnalytics) { }
@@ -38,9 +38,8 @@ export interface StringMap {
   pluginName: 'AppCenterAnalytics',
   plugin: 'cordova-plugin-appcenter-analytics',
   pluginRef: 'AppCenter.Analytics',
-  repo:
-    'https://github.com/Microsoft/appcenter-sdk-cordova/tree/master/cordova-plugin-appcenter-analytics',
-  platforms: ['Android', 'iOS']
+  repo: 'https://github.com/Microsoft/appcenter-sdk-cordova/tree/master/cordova-plugin-appcenter-analytics',
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class AppCenterAnalytics extends IonicNativePlugin {

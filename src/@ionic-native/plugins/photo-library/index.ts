@@ -1,6 +1,5 @@
-import { Plugin, Cordova, IonicNativePlugin, CordovaOptions, wrap } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Cordova, CordovaOptions, IonicNativePlugin, Plugin, wrap } from '@ionic-native/core';
+import { Observable, Observer } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 /**
@@ -26,7 +25,7 @@ export function CordovaFiniteObservable(opts: CordovaFiniteObservableOptions = {
   opts.observable = true;
   return (target: Object, methodName: string, descriptor: TypedPropertyDescriptor<any>) => {
     return {
-      value: function(...args: any[]) {
+      value(...args: any[]) {
         const wrappedObservable: Observable<any> = wrap(this, methodName, opts).apply(this, args);
         return new Observable<any>((observer: Observer<any>) => {
           const wrappedSubscription = wrappedObservable.subscribe({
@@ -36,15 +35,19 @@ export function CordovaFiniteObservable(opts: CordovaFiniteObservableOptions = {
                 observer.complete();
               }
             },
-            error: (err: any) => { observer.error(err); },
-            complete: () => { observer.complete(); }
+            error: (err: any) => {
+              observer.error(err);
+            },
+            complete: () => {
+              observer.complete();
+            },
           });
           return () => {
             wrappedSubscription.unsubscribe();
           };
         });
       },
-      enumerable: true
+      enumerable: true,
     };
   };
 }
@@ -58,7 +61,7 @@ export function CordovaFiniteObservable(opts: CordovaFiniteObservableOptions = {
  *
  * @usage
  * ```typescript
- * import { PhotoLibrary } from '@ionic-native/photo-library';
+ * import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
  *
  * constructor(private photoLibrary: PhotoLibrary) { }
  *
@@ -91,24 +94,28 @@ export function CordovaFiniteObservable(opts: CordovaFiniteObservableOptions = {
   plugin: 'cordova-plugin-photo-library',
   pluginRef: 'cordova.plugins.photoLibrary',
   repo: 'https://github.com/terikon/cordova-plugin-photo-library',
-  install: 'ionic cordova plugin add cordova-plugin-photo-library --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="To choose photos"',
+  install:
+    'ionic cordova plugin add cordova-plugin-photo-library --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="To choose photos"',
   installVariables: ['PHOTO_LIBRARY_USAGE_DESCRIPTION'],
-  platforms: ['Android', 'Browser', 'iOS']
+  platforms: ['Android', 'Browser', 'iOS'],
 })
 @Injectable()
 export class PhotoLibrary extends IonicNativePlugin {
-
   /**
    * Retrieves library items. Library item contains photo metadata like width and height, as well as photoURL and thumbnailURL.
    * @param options {GetLibraryOptions} Optional, like thumbnail size and chunks settings.
    * @return {Observable<LibraryItem[]>} Returns library items. If appropriate option was set, will be returned by chunks.
    */
-  @CordovaFiniteObservable({
-    callbackOrder: 'reverse',
-    resultFinalPredicate: 'isLastChunk',
-    resultTransform: 'library'
+  @Cordova({
+    observable: true,
   })
-  getLibrary(options?: GetLibraryOptions): Observable<LibraryItem[]> { return; }
+  getLibrary(
+    success?: (res?: any) => void,
+    error?: (err?: any) => void,
+    options?: GetLibraryOptions
+  ): Observable<LibraryItem[]> {
+    return;
+  }
 
   /**
    * Asks user permission to access photo library.
@@ -116,18 +123,22 @@ export class PhotoLibrary extends IonicNativePlugin {
    * @return { Promise<void>} Returns a promise that resolves when permissions are granted, and fails when not.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  requestAuthorization(options?: RequestAuthorizationOptions): Promise<void> { return; }
+  requestAuthorization(options?: RequestAuthorizationOptions): Promise<void> {
+    return;
+  }
 
   /**
    * Returns list of photo albums on device.
    * @return {Promise<AlbumItem[]>} Resolves to list of albums.
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  getAlbums(): Promise<AlbumItem[]> { return; }
+  getAlbums(): Promise<AlbumItem[]> {
+    return;
+  }
 
   /**
    * Provides means to request URL of thumbnail, with specified size or quality.
@@ -137,9 +148,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  getThumbnailURL(photo: string | LibraryItem, options?: GetThumbnailOptions): Promise<string> { return; }
+  getThumbnailURL(photo: string | LibraryItem, options?: GetThumbnailOptions): Promise<string> {
+    return;
+  }
 
   /**
    * Provides means to request photo URL by id.
@@ -149,9 +162,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  getPhotoURL(photo: string | LibraryItem, options?: any): Promise<string> { return; }
+  getPhotoURL(photo: string | LibraryItem, options?: any): Promise<string> {
+    return;
+  }
 
   /**
    * Returns thumbnail as Blob.
@@ -161,9 +176,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  getThumbnail(photo: string | LibraryItem, options?: GetThumbnailOptions): Promise<Blob> { return; }
+  getThumbnail(photo: string | LibraryItem, options?: GetThumbnailOptions): Promise<Blob> {
+    return;
+  }
 
   /**
    * Returns photo as Blob.
@@ -173,9 +190,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 1,
-    errorIndex: 2
+    errorIndex: 2,
   })
-  getPhoto(photo: string | LibraryItem, options?: any): Promise<Blob> { return; }
+  getPhoto(photo: string | LibraryItem, options?: any): Promise<Blob> {
+    return;
+  }
 
   /**
    * Saves image to specified album. Album will be created if not exists.
@@ -187,9 +206,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
-  saveImage(url: string, album: AlbumItem | string, options?: GetThumbnailOptions): Promise<LibraryItem> { return; }
+  saveImage(url: string, album: AlbumItem | string, options?: GetThumbnailOptions): Promise<LibraryItem> {
+    return;
+  }
 
   /**
    * Saves video to specified album. Album will be created if not exists.
@@ -199,10 +220,11 @@ export class PhotoLibrary extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
-  saveVideo(url: string, album: AlbumItem | string): Promise<void> { return; }
-
+  saveVideo(url: string, album: AlbumItem | string): Promise<void> {
+    return;
+  }
 }
 
 /**

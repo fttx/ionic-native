@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Cordova,
-  CordovaProperty,
-  IonicNativePlugin,
-  Plugin
-} from '@ionic-native/core';
+import { Cordova, CordovaProperty, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Diagnostic
@@ -13,13 +8,13 @@ import {
  *
  * @usage
  * ```typescript
- * import { Diagnostic } from '@ionic-native/diagnostic';
+ * import { Diagnostic } from '@ionic-native/diagnostic/ngx';
  *
  * constructor(private diagnostic: Diagnostic) { }
  *
  * ...
  *
- * let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
+ * let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); }
  * let errorCallback = (e) => console.error(e);
  *
  * this.diagnostic.isCameraAvailable().then(successCallback).catch(errorCallback);
@@ -44,7 +39,7 @@ import {
   plugin: 'cordova.plugins.diagnostic',
   pluginRef: 'cordova.plugins.diagnostic',
   repo: 'https://github.com/dpa99c/cordova-diagnostic-plugin',
-  platforms: ['Android', 'iOS', 'Windows']
+  platforms: ['Android', 'iOS', 'Windows'],
 })
 @Injectable()
 export class Diagnostic extends IonicNativePlugin {
@@ -72,13 +67,17 @@ export class Diagnostic extends IonicNativePlugin {
     RECEIVE_MMS: 'RECEIVE_MMS',
     WRITE_EXTERNAL_STORAGE: 'WRITE_EXTERNAL_STORAGE',
     READ_EXTERNAL_STORAGE: 'READ_EXTERNAL_STORAGE',
-    BODY_SENSORS: 'BODY_SENSORS'
+    BODY_SENSORS: 'BODY_SENSORS',
   };
 
-  @CordovaProperty
+  @CordovaProperty()
   permissionStatus: {
     GRANTED: string;
+    /**
+     * @deprecated cordova.plugins.diagnostic@5.0.0 uses DENIED_ONCE to unify DENIED* statuses across iOS/Android
+     */
     DENIED: string;
+    DENIED_ONCE: string;
     NOT_REQUESTED: string;
     DENIED_ALWAYS: string;
     RESTRICTED: string;
@@ -87,7 +86,16 @@ export class Diagnostic extends IonicNativePlugin {
 
   locationAuthorizationMode = {
     ALWAYS: 'always',
-    WHEN_IN_USE: 'when_in_use'
+    WHEN_IN_USE: 'when_in_use',
+  };
+
+  /**
+   * iOS ONLY
+   * Location accuracy authorization
+   */
+  locationAccuracyAuthorization: {
+    FULL: 'full',
+    REDUCED: 'reduced',
   };
 
   permissionGroups = {
@@ -103,24 +111,18 @@ export class Diagnostic extends IonicNativePlugin {
       'USE_SIP',
       'PROCESS_OUTGOING_CALLS',
       'READ_CALL_LOG',
-      'WRITE_CALL_LOG'
+      'WRITE_CALL_LOG',
     ],
     SENSORS: ['BODY_SENSORS'],
-    SMS: [
-      'SEND_SMS',
-      'RECEIVE_SMS',
-      'READ_SMS',
-      'RECEIVE_WAP_PUSH',
-      'RECEIVE_MMS'
-    ],
-    STORAGE: ['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']
+    SMS: ['SEND_SMS', 'RECEIVE_SMS', 'READ_SMS', 'RECEIVE_WAP_PUSH', 'RECEIVE_MMS'],
+    STORAGE: ['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE'],
   };
 
   locationMode = {
     HIGH_ACCURACY: 'high_accuracy',
     DEVICE_ONLY: 'device_only',
     BATTERY_SAVING: 'battery_saving',
-    LOCATION_OFF: 'location_off'
+    LOCATION_OFF: 'location_off',
   };
 
   bluetoothState = {
@@ -131,10 +133,10 @@ export class Diagnostic extends IonicNativePlugin {
     POWERED_OFF: 'powered_off',
     POWERED_ON: 'powered_on',
     POWERING_OFF: 'powering_off',
-    POWERING_ON: 'powering_on'
+    POWERING_ON: 'powering_on',
   };
 
-  @CordovaProperty
+  @CordovaProperty()
   NFCState: {
     UNKNOWN: string;
     POWERED_OFF: string;
@@ -143,7 +145,7 @@ export class Diagnostic extends IonicNativePlugin {
     POWERING_OFF: string;
   };
 
-  @CordovaProperty
+  @CordovaProperty()
   motionStatus: {
     NOT_REQUESTED: string;
     GRANTED: string;
@@ -678,7 +680,7 @@ export class Diagnostic extends IonicNativePlugin {
    */
   @Cordova({
     platforms: ['Android'],
-    sync: true
+    sync: true,
   })
   switchToWirelessSettings(): void {}
 
@@ -687,7 +689,7 @@ export class Diagnostic extends IonicNativePlugin {
    */
   @Cordova({
     platforms: ['Android'],
-    sync: true
+    sync: true,
   })
   switchToNFCSettings(): void {}
 
@@ -727,7 +729,7 @@ export class Diagnostic extends IonicNativePlugin {
    */
   @Cordova({
     platforms: ['Android'],
-    sync: true
+    sync: true,
   })
   registerNFCStateChangeHandler(handler: Function): void {}
 
@@ -814,6 +816,15 @@ export class Diagnostic extends IonicNativePlugin {
    */
   @Cordova({ platforms: ['iOS'] })
   getRemoteNotificationsAuthorizationStatus(): Promise<string> {
+    return;
+  }
+
+  /**
+   * Requests reminders authorization for the application.
+   * @returns {Promise<any>}
+   */
+  @Cordova({ platforms: ['iOS'] })
+  requestRemoteNotificationsAuthorization(types?: string[], omitRegistration?: boolean): Promise<string> {
     return;
   }
 
@@ -927,4 +938,36 @@ export class Diagnostic extends IonicNativePlugin {
   getMotionAuthorizationStatus(): Promise<string> {
     return;
   }
+
+  /**
+   * Returns the location accuracy authorization for the application on iOS 14+. Note: calling on iOS <14 will result in the Promise being rejected.
+   *
+   * Learn more about this method [here](https://github.com/dpa99c/cordova-diagnostic-plugin#getlocationaccuracyauthorization)
+   *
+   * @return {Promise<string>}
+   */
+  @Cordova({ platform: ['iOS'] })
+  getLocationAccuracyAuthorization(): Promise<string> {
+    return;
+  }
+
+  /**
+   * Requests temporary access to full location accuracy for the application on iOS 14+.
+   *
+   * Learn more about this method [here](https://github.com/dpa99c/cordova-diagnostic-plugin#requesttemporaryfullaccuracyauthorization)
+   *
+   * @return {Promise<string>}
+   */
+  @Cordova({ platforms: ['iOS'] })
+  requestTemporaryFullAccuracyAuthorization(purpose: string): Promise<string> {
+    return;
+  }
+
+  /**
+   * Registers a function to be called when a change in location accuracy authorization occurs on iOS 14+.
+   *
+   * Learn more about this method [here](https://github.com/dpa99c/cordova-diagnostic-plugin#registerLocationAccuracyAuthorizationChangeHandler)
+   */
+  @Cordova({ platforms: ['iOS'], sync: true })
+  registerLocationAccuracyAuthorizationChangeHandler(handler: Function): void {}
 }

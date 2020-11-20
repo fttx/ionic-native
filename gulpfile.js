@@ -11,7 +11,7 @@ const flagConfig = {
     string: ['port', 'version', 'ngVersion', 'animations'],
     boolean: ['dry-run'],
     alias: { p: 'port', v: 'version', a: 'ngVersion' },
-    default: { port: 8000 }
+    default: { port: 8000 },
   },
   flags = minimist(process.argv.slice(2), flagConfig);
 
@@ -24,7 +24,7 @@ gulp.task('lint', () => {
     .pipe(
       tslint({
         formatter: 'verbose',
-        configuration: 'tslint.json'
+        configuration: 'tslint.json',
       })
     )
     .pipe(tslint.report());
@@ -32,9 +32,7 @@ gulp.task('lint', () => {
 
 gulp.task('plugin:create', () => {
   if (flags.n && flags.n !== '') {
-    const src = flags.m
-        ? './scripts/templates/wrap-min.tmpl'
-        : './scripts/templates/wrap.tmpl',
+    const src = flags.m ? './scripts/templates/wrap-min.tmpl' : './scripts/templates/wrap.tmpl',
       pluginName = flags.n,
       spaced = pluginName.replace(/(?!^)([A-Z])/g, ' $1'),
       kebabCase = _.kebabCase(pluginName);

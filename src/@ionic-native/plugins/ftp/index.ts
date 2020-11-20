@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * @name FTP
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
  *
  * @usage
  * ```typescript
- * import { FTP } from '@ionic-native/ftp';
+ * import { FTP } from '@ionic-native/ftp/ngx';
  *
  *
  * constructor(private fTP: FTP) { }
@@ -28,7 +28,7 @@ import { Observable } from 'rxjs/Observable';
   plugin: 'cordova-plugin-ftp',
   pluginRef: 'cordova.plugin.ftp',
   repo: 'https://github.com/xfally/cordova-plugin-ftp',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class FTP extends IonicNativePlugin {
@@ -110,7 +110,7 @@ export class FTP extends IonicNativePlugin {
    *                        The arg `0`, `0.1xx`, `0.2xx` ... `1` means the upload percent. When it reach `1`, means success.
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
   upload(localFile: string, remoteFile: string): Observable<any> {
     return;
@@ -126,7 +126,7 @@ export class FTP extends IonicNativePlugin {
    *                        The arg `0`, `0.1xx`, `0.2xx` ... `1` means the upload percent. When it reach `1`, means success.
    */
   @Cordova({
-    observable: true
+    observable: true,
   })
   download(localFile: string, remoteFile: string): Observable<any> {
     return;

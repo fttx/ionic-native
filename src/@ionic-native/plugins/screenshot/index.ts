@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { IonicNativePlugin, Plugin, getPromise } from '@ionic-native/core';
 
 declare const navigator: any;
 
@@ -8,7 +8,7 @@ declare const navigator: any;
  * @description Captures a screen shot
  * @usage
  * ```typescript
- * import { Screenshot } from '@ionic-native/screenshot';
+ * import { Screenshot } from '@ionic-native/screenshot/ngx';
  *
  * constructor(private screenshot: Screenshot) { }
  *
@@ -26,11 +26,10 @@ declare const navigator: any;
   plugin: 'com.darktalker.cordova.screenshot',
   pluginRef: 'navigator.screenshot',
   repo: 'https://github.com/gitawego/cordova-screenshot',
-  platforms: ['Android', 'iOS', 'macOS']
+  platforms: ['Android', 'iOS', 'macOS'],
 })
 @Injectable()
 export class Screenshot extends IonicNativePlugin {
-
   /**
    *  Takes screenshot and saves the image
    *
@@ -42,22 +41,20 @@ export class Screenshot extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   save(format?: string, quality?: number, filename?: string): Promise<any> {
-    return new Promise<any>(
-      (resolve, reject) => {
-        navigator.screenshot.save(
-          (error: any, result: any) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          },
-          format,
-          quality,
-          filename
-        );
-      }
-    );
+    return getPromise<any>((resolve, reject) => {
+      navigator.screenshot.save(
+        (error: any, result: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        },
+        format,
+        quality,
+        filename
+      );
+    });
   }
 
   /**
@@ -68,19 +65,14 @@ export class Screenshot extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   URI(quality?: number): Promise<any> {
-    return new Promise<any>(
-      (resolve, reject) => {
-        navigator.screenshot.URI(
-          (error: any, result: any) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          },
-          quality
-        );
-      }
-    );
+    return getPromise<any>((resolve, reject) => {
+      navigator.screenshot.URI((error: any, result: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }, quality);
+    });
   }
 }

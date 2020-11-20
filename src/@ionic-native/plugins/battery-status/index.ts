@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface BatteryStatusResponse {
   /**
@@ -21,7 +21,7 @@ export interface BatteryStatusResponse {
  *
  * @usage
  * ```typescript
- * import { BatteryStatus } from '@ionic-native/battery-status';
+ * import { BatteryStatus } from '@ionic-native/battery-status/ngx';
  *
  * constructor(private batteryStatus: BatteryStatus) { }
  *
@@ -45,7 +45,7 @@ export interface BatteryStatusResponse {
   plugin: 'cordova-plugin-battery-status',
   pluginRef: 'navigator.battery',
   repo: 'https://github.com/apache/cordova-plugin-battery-status',
-  platforms: ['iOS', 'Android', 'Windows', 'Browser']
+  platforms: ['iOS', 'Android', 'Windows', 'Browser'],
 })
 @Injectable()
 export class BatteryStatus extends IonicNativePlugin {
@@ -55,7 +55,7 @@ export class BatteryStatus extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'batterystatus'
+    event: 'batterystatus',
   })
   onChange(): Observable<BatteryStatusResponse> {
     return;
@@ -67,7 +67,7 @@ export class BatteryStatus extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'batterylow'
+    event: 'batterylow',
   })
   onLow(): Observable<BatteryStatusResponse> {
     return;
@@ -79,7 +79,7 @@ export class BatteryStatus extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'batterycritical'
+    event: 'batterycritical',
   })
   onCritical(): Observable<BatteryStatusResponse> {
     return;

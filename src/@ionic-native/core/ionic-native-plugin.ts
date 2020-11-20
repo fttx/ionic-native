@@ -1,54 +1,62 @@
+import { checkAvailability } from './decorators/common';
+import { get } from './util';
+
 export class IonicNativePlugin {
-  static pluginName: string;
-
-  static pluginRef: string;
-
-  static plugin: string;
-
-  static repo: string;
-
-  static platforms: string[];
-
-  static install: string;
+  static pluginName = '';
+  static pluginRef = '';
+  static plugin = '';
+  static repo = '';
+  static platforms: string[] = [];
+  static install = '';
 
   /**
    * Returns a boolean that indicates whether the plugin is installed
    * @return {boolean}
    */
   static installed(): boolean {
-    return false;
+    const isAvailable = checkAvailability(this.pluginRef) === true;
+    return isAvailable;
   }
 
   /**
    * Returns the original plugin object
    */
-  static getPlugin(): any {}
+  static getPlugin(): any {
+    if (typeof window !== 'undefined') {
+      return get(window, this.pluginRef);
+    }
+    return null;
+  }
 
   /**
    * Returns the plugin's name
    */
   static getPluginName(): string {
-    return;
+    const pluginName = this.pluginName;
+    return pluginName;
   }
 
   /**
    * Returns the plugin's reference
    */
   static getPluginRef(): string {
-    return;
+    const pluginRef = this.pluginRef;
+    return pluginRef;
   }
 
   /**
    * Returns the plugin's install name
    */
   static getPluginInstallName(): string {
-    return;
+    const plugin = this.plugin;
+    return plugin;
   }
 
   /**
    * Returns the plugin's supported platforms
    */
   static getSupportedPlatforms(): string[] {
-    return;
+    const platform = this.platforms;
+    return platform;
   }
 }

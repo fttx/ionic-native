@@ -1,30 +1,35 @@
 import { Injectable } from '@angular/core';
-import {
-  Cordova,
-  CordovaProperty,
-  Plugin,
-  CordovaCheck,
-  IonicNativePlugin
-} from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
+import { Cordova, CordovaCheck, CordovaProperty, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable, merge } from 'rxjs';
 
 declare const navigator: any;
 
+export enum Connection {
+  UNKNOWN = 0,
+  ETHERNET,
+  WIFI,
+  CELL_2G,
+  CELL_3G,
+  CELL_4G,
+  CELL,
+  NONE,
+}
+
 /**
  * @name Network
+ * @premier network-information
  * @description
  * Requires Cordova plugin: cordova-plugin-network-information. For more info, please see the [Network plugin docs](https://github.com/apache/cordova-plugin-network-information).
  *
  * @usage
  * ```typescript
- * import { Network } from '@ionic-native/network';
+ * import { Network } from '@ionic-native/network/ngx';
  *
  * constructor(private network: Network) { }
  *
  * ...
  *
- * // watch network for a disconnect
+ * // watch network for a disconnection
  * let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
  *   console.log('network was disconnected :-(');
  * });
@@ -37,7 +42,7 @@ declare const navigator: any;
  * let connectSubscription = this.network.onConnect().subscribe(() => {
  *   console.log('network connected!');
  *   // We just got a connection but we need to wait briefly
- *    // before we determine the connection type. Might need to wait.
+ *    // before we determine the connection type. Might need to wait.
  *   // prior to doing any api requests as well.
  *   setTimeout(() => {
  *     if (this.network.type === 'wifi') {
@@ -58,28 +63,42 @@ declare const navigator: any;
   plugin: 'cordova-plugin-network-information',
   pluginRef: 'navigator.connection',
   repo: 'https://github.com/apache/cordova-plugin-network-information',
-  platforms: ['Amazon Fire OS', 'Android', 'Browser', 'iOS', 'Windows']
+  platforms: ['Amazon Fire OS', 'Android', 'Browser', 'iOS', 'Windows'],
 })
 @Injectable()
 export class Network extends IonicNativePlugin {
   /**
+   * Constants for possible connection types
+   */
+  Connection = {
+    UNKNOWN: 'unknown',
+    ETHERNET: 'ethernet',
+    WIFI: 'wifi',
+    CELL_2G: '2g',
+    CELL_3G: '3g',
+    CELL_4G: '4g',
+    CELL: 'cellular',
+    NONE: 'none',
+  };
+
+  /**
    * Connection type
    * @return {string}
    */
-  @CordovaProperty type: string;
+  @CordovaProperty() type: string;
 
   /**
    * Downlink Max Speed
    * @return {string}
    */
-  @CordovaProperty downlinkMax: string;
+  @CordovaProperty() downlinkMax: string;
 
   /**
    * Returns an observable to watch connection changes
    * @return {Observable<any>}
    */
   @CordovaCheck()
-  onchange(): Observable<any> {
+  onChange(): Observable<any> {
     return merge(this.onConnect(), this.onDisconnect());
   }
 
@@ -90,7 +109,7 @@ export class Network extends IonicNativePlugin {
   @Cordova({
     eventObservable: true,
     event: 'offline',
-    element: document
+    element: document,
   })
   onDisconnect(): Observable<any> {
     return;
@@ -103,7 +122,7 @@ export class Network extends IonicNativePlugin {
   @Cordova({
     eventObservable: true,
     event: 'online',
-    element: document
+    element: document,
   })
   onConnect(): Observable<any> {
     return;

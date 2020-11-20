@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Instagram
@@ -7,7 +7,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Instagram } from '@ionic-native/instagram';
+ * import { Instagram } from '@ionic-native/instagram/ngx';
  *
  * constructor(private instagram: Instagram) { }
  *
@@ -24,20 +24,21 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-instagram-plugin',
   pluginRef: 'Instagram',
   repo: 'https://github.com/vstirbu/InstagramPlugin',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class Instagram extends IonicNativePlugin {
-
   /**
    * Detect if the Instagram application is installed on the device.
    *
    * @returns {Promise<boolean|string>} Returns a promise that returns a boolean value if installed, or the app version on android
    */
   @Cordova({
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
-  isInstalled(): Promise<boolean | string> { return; }
+  isInstalled(): Promise<boolean | string> {
+    return;
+  }
 
   /**
    * Share an image on Instagram
@@ -48,9 +49,11 @@ export class Instagram extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a promise that resolves if the image was shared
    */
   @Cordova({
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
-  share(canvasIdOrDataUrl: string, caption?: string): Promise<any> { return; }
+  share(canvasIdOrDataUrl: string, caption?: string): Promise<any> {
+    return;
+  }
 
   /**
    * Share a library asset or video
@@ -58,8 +61,9 @@ export class Instagram extends IonicNativePlugin {
    * @returns {Promise<any>} Returns a promise that resolves if the image was shared
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  shareAsset(assetLocalIdentifier: string): Promise<any> { return; }
-
+  shareAsset(assetLocalIdentifier: string): Promise<any> {
+    return;
+  }
 }

@@ -28,7 +28,7 @@ export interface SmsOptionsAndroid {
  *
  * @usage
  * ```typescript
- * import { SMS } from '@ionic-native/sms';
+ * import { SMS } from '@ionic-native/sms/ngx';
  *
  * constructor(private sms: SMS) { }
  *
@@ -48,26 +48,22 @@ export interface SmsOptionsAndroid {
   plugin: 'cordova-sms-plugin',
   pluginRef: 'sms',
   repo: 'https://github.com/cordova-sms/cordova-sms-plugin',
-  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone 8'],
 })
 @Injectable()
 export class SMS extends IonicNativePlugin {
   /**
    * Sends sms to a number
-   * @param phoneNumber {string|Array<string>} Phone number
+   * @param phoneNumber {string|string[]} Phone number
    * @param message {string} Message
    * @param options {SmsOptions} Options
    * @returns {Promise<any>} Resolves promise when the SMS has been sent
    */
   @Cordova({
     successIndex: 3,
-    errorIndex: 4
+    errorIndex: 4,
   })
-  send(
-    phoneNumber: string | string[],
-    message: string,
-    options?: SmsOptions
-  ): Promise<any> {
+  send(phoneNumber: string | string[], message: string, options?: SmsOptions): Promise<any> {
     return;
   }
 
@@ -76,7 +72,7 @@ export class SMS extends IonicNativePlugin {
    * @return {Promise<boolean>} returns a promise that resolves with a boolean that indicates if we have permission
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
   hasPermission(): Promise<boolean> {
     return;

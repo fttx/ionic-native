@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Keychain
@@ -13,7 +12,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Keychain } from '@ionic-native/keychain';
+ * import { Keychain } from '@ionic-native/keychain/ngx';
  *
  * constructor(private keychain: Keychain) { }
  *
@@ -32,11 +31,10 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-ios-keychain',
   pluginRef: 'window.Keychain',
   repo: 'https://github.com/ionic-team/cordova-plugin-ios-keychain',
-  platforms: ['iOS']
+  platforms: ['iOS'],
 })
 @Injectable()
 export class Keychain extends IonicNativePlugin {
-
   /**
    * Retrieves a value for a key
    *
@@ -44,9 +42,11 @@ export class Keychain extends IonicNativePlugin {
    * @param {string} [touchIDMessage] the message to show underneath the TouchID prompt (if any)
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  get(key: string, touchIDMessage?: string): Promise<any> { return; }
+  get(key: string, touchIDMessage?: string): Promise<any> {
+    return;
+  }
 
   /**
    * Sets a value for a key
@@ -56,9 +56,11 @@ export class Keychain extends IonicNativePlugin {
    * @param {boolean} [useTouchID] whether to store the value with security such that TouchID will be needed to grab it
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  set(key: string, value: string | number | boolean, useTouchID?: boolean): Promise<any> { return; }
+  set(key: string, value: string | number | boolean, useTouchID?: boolean): Promise<any> {
+    return;
+  }
 
   /**
    * Gets a JSON value for a key
@@ -67,9 +69,11 @@ export class Keychain extends IonicNativePlugin {
    * @param {string} touchIDMessage the message to show underneath the TouchID prompt (if any)
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  getJson(key: string, touchIDMessage?: string): Promise<any> { return; }
+  getJson(key: string, touchIDMessage?: string): Promise<any> {
+    return;
+  }
 
   /**
    * Sets a JSON value for a key
@@ -79,9 +83,11 @@ export class Keychain extends IonicNativePlugin {
    * @param {boolean} [useTouchId] Wether to store the value with security such that TouchID will be needed to grab it
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  setJson(key: string, obj: any, useTouchId?: boolean): Promise<any> { return; }
+  setJson(key: string, obj: any, useTouchId?: boolean): Promise<any> {
+    return;
+  }
 
   /**
    * Removes a value for a key
@@ -89,8 +95,9 @@ export class Keychain extends IonicNativePlugin {
    * @param {string} key the key to remove
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  remove(key: string): Promise<any> { return; }
-
+  remove(key: string): Promise<any> {
+    return;
+  }
 }

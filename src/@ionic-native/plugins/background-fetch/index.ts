@@ -1,14 +1,12 @@
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Injectable } from '@angular/core';
 
 export interface BackgroundFetchConfig {
-
   /**
    * Set true to cease background-fetch from operating after user "closes" the app. Defaults to true.
    */
   stopOnTerminate?: boolean;
 }
-
 
 /**
  * @name Background Fetch
@@ -20,14 +18,14 @@ export interface BackgroundFetchConfig {
  * @usage
  *
  * ```typescript
- * import { BackgroundFetch, BackgroundFetchConfig } from '@ionic-native/background-fetch';
+ * import { BackgroundFetch, BackgroundFetchConfig } from '@ionic-native/background-fetch/ngx';
  *
  *
  * constructor(private backgroundFetch: BackgroundFetch) {
  *
  *   const config: BackgroundFetchConfig = {
  *     stopOnTerminate: false, // Set true to cease background-fetch from operating after user "closes" the app. Defaults to true.
- *   };
+ *   }
  *
  *   backgroundFetch.configure(config)
  *      .then(() => {
@@ -57,12 +55,10 @@ export interface BackgroundFetchConfig {
   plugin: 'cordova-plugin-background-fetch',
   pluginRef: 'BackgroundFetch',
   repo: 'https://github.com/transistorsoft/cordova-plugin-background-fetch',
-  platforms: ['iOS']
+  platforms: ['iOS'],
 })
 @Injectable()
 export class BackgroundFetch extends IonicNativePlugin {
-
-
   /**
    * Configures the plugin's fetch callbackFn
    *
@@ -70,9 +66,11 @@ export class BackgroundFetch extends IonicNativePlugin {
    * @return {Promise<any>}
    */
   @Cordova({
-    callbackOrder: 'reverse'
+    callbackOrder: 'reverse',
   })
-  configure(config: BackgroundFetchConfig): Promise<any> { return; }
+  configure(config: BackgroundFetchConfig): Promise<any> {
+    return;
+  }
 
   /**
    * Start the background-fetch API.
@@ -80,28 +78,33 @@ export class BackgroundFetch extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  start(): Promise<any> { return; }
+  start(): Promise<any> {
+    return;
+  }
 
   /**
    * Stop the background-fetch API from firing fetch events. Your callbackFn provided to #configure will no longer be executed.
    * @returns {Promise<any>}
    */
   @Cordova()
-  stop(): Promise<any> { return; }
+  stop(): Promise<any> {
+    return;
+  }
 
   /**
    * You MUST call this method in your fetch callbackFn provided to #configure in order to signal to iOS that your fetch action is complete. iOS provides only 30s of background-time for a fetch-event -- if you exceed this 30s, iOS will kill your app.
    */
   @Cordova({
-    sync: true
+    sync: true,
   })
-  finish(): void { }
+  finish(taskId: string): void {}
 
   /**
    * Return the status of the background-fetch
    * @returns {Promise<any>}
    */
   @Cordova()
-  status(): Promise<any> { return; }
-
+  status(): Promise<any> {
+    return;
+  }
 }

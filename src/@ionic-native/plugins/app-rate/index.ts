@@ -51,6 +51,11 @@ export interface AppRatePreferences {
    * App Store URLS
    */
   storeAppURL?: AppUrls;
+
+  /**
+   * Open URL function
+   */
+  openUrl?: (url: string) => void;
 }
 
 export interface AppRateCustomLocale {
@@ -75,11 +80,17 @@ export interface AppRateCustomLocale {
   /** No button label */
   noButtonLabel?: string;
 
-  /** App rate promt title */
+  /** App rate prompt title */
   appRatePromptTitle?: string;
 
   /** Feedback prompt title */
   feedbackPromptTitle?: string;
+
+  /** Feedback prompt message */
+  appRatePromptMessage?: string;
+
+  /** Feedback prompt message */
+  feedbackPromptMessage?: string;
 }
 
 export interface AppRateCallbacks {
@@ -127,6 +138,7 @@ export interface AppUrls {
 
 /**
  * @name App Rate
+ * @premier app-rate
  * @description
  * The AppRate plugin makes it easy to prompt the user to rate your app, either now, later, or never.
  *
@@ -134,7 +146,7 @@ export interface AppUrls {
  *
  * @usage
  * ```typescript
- * import { AppRate } from '@ionic-native/app-rate';
+ * import { AppRate } from '@ionic-native/app-rate/ngx';
  *
  * constructor(private appRate: AppRate) { }
  *
@@ -144,7 +156,7 @@ export interface AppUrls {
  *   ios: '<app_id>',
  *   android: 'market://details?id=<package_name>',
  *   windows: 'ms-windows-store://review/?ProductId=<store_id>'
- * };
+ * }
  *
  * this.appRate.promptForRating(true);
  *
@@ -156,7 +168,7 @@ export interface AppUrls {
  *    android: 'market://details?id=<package_name>',
  *    windows: 'ms-windows-store://review/?ProductId=<store_id>'
  *   }
- * };
+ * }
  *
  * this.appRate.promptForRating(false);
  * ```
@@ -173,7 +185,7 @@ export interface AppUrls {
   plugin: 'cordova-plugin-apprate',
   pluginRef: 'AppRate',
   repo: 'https://github.com/pushandplay/cordova-plugin-apprate',
-  platforms: ['Android', 'BlackBerry 10', 'iOS', 'Windows']
+  platforms: ['Android', 'BlackBerry 10', 'iOS', 'Windows'],
 })
 @Injectable()
 export class AppRate extends IonicNativePlugin {
@@ -181,7 +193,8 @@ export class AppRate extends IonicNativePlugin {
    * Configure various settings for the Rating View.
    * See table below for options
    */
-  @CordovaProperty preferences: AppRatePreferences;
+  @CordovaProperty()
+  preferences: AppRatePreferences;
 
   /**
    * Prompts the user for rating

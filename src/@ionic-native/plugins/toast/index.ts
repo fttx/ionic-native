@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 export interface ToastOptions {
   /**
@@ -45,7 +45,7 @@ export interface ToastOptions {
  *
  * @usage
  * ```typescript
- * import { Toast } from '@ionic-native/toast';
+ * import { Toast } from '@ionic-native/toast/ngx';
  *
  * constructor(private toast: Toast) { }
  *
@@ -65,11 +65,10 @@ export interface ToastOptions {
   plugin: 'cordova-plugin-x-toast',
   pluginRef: 'plugins.toast',
   repo: 'https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin',
-  platforms: ['Android', 'BlackBerry 10', 'iOS', 'Windows', 'Windows Phone 8']
+  platforms: ['Android', 'BlackBerry 10', 'iOS', 'Windows', 'Windows Phone 8'],
 })
 @Injectable()
 export class Toast extends IonicNativePlugin {
-
   /**
    * Show a native toast for the given duration at the specified position.
    *
@@ -80,16 +79,20 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  show(message: string, duration: string, position: string): Observable<any> { return; }
+  show(message: string, duration: string, position: string): Observable<any> {
+    return;
+  }
 
   /**
    * Manually hide any currently visible toast.
    * @returns {Promise<any>} Returns a Promise that resolves on success.
    */
   @Cordova()
-  hide(): Promise<any> { return; }
+  hide(): Promise<any> {
+    return;
+  }
 
   /**
    * Show a native toast with the given options.
@@ -104,9 +107,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showWithOptions(options: ToastOptions): Observable<any> { return; }
+  showWithOptions(options: ToastOptions): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'short', 'top')`.
@@ -115,9 +120,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showShortTop(message: string): Observable<any> { return; }
+  showShortTop(message: string): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'short', 'center')`.
@@ -126,10 +133,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showShortCenter(message: string): Observable<any> { return; }
-
+  showShortCenter(message: string): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'short', 'bottom')`.
@@ -138,10 +146,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showShortBottom(message: string): Observable<any> { return; }
-
+  showShortBottom(message: string): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'long', 'top')`.
@@ -150,10 +159,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showLongTop(message: string): Observable<any> { return; }
-
+  showLongTop(message: string): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'long', 'center')`.
@@ -162,10 +172,11 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showLongCenter(message: string): Observable<any> { return; }
-
+  showLongCenter(message: string): Observable<any> {
+    return;
+  }
 
   /**
    * Shorthand for `show(message, 'long', 'bottom')`.
@@ -174,8 +185,9 @@ export class Toast extends IonicNativePlugin {
    */
   @Cordova({
     observable: true,
-    clearFunction: 'hide'
+    clearFunction: 'hide',
   })
-  showLongBottom(message: string): Observable<any> { return; }
-
+  showLongBottom(message: string): Observable<any> {
+    return;
+  }
 }

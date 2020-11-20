@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name App Availability
@@ -10,7 +10,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { AppAvailability } from '@ionic-native/app-availability';
+ * import { AppAvailability } from '@ionic-native/app-availability/ngx';
  * import { Platform } from 'ionic-angular';
  *
  * constructor(private appAvailability: AppAvailability, private platform: Platform) { }
@@ -37,17 +37,17 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-appavailability',
   pluginRef: 'appAvailability',
   repo: 'https://github.com/ohh2ahh/AppAvailability',
-  platforms: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'],
 })
 @Injectable()
 export class AppAvailability extends IonicNativePlugin {
-
   /**
    * Checks if an app is available on device
    * @param {string} app Package name on android, or URI scheme on iOS
    * @returns {Promise<boolean>}
    */
   @Cordova()
-  check(app: string): Promise<boolean> { return; }
-
+  check(app: string): Promise<boolean> {
+    return;
+  }
 }

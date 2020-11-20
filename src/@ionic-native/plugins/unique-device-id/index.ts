@@ -1,4 +1,4 @@
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Injectable } from '@angular/core';
 
 /**
@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
  *
  * @usage
  * ```typescript
- * import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+ * import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
  *
  * constructor(private uniqueDeviceID: UniqueDeviceID) { }
  *
@@ -25,16 +25,16 @@ import { Injectable } from '@angular/core';
   plugin: 'cordova-plugin-uniquedeviceid',
   pluginRef: 'window.plugins.uniqueDeviceID',
   repo: 'https://github.com/Paldom/UniqueDeviceID',
-  platforms: ['Android', 'iOS', 'Windows Phone 8']
+  platforms: ['Android', 'iOS', 'Windows Phone 8'],
 })
 @Injectable()
 export class UniqueDeviceID extends IonicNativePlugin {
-
   /**
    * Gets a unique, cross-install, app-specific device id.
    * @return {Promise<string>} Returns a promise that resolves when something happens
    */
   @Cordova()
-  get(): Promise<string> { return; }
-
+  get(): Promise<string> {
+    return;
+  }
 }

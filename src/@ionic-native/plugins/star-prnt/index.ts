@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface Printer {
   /**
@@ -108,7 +108,6 @@ export interface ImageObj {
   openCashDrawer?: boolean;
 }
 export interface PrintCommand {
-
   /**
    * Characther encoding is used to getByte data from all subsequent commands. Default 'US-ASCII'
    * Choose the format of the return value Defined in StarPRNT.Encoding or the Encoding enum.
@@ -137,13 +136,13 @@ export interface PrintCommand {
    * Data (Command) is added to the command buffer. Takes an array of bytes.
    * Example: {appendBytes:[0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x2e]}
    */
-  appendBytes?: Array<number>;
+  appendBytes?: number[];
 
   /**
    * Data (Command) is added to the command buffer. Takes an array of bytes.
    * Example: {appendRawBytes:[0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x2e]}
    */
-  appendRawBytes?: Array<number>;
+  appendRawBytes?: number[];
 
   /**
    * Set command of the character space is generated and added to the command buffer. Character Spacs (Unit: Dots) Example: 4
@@ -156,7 +155,7 @@ export interface PrintCommand {
   appendEmphasis?: string;
 
   /**
-    *  Enable emphasis mode is generated and added to the command buffer. Example: {enableEmphasis:true}
+   *  Enable emphasis mode is generated and added to the command buffer. Example: {enableEmphasis:true}
    */
   enableEmphasis?: boolean;
 
@@ -242,7 +241,7 @@ export interface PrintCommand {
    * Example: {appendHorizontalTabPosition:[15, 35]}
    * Delete positions Example: {appendHorizontalTabPosition:[]}
    */
-  appendHorizontalTabPosition?: Array<number>;
+  appendHorizontalTabPosition?: number[];
 
   /**
    * Print command of the logo is generated and added to the command buffer. The logo has to be uploaded to the printer using the Star Print utility.
@@ -335,7 +334,7 @@ export interface PrintCommand {
    * Example: {enableMultiple:true, width:2, height:2}
    * Disable Example: {enableMultiple:false}
    */
-   enableMultiple?: boolean;
+  enableMultiple?: boolean;
 
   /**
    * Print command of the QR code is generated and added to the command buffer.
@@ -440,7 +439,7 @@ export enum Encoding {
   /** Traditional Chinese */
   Big5 = 'Big5',
   /** UFT8 */
-  UTF8 = 'UTF-8'
+  UTF8 = 'UTF-8',
 }
 
 /**
@@ -485,7 +484,7 @@ export enum CodePageType {
   CP3847 = 'CP3847',
   CP3848 = 'CP3848',
   UTF8 = 'UTF8',
-  Blank = 'Blank'
+  Blank = 'Blank',
 }
 
 /**
@@ -507,7 +506,7 @@ export enum InternationalType {
   LatinAmerica = 'LatinAmerica',
   Korea = 'Korea',
   Ireland = 'Ireland',
-  Legal = 'Legal'
+  Legal = 'Legal',
 }
 
 /**
@@ -517,7 +516,7 @@ export enum FontStyleType {
   /** Font-A (12 x 24 dots) / Specify 7 x 9 font (half dots) */
   A = 'A',
   /** Font-B (9 x 24 dots) / Specify 5 x 9 font (2P-1) */
-  B = 'B'
+  B = 'B',
 }
 
 /**
@@ -527,7 +526,7 @@ export enum CutPaperAction {
   FullCut = 'FullCut',
   FullCutWithFeed = 'FullCutWithFeed',
   PartialCut = 'PartialCut',
-  PartialCutWithFeed = 'PartialCutWithFeed'
+  PartialCutWithFeed = 'PartialCutWithFeed',
 }
 
 /**
@@ -536,7 +535,7 @@ export enum CutPaperAction {
 export enum BlackMarkType {
   Valid = 'Valid',
   Invalid = 'Invalid',
-  ValidWithDetection = 'ValidWithDetection'
+  ValidWithDetection = 'ValidWithDetection',
 }
 
 /**
@@ -546,7 +545,7 @@ export enum LogoSize {
   Normal = 'Normal',
   DoubleWidth = 'DoubleWidth',
   DoubleHeight = 'DoubleHeight',
-  DoubleWidthDoubleHeight = 'DoubleWidthDoubleHeight'
+  DoubleWidthDoubleHeight = 'DoubleWidthDoubleHeight',
 }
 
 /**
@@ -555,7 +554,7 @@ export enum LogoSize {
 export enum AlignmentPosition {
   Left = 'Left',
   Center = 'Center',
-  Right = 'Right'
+  Right = 'Right',
 }
 
 /**
@@ -570,7 +569,7 @@ export enum BarcodeSymbology {
   JAN13 = 'JAN13',
   NW7 = 'NW7',
   UPCA = 'UPCA',
-  UPCE = 'UPCE'
+  UPCE = 'UPCE',
 }
 
 /**
@@ -585,7 +584,7 @@ export enum BarcodeWidth {
   Mode6 = 'Mode6',
   Mode7 = 'Mode7',
   Mode8 = 'Mode8',
-  Mode9 = 'Mode9'
+  Mode9 = 'Mode9',
 }
 
 /**
@@ -593,7 +592,7 @@ export enum BarcodeWidth {
  */
 export enum QrCodeModel {
   No1 = 'No1',
-  No2 = 'No2'
+  No2 = 'No2',
 }
 
 /**
@@ -603,7 +602,7 @@ export enum QrCodeLevel {
   H = 'H',
   L = 'L',
   M = 'M',
-  Q = 'Q'
+  Q = 'Q',
 }
 
 /**
@@ -613,7 +612,7 @@ export enum BitmapConverterRotation {
   Normal = 'Normal',
   Left90 = 'Left90',
   Right90 = 'Right90',
-  Rotate180 = 'Rotate180'
+  Rotate180 = 'Rotate180',
 }
 
 /**
@@ -628,7 +627,7 @@ export interface CommandsArray extends Array<PrintCommand> {}
  *
  * @usage
  * ```typescript
- * import { StarPRNT } from '@ionic-native/star-prnt';
+ * import { StarPRNT } from '@ionic-native/star-prnt/ngx';
  *
  *
  * constructor(private starprnt: StarPRNT) { }
@@ -647,15 +646,14 @@ export interface CommandsArray extends Array<PrintCommand> {}
   plugin: 'cordova-plugin-starprnt', // npm package name, example: cordova-plugin-camera
   pluginRef: 'starprnt', // the variable reference to call the plugin, example: navigator.geolocation
   repo: 'https://github.com/auctifera-josed/starprnt', // the github repository URL for the plugin
-  platforms: ['Android', 'iOS'] // Array of platforms supported, example: ['Android', 'iOS']
+  platforms: ['Android', 'iOS'], // Array of platforms supported, example: ['Android', 'iOS']
 })
 @Injectable()
 export class StarPRNT extends IonicNativePlugin {
-
   /**
    * Constant for Emulation
    */
-  Emulation  = {
+  Emulation = {
     StarPRNT: 'StarPRNT',
     StarPRNTL: 'StarPRNTL',
     StarLine: 'StarLine',
@@ -675,7 +673,7 @@ export class StarPRNT extends IonicNativePlugin {
     Windows1251: 'Windows-1251',
     GB2312: 'GB2312',
     Big5: 'Big5',
-    UTF8: 'UTF-8'
+    UTF8: 'UTF-8',
   };
 
   /**
@@ -720,7 +718,7 @@ export class StarPRNT extends IonicNativePlugin {
     CP3847: 'CP3847',
     CP3848: 'CP3848',
     UTF8: 'UTF8',
-    Blank: 'Blank'
+    Blank: 'Blank',
   };
 
   /**
@@ -742,7 +740,7 @@ export class StarPRNT extends IonicNativePlugin {
     LatinAmerica: 'LatinAmerica',
     Korea: 'Korea',
     Ireland: 'Ireland',
-    Legal: 'Legal'
+    Legal: 'Legal',
   };
 
   /**
@@ -752,7 +750,7 @@ export class StarPRNT extends IonicNativePlugin {
     /** Font-A (12 x 24 dots) / Specify 7 x 9 font (half dots) */
     A: 'A',
     /** Font-B (9 x 24 dots) / Specify 5 x 9 font (2P-1) */
-    B: 'B'
+    B: 'B',
   };
 
   /**
@@ -762,7 +760,7 @@ export class StarPRNT extends IonicNativePlugin {
     FullCut: 'FullCut',
     FullCutWithFeed: 'FullCutWithFeed',
     PartialCut: 'PartialCut',
-    PartialCutWithFeed: 'PartialCutWithFeed'
+    PartialCutWithFeed: 'PartialCutWithFeed',
   };
 
   /**
@@ -771,7 +769,7 @@ export class StarPRNT extends IonicNativePlugin {
   BlackMarkType = {
     Valid: 'Valid',
     Invalid: 'Invalid',
-    ValidWithDetection: 'ValidWithDetection'
+    ValidWithDetection: 'ValidWithDetection',
   };
 
   /**
@@ -780,7 +778,7 @@ export class StarPRNT extends IonicNativePlugin {
   AlignmentPosition = {
     Left: 'Left',
     Center: 'Center',
-    Right: 'Right'
+    Right: 'Right',
   };
 
   /**
@@ -790,7 +788,7 @@ export class StarPRNT extends IonicNativePlugin {
     Normal: 'Normal',
     DoubleWidth: 'DoubleWidth',
     DoubleHeight: 'DoubleHeight',
-    DoubleWidthDoubleHeight: 'DoubleWidthDoubleHeight'
+    DoubleWidthDoubleHeight: 'DoubleWidthDoubleHeight',
   };
 
   /**
@@ -805,7 +803,7 @@ export class StarPRNT extends IonicNativePlugin {
     JAN13: 'JAN13',
     NW7: 'NW7',
     UPCA: 'UPCA',
-    UPCE: 'UPCE'
+    UPCE: 'UPCE',
   };
 
   /**
@@ -820,7 +818,7 @@ export class StarPRNT extends IonicNativePlugin {
     Mode6: 'Mode6',
     Mode7: 'Mode7',
     Mode8: 'Mode8',
-    Mode9: 'Mode9'
+    Mode9: 'Mode9',
   };
 
   /**
@@ -828,7 +826,7 @@ export class StarPRNT extends IonicNativePlugin {
    */
   QrCodeModel = {
     No1: 'No1',
-    No2: 'No2'
+    No2: 'No2',
   };
 
   /**
@@ -838,7 +836,7 @@ export class StarPRNT extends IonicNativePlugin {
     H: 'H',
     L: 'L',
     M: 'M',
-    Q: 'Q'
+    Q: 'Q',
   };
 
   /**
@@ -848,7 +846,7 @@ export class StarPRNT extends IonicNativePlugin {
     Normal: 'Normal',
     Left90: 'Left90',
     Right90: 'Right90',
-    Rotate180: 'Rotate180'
+    Rotate180: 'Rotate180',
   };
 
   /**
@@ -880,11 +878,7 @@ export class StarPRNT extends IonicNativePlugin {
    * @return {Promise<any>} Success! if printed correctly or error message string returned by the SDK.
    */
   @Cordova()
-  printRawText(
-    port: string,
-    emulation: string,
-    printObj: PrintObj
-  ): Promise<any> {
+  printRawText(port: string, emulation: string, printObj: PrintObj): Promise<any> {
     return;
   }
 
@@ -896,11 +890,7 @@ export class StarPRNT extends IonicNativePlugin {
    * @return {Promise<any>} Success! if printed correctly or error message string returned by the SDK.
    */
   @Cordova()
-  printRasterReceipt(
-    port: string,
-    emulation: string,
-    rasterObj: RasterObj
-  ): Promise<any> {
+  printRasterReceipt(port: string, emulation: string, rasterObj: RasterObj): Promise<any> {
     return;
   }
 
@@ -912,11 +902,7 @@ export class StarPRNT extends IonicNativePlugin {
    * @return {Promise<any>} Success! if printed correctly or error message string returned by the SDK.
    */
   @Cordova()
-  printImage(
-    port: string,
-    emulation: string,
-    imageObj: ImageObj
-  ): Promise<any> {
+  printImage(port: string, emulation: string, imageObj: ImageObj): Promise<any> {
     return;
   }
 
@@ -939,11 +925,7 @@ export class StarPRNT extends IonicNativePlugin {
    * @return {Promise<any>} Success! if printed correctly or error message string returned by the SDK.
    */
   @Cordova()
-  print(
-    port: string,
-    emulation: string,
-    commandsArray: CommandsArray
-  ): Promise<any> {
+  print(port: string, emulation: string, commandsArray: CommandsArray): Promise<any> {
     return;
   }
 
@@ -951,12 +933,11 @@ export class StarPRNT extends IonicNativePlugin {
    * Allows you to connect to the printer, keep the connection alive and receive status updates through an observable
    * @param {string} port  printer name i.e BT:StarMicronics.
    * @param {string} emulation  StarPrinter Emulation type: "StarPRNT", "StarPRNTL", "StarLine", "StarGraphic", "EscPos", "EscPosMobile", "StarDotImpact"
-   * @param {boolean} hasBarcodeReader  Set to true if the device has a barcode reader (e.g. mPop)
    * @return {Observable<any>} Success! if connected or error message string returned by the SDK.
    */
   @Cordova({
     observable: true,
-    callbackStyle: 'node'
+    callbackStyle: 'node',
   })
   connect(port: string, emulation: string, hasBarcodeReader: boolean): Observable<any> {
     return;
@@ -968,7 +949,7 @@ export class StarPRNT extends IonicNativePlugin {
    */
   @Cordova({
     eventObservable: true,
-    event: 'starPrntData'
+    event: 'starPrntData',
   })
   getStatus(): Observable<any> {
     return;

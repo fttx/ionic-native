@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs/Observable';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Observable } from 'rxjs';
 
 /**
  * @name Google Nearby
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
  *
  * @usage
  * ```typescript
- * import { GoogleNearby } from '@ionic-native/google-nearby';
+ * import { GoogleNearby } from '@ionic-native/google-nearby/ngx';
  *
  *
  * constructor(private googleNearby: GoogleNearby) { }
@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Observable';
  * this.googleNearby.publish('Hello')
  *   .then((res: any) => console.log(res))
  *   .catch((error: any) => console.error(error));
- * 
+ *
  * this.googleNearby.subscribe()
  *   .then((res: any) => console.log(res))
  *   .catch((error: any) => console.error(error));
@@ -30,11 +30,10 @@ import { Observable } from 'rxjs/Observable';
   repo: 'https://github.com/hahahannes/cordova-plugin-google-nearby',
   install: 'ionic cordova plugin add cordova-plugin-google-nearby --variable API_KEY="123456789"',
   installVariables: ['API_KEY'],
-  platforms: ['Android']
+  platforms: ['Android'],
 })
 @Injectable()
 export class GoogleNearby extends IonicNativePlugin {
-
   /**
    * Publish a message
    * @param message {string} Message to publish
@@ -45,13 +44,13 @@ export class GoogleNearby extends IonicNativePlugin {
     return;
   }
 
-/**
-   * Subscribe to recieve messages
-   * @return {Observable<any>} Returns an observable that emits recieved messages
+  /**
+   * Subscribe to receive messages
+   * @return {Observable<any>} Returns an observable that emits received messages
    */
   @Cordova({
     observable: true,
-    clearFunction: 'unsubscribe'
+    clearFunction: 'unsubscribe',
   })
   subscribe(): Observable<any> {
     return;

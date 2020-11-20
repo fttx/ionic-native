@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+
+export interface FileChooserOptions {
+  /**
+   * comma seperated mime types to filter files.
+   */
+  mime: string;
+}
 
 /**
  * @name File Chooser
@@ -9,7 +16,7 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { FileChooser } from '@ionic-native/file-chooser';
+ * import { FileChooser } from '@ionic-native/file-chooser/ngx';
  *
  * constructor(private fileChooser: FileChooser) { }
  *
@@ -20,22 +27,25 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
  *   .catch(e => console.log(e));
  *
  * ```
+ * @interfaces
+ * FileChooserOptions
  */
 @Plugin({
   pluginName: 'FileChooser',
   plugin: 'cordova-plugin-filechooser',
   pluginRef: 'fileChooser',
   repo: 'https://github.com/ihadeed/cordova-filechooser',
-  platforms: ['Android']
+  platforms: ['Android'],
 })
 @Injectable()
 export class FileChooser extends IonicNativePlugin {
-
   /**
    * Open a file
+   * @param {FileChooserOptions} [options]  Optional parameter, defaults to ''. Filters the file selection list according to mime types
    * @returns {Promise<string>}
    */
   @Cordova()
-  open(): Promise<string> { return; }
-
+  open(options?: FileChooserOptions): Promise<string> {
+    return;
+  }
 }

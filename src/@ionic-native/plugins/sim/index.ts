@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
-
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Sim
@@ -11,7 +10,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  *
  * @usage
  * ```typescript
- * import { Sim } from '@ionic-native/sim';
+ * import { Sim } from '@ionic-native/sim/ngx';
  *
  *
  * constructor(private sim: Sim) { }
@@ -38,7 +37,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-sim',
   pluginRef: 'plugins.sim',
   repo: 'https://github.com/pbakondy/cordova-plugin-sim',
-  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone']
+  platforms: ['Android', 'iOS', 'Windows', 'Windows Phone'],
 })
 @Injectable()
 export class Sim extends IonicNativePlugin {
@@ -47,23 +46,29 @@ export class Sim extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  getSimInfo(): Promise<any> { return; }
+  getSimInfo(): Promise<any> {
+    return;
+  }
 
   /**
    * Check permission
    * @returns {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
-  hasReadPermission(): Promise<any> { return; }
+  hasReadPermission(): Promise<any> {
+    return;
+  }
 
   /**
    * Request permission
    * @returns {Promise<any>}
    */
   @Cordova({
-    platforms: ['Android']
+    platforms: ['Android'],
   })
-  requestReadPermission(): Promise<any> { return; }
+  requestReadPermission(): Promise<any> {
+    return;
+  }
 }

@@ -1,39 +1,39 @@
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 import { Injectable } from '@angular/core';
 
 export interface TealConfig {
-    /**
-     * Your Tealium account name
-     */
-    account: string;
-    /**
-     * Your Tealium profile name
-     */
-    profile: string;
-    /**
-     * Your Tealium environment name (dev, qa, prod)
-     */
-    environment: string;
-    /**
-     * Arbitrary instance name string. Must be consistent for all calls to Tealium API.
-     */
-    instance: string;
-    /**
-     * Enables ("true") or disables ("false") lifecycle reporting. Default true if omitted.
-     */
-    isLifecycleEnabled?: string;
-    /**
-     * Not usually required. Sets a custom URL override for dispatches to UDH.
-     */
-    collectDispatchURL?: string;
-    /**
-     * Your Tealium UDH profile. Only active if you do not have collectDispatchURL set.
-     */
-    collectDispatchProfile?: string;
-    /**
-     * Enables ("true") or disables ("false") Crash Reporter module for Android. Default false if omitted.
-     */
-    isCrashReporterEnabled?: string;
+  /**
+   * Your Tealium account name
+   */
+  account: string;
+  /**
+   * Your Tealium profile name
+   */
+  profile: string;
+  /**
+   * Your Tealium environment name (dev, qa, prod)
+   */
+  environment: string;
+  /**
+   * Arbitrary instance name string. Must be consistent for all calls to Tealium API.
+   */
+  instance: string;
+  /**
+   * Enables ("true") or disables ("false") lifecycle reporting. Default true if omitted.
+   */
+  isLifecycleEnabled?: string;
+  /**
+   * Not usually required. Sets a custom URL override for dispatches to UDH.
+   */
+  collectDispatchURL?: string;
+  /**
+   * Your Tealium UDH profile. Only active if you do not have collectDispatchURL set.
+   */
+  collectDispatchProfile?: string;
+  /**
+   * Enables ("true") or disables ("false") Crash Reporter module for Android. Default false if omitted.
+   */
+  isCrashReporterEnabled?: string;
 }
 
 /**
@@ -45,7 +45,7 @@ export interface TealConfig {
  * For full documentation, see [https://community.tealiumiq.com/t5/Mobile-Libraries/Tealium-for-Cordova/ta-p/17618](https://community.tealiumiq.com/t5/Mobile-Libraries/Tealium-for-Cordova/ta-p/17618)
  * @usage
  * ```
- * import { Tealium, TealConfig } from '@ionic-native/tealium';
+ * import { Tealium, TealConfig } from '@ionic-native/tealium/ngx';
  *
  *
  * constructor(private tealium: Tealium) { }
@@ -78,12 +78,10 @@ export interface TealConfig {
   platforms: ['Android', 'iOS'], // Array of platforms supported, example: ['Android', 'iOS']
   install: '', // OPTIONAL install command, in case the plugin requires variables
 })
-
 @Injectable()
 export class Tealium extends IonicNativePlugin {
-
   /**
-   * This function initializes the Tealium Cordova plugin. 
+   * This function initializes the Tealium Cordova plugin.
    * This should usually be done inside the "deviceReady" handler.
    * @param config {TealConfig}
    * @return {Promise<any>} Returns a promise that resolves when something happens
@@ -184,7 +182,7 @@ export class Tealium extends IonicNativePlugin {
   getPersistent(keyName: string, instanceName: string, callback: any): Promise<any> {
     return;
   }
-/**
+  /**
    * This function retrieves a value from the Tealium Volatile data store
    * @param keyName {string} The key name that this data will retrieved from the Tealium data store
    * @param instanceName {string} Your arbitrary Tealium instance name provided at init time
@@ -196,8 +194,8 @@ export class Tealium extends IonicNativePlugin {
     return;
   }
 
-   /**
-   * This function adds a remote command for later execution 
+  /**
+   * This function adds a remote command for later execution
    * @param commandName {string} The command name for this Remote Command
    * @param instanceName {string} Your arbitrary Tealium instance name provided at init time
    * @param callback {any} A callback function that will be called when the data has been retrieved
@@ -216,5 +214,4 @@ export class Tealium extends IonicNativePlugin {
   getVisitorId(): Promise<any> {
     return;
   }
-
 }

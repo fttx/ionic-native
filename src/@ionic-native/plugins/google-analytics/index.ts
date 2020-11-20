@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 /**
  * @name Google Analytics
@@ -11,7 +11,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  * - (Android) Google Play Services SDK installed via [Android SDK Manager](https://developer.android.com/sdk/installing/adding-packages.html)
  * @usage
  * ```typescript
- * import { GoogleAnalytics } from '@ionic-native/google-analytics';
+ * import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
  *
  * constructor(private ga: GoogleAnalytics) { }
  *
@@ -20,7 +20,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
  * this.ga.startTrackerWithId('YOUR_TRACKER_ID')
  *    .then(() => {
  *      console.log('Google analytics is ready now');
-        this.ga.trackView('test');
+ *       this.ga.trackView('test');
  *      // Tracker is ready
  *      // You can now track pages or set additional information such as AppVersion or UserId
  *    })
@@ -34,7 +34,7 @@ import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
   plugin: 'cordova-plugin-google-analytics',
   pluginRef: 'ga',
   repo: 'https://github.com/danwilson/google-analytics-plugin',
-  platforms: ['Android', 'Browser', 'iOS', 'Windows Phone 8']
+  platforms: ['Android', 'Browser', 'iOS', 'Windows Phone 8'],
 })
 @Injectable()
 export class GoogleAnalytics extends IonicNativePlugin {
@@ -47,7 +47,7 @@ export class GoogleAnalytics extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
   startTrackerWithId(id: string, interval?: number): Promise<any> {
     return;
@@ -142,7 +142,7 @@ export class GoogleAnalytics extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 2,
-    errorIndex: 3
+    errorIndex: 3,
   })
   trackMetric(key: number, value?: number): Promise<any> {
     return;
@@ -159,13 +159,9 @@ export class GoogleAnalytics extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 3,
-    errorIndex: 4
+    errorIndex: 4,
   })
-  trackView(
-    title: string,
-    campaignUrl?: string,
-    newSession?: boolean
-  ): Promise<any> {
+  trackView(title: string, campaignUrl?: string, newSession?: boolean): Promise<any> {
     return;
   }
 
@@ -193,15 +189,9 @@ export class GoogleAnalytics extends IonicNativePlugin {
    */
   @Cordova({
     successIndex: 5,
-    errorIndex: 6
+    errorIndex: 6,
   })
-  trackEvent(
-    category: string,
-    action: string,
-    label?: string,
-    value?: number,
-    newSession?: boolean
-  ): Promise<any> {
+  trackEvent(category: string, action: string, label?: string, value?: number, newSession?: boolean): Promise<any> {
     return;
   }
 
@@ -225,12 +215,7 @@ export class GoogleAnalytics extends IonicNativePlugin {
    * @returns {Promise<any>}
    */
   @Cordova()
-  trackTiming(
-    category: string,
-    intervalInMilliseconds: number,
-    variable: string,
-    label: string
-  ): Promise<any> {
+  trackTiming(category: string, intervalInMilliseconds: number, variable: string, label: string): Promise<any> {
     return;
   }
 
@@ -298,7 +283,7 @@ export class GoogleAnalytics extends IonicNativePlugin {
    * @platform
    */
   @Cordova({
-    platforms: ['Android', 'iOS', 'Windows']
+    platforms: ['Android', 'iOS', 'Windows'],
   })
   dispatch(): Promise<any> {
     return;
