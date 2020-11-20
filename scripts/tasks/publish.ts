@@ -41,7 +41,7 @@ const PLUGIN_PEER_DEPENDENCIES = {
 function getPackageJsonContent(name: string, peerDependencies = {}, dependencies = {}) {
   return merge(PACKAGE_JSON_BASE, {
     // @fttx rename the npm module
-    name: (name.indexOf('barcode-scanner') != -1 || name.indexOf('core') != -1 ? '@fttx/' : '@fttx') + name,
+    name: '@fttx/' + name,
     dependencies,
     peerDependencies,
     version: VERSION,
@@ -68,7 +68,8 @@ function prepare() {
   PLUGIN_PATHS.forEach((pluginPath: string) => {
     const pluginName = pluginPath.split(/[\/\\]+/).slice(-2)[0];
     // @fttx: build only barcode-scanner plugin
-    if (pluginName.indexOf('barcode-scanner') == -1 || pluginName.indexOf('core') == -1) return;
+    if (pluginName.indexOf('barcode-scanner') == -1 && pluginName.indexOf('core') == -1) return;
+    console.log('@@@ Publishing ' + pluginName);
     const packageJsonContents = getPackageJsonContent(pluginName, PLUGIN_PEER_DEPENDENCIES);
     const dir = path.resolve(DIST, 'plugins', pluginName);
     const ngxDir = path.join(dir, 'ngx');
@@ -84,7 +85,7 @@ async function publish(ignoreErrors = false) {
     (pkg: any) =>
       new Promise<any>((resolve, reject) => {
         // @fttx: build only barcode-scanner plugin
-        if (pkg.indexOf('barcode-scanner') == -1 || pkg.indexOf('core') == -1) return resolve();
+        if (pkg.indexOf('barcode-scanner') == -1 && pkg.indexOf('core') == -1) return resolve();
         exec(`npm publish ${pkg} ${FLAGS}`, (err, stdout) => {
           if (stdout) {
             Logger.verbose(stdout.trim());

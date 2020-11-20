@@ -1,3 +1,7 @@
+## [5.29.6](https://github.com/ionic-team/ionic-native/compare/v5.29.5...v5.29.6) (2020-11-20)
+
+
+
 ## [5.29.5](https://github.com/ionic-team/ionic-native/compare/v5.29.3...v5.29.5) (2020-11-20)
 
 
@@ -3425,7 +3429,7 @@
 * **apple-pay:** add cordova-plugin-applepay ([#2081](https://github.com/ionic-team/ionic-native/issues/2081)) ([784f948](https://github.com/ionic-team/ionic-native/commit/784f948a5b3bd7f5df8f2a37c43beab36e339819))
 * **apple-pay:** update for version 3 of the Apple Pay plugin. ([#2177](https://github.com/ionic-team/ionic-native/issues/2177)) ([bf41506](https://github.com/ionic-team/ionic-native/commit/bf41506324377b27c2a3144893e3bc1862252d91))
 * **ble:** support startStateNotifications & stopStateNotifications ([#2085](https://github.com/ionic-team/ionic-native/issues/2085)) ([2a4bcee](https://github.com/ionic-team/ionic-native/commit/2a4bcee6a05e45010348952eb77ec628eb7a8806))
-* **braintree:** add support for cordova-plugin-braintree to [@fttx](https://github.com/ionic-native) ([#2073](https://github.com/ionic-team/ionic-native/issues/2073)) ([091ac7a](https://github.com/ionic-team/ionic-native/commit/091ac7a68c84ee21ef307e8d73f018443414692a))
+* **braintree:** add support for cordova-plugin-braintree to [@ionic-native](https://github.com/ionic-native) ([#2073](https://github.com/ionic-team/ionic-native/issues/2073)) ([091ac7a](https://github.com/ionic-team/ionic-native/commit/091ac7a68c84ee21ef307e8d73f018443414692a))
 * **call-number:** add isCallSupported method  ([#2051](https://github.com/ionic-team/ionic-native/issues/2051)) ([6053296](https://github.com/ionic-team/ionic-native/commit/60532969988722744f7058a6d4b062c7e9dc88f4))
 * **dns:** add cordova-plugin-dns plugin ([#2083](https://github.com/ionic-team/ionic-native/issues/2083)) ([212bd63](https://github.com/ionic-team/ionic-native/commit/212bd631911bcca44278cc6b3373afdb05b8d424))
 * **firebase:** add new Firebase phone verification methods ([#2157](https://github.com/ionic-team/ionic-native/issues/2157)) ([86181af](https://github.com/ionic-team/ionic-native/commit/86181afc27a8fd31a8773dd3cc89388f4f4ff230))
@@ -3622,10 +3626,10 @@
 * **media:** the plugin's `create` method no longer takes callback functions. You must use the
 observables provided by the `MediaObject` instance. Refer to the updated documentation for more
 information.
-* **admob-pro:** `@fttx/admob` is now `@fttx/admob-pro`. Also, class name is changed
+* **admob-pro:** `@ionic-native/admob` is now `@ionic-native/admob-pro`. Also, class name is changed
 from `AdMob` to `AdMobPro`.
 * **media:** `MediaObject` class is now `Media`
-* **rename plugin to FileTransfer to match original plugin:** Package name is now `@fttx/file-transfer`. `Transfer` class has been
+* **rename plugin to FileTransfer to match original plugin:** Package name is now `@ionic-native/file-transfer`. `Transfer` class has been
 renamed to `FileTransfer`. Also, `TransferObject` class has been renamed to `FileTransferObject`.
 
 
