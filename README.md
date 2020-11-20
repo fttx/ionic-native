@@ -2,13 +2,10 @@
 
 ```bash
 npm i
-npm run build && npm run readmes
-# cd dist/@ionic-native/plugins/barcode-scanner
 # search for '@fttx' in the 'scripts/tasks/publish.ts' file for more info
-npm run shipit
 npm version patch
 npm login
-npm publish
+npm run shipit
 ```
 
 [![Circle CI](https://circleci.com/gh/ionic-team/ionic-native.svg?style=shield)](https://circleci.com/gh/ionic-team/ionic-native) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) ![](https://img.shields.io/npm/v/@ionic-native/core.svg)
