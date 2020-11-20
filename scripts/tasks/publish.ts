@@ -33,14 +33,15 @@ const MIN_CORE_VERSION = '^5.1.0';
 const RXJS_VERSION = '^5.5.0 || ^6.5.0';
 
 const PLUGIN_PEER_DEPENDENCIES = {
-  '@ionic-native/core': MIN_CORE_VERSION,
+  // peer dependency
+  '@fttx/core': MIN_CORE_VERSION,
   rxjs: RXJS_VERSION,
 };
 
 function getPackageJsonContent(name: string, peerDependencies = {}, dependencies = {}) {
   return merge(PACKAGE_JSON_BASE, {
     // @fttx rename the npm module
-    name: (name.indexOf('barcode-scanner') != -1 ? '@fttx/' : '@ionic-native') + name,
+    name: (name.indexOf('barcode-scanner') != -1 || name.indexOf('core') != -1 ? '@fttx/' : '@ionic-native') + name,
     dependencies,
     peerDependencies,
     version: VERSION,
