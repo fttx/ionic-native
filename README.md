@@ -3,10 +3,10 @@
 ```bash
 npm i
 npm run build && npm run readmes
-cd dist/@ionic-native/plugins/barcode-scanner
-npm version patch
+# cd dist/@ionic-native/plugins/barcode-scanner
 # search for '@fttx' in the 'scripts/tasks/publish.ts' file for more info
-npm run npmpub
+npm run shipit
+npm version patch
 npm login
 npm publish
 ```

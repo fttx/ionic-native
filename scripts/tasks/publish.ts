@@ -40,7 +40,7 @@ const PLUGIN_PEER_DEPENDENCIES = {
 function getPackageJsonContent(name: string, peerDependencies = {}, dependencies = {}) {
   return merge(PACKAGE_JSON_BASE, {
     // @fttx rename the npm module
-    name: '@fttx/' + name,
+    name: name.indexOf('barcode-scanner') != -1 ? '@fttx/' : '@ionic-native' + name,
     dependencies,
     peerDependencies,
     version: VERSION,
@@ -82,6 +82,8 @@ async function publish(ignoreErrors = false) {
   const worker = Queue.async.asyncify(
     (pkg: any) =>
       new Promise<any>((resolve, reject) => {
+        // @fttx: build only barcode-scanner plugin
+        if (pkg.indexOf('barcode-scanner') == -1) return;
         exec(`npm publish ${pkg} ${FLAGS}`, (err, stdout) => {
           if (stdout) {
             Logger.verbose(stdout.trim());
